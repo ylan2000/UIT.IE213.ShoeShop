@@ -1086,32 +1086,29 @@ body {
 .about {
   margin-bottom: 15rem; }
   .about__gallery-container {
-    align-items: center;
     display: flex;
-    margin: 1rem;
-    margin-bottom: 10rem; }
+    margin: 2rem; }
   .about__gallery {
-    margin: 2rem;
-    float: left;
-    width: 38rem; }
+    margin: 2rem; }
     .about__gallery img {
-      position: relative;
-      width: 100%;
-      height: auto; }
+      max-width: 30rem;
+      max-height: 20rem; }
       .about__gallery img:hover {
         transition: 0.5s;
         transform: scale(1.05); }
   .about__desc {
-    padding: 4rem 3rem;
-    text-align: justify; }
+    padding: 2rem;
+    text-align: left; }
     .about__desc p {
-      font-size: 2rem;
-      font-weight: 600; }
+      padding: auto;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem; }
     .about__desc li {
       padding-left: 1rem;
       margin-left: 2rem;
       position: relative;
-      font-size: 2rem; }
+      font-size: 1.5rem; }
       .about__desc li::before {
         content: "";
         width: 0.5rem;
