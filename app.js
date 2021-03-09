@@ -55,6 +55,11 @@ app.get("/return-policy", (req,res) =>
   res.status(200).render("pages/return-policy");
 })
 
+app.get("/order-detail", (req,res) =>
+{
+  res.status(200).render("pages/order-detail");
+})
+
 //users
 app.get("/login/logout", (req,res) =>
 {
