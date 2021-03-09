@@ -750,7 +750,7 @@ body {
     transition: 0.5s; }
 
 .cart {
-  margin-top: 15rem; }
+  margin-top: 5rem; }
   .cart__title {
     font-size: 4rem;
     text-align: center;
@@ -843,7 +843,7 @@ body {
     font-weight: 700; }
 
 .wishlist {
-  margin: 15rem 0; }
+  margin: 5rem 0; }
   .wishlist__title {
     font-size: 4rem;
     text-align: center;
