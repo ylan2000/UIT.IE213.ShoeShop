@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title>User</title>
+    <%- include('../../template/header.ejs'); -%>
   </head>
   <body>
+    <%- include('../../template/sidebar.ejs'); -%>
+    <%- include('../../template/navbar.ejs'); -%>
     <div class="d-flex justify-content-between">
       <h1 class="text-primary">Users</h1>
       <form>
@@ -178,4 +181,5 @@
       </ul>
     </nav>
   </body>
+  <%- include('../../template/footer.ejs'); -%>
 </html>

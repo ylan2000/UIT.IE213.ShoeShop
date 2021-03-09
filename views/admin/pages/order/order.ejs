@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
      <head>
-          <title>Order Management</title>
+          <%- include('../../template/header.ejs'); -%>
      </head>
      <body>
+          <%- include('../../template/sidebar.ejs'); -%>
+          <%- include('../../template/navbar.ejs'); -%>
           <div class="d-flex justify-content-between">
                <h1 class="text-primary">Orders</h1>
                <form class="form-inline my-2 my-lg-0">
@@ -138,4 +141,5 @@
                </div>
           </div>
      </body>
+     <%- include('../../template/footer.ejs'); -%>
 </html>

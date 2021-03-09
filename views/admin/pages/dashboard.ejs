@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
      <head>
-          <title>Dashboard</title>
+          <%- include('../../template/header.ejs'); -%>
      </head>
      <body>
+          <%- include('../../template/sidebar.ejs'); -%>
+          <%- include('../../template/navbar.ejs'); -%>
           <h1 class="text-center text-danger font-weight-bold">SHOP N7</h1>
           <div class="d-flex justify-content-between mt-5">
                <div class="card">
@@ -71,4 +74,5 @@
           }
           </script>
      </body>
+     <%- include('../../template/footer.ejs'); -%>
 </html>
