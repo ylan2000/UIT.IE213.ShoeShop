@@ -1,4 +1,4 @@
-var countDownDate = new Date("Jan 1, 2021 15:37:25").getTime();
+var countDownDate = new Date("June 26, 2021 15:37:25").getTime();
 
 var eventDay = document.querySelector(".event__time--day");
 var eventHour = document.querySelector(".event__time--hour");
