@@ -750,7 +750,7 @@ body {
     transition: 0.5s; }
 
 .cart {
-  margin-top: 15rem; }
+  margin-top: 5rem; }
   .cart__title {
     font-size: 4rem;
     text-align: center;
@@ -843,7 +843,7 @@ body {
     font-weight: 700; }
 
 .wishlist {
-  margin: 15rem 0; }
+  margin: 5rem 0; }
   .wishlist__title {
     font-size: 4rem;
     text-align: center;
@@ -955,14 +955,16 @@ body {
     .brandinfo__img-palla:hover {
       opacity: 90%; }
   .brandinfo__img-cv {
-    margin-top: 10rem;
+    width: 50rem;
+    height: auto;
+    margin: 10rem auto;
     opacity: 30%;
     transition: all 0.3s ease-in; }
     .brandinfo__img-cv:hover {
       opacity: 90%; }
   .brandinfo__img-vans {
     width: 40rem;
-    height: 16rem;
+    height: auto;
     margin: 10rem auto;
     opacity: 30%;
     transition: all 0.3s ease-in; }
@@ -979,7 +981,7 @@ body {
     padding-top: 5rem;
     margin-bottom: 10rem; }
   .brandinfo__filter {
-    margin: 2rem 10rem 2rem 10rem;
+    margin: 2rem 10rem 2rem 15rem;
     align-items: center;
     display: flex;
     padding: 1.2rem 7.2rem; }
@@ -1010,9 +1012,9 @@ body {
     justify-content: center;
     line-height: 4rem;
     text-transform: uppercase;
-    background-color: #FFCED1; }
+    background-color: #BDBDBD; }
     .brandinfo__filter-btn:hover {
-      color: #FF7D00;
+      color: #444;
       transition: 0.3s; }
   .brandinfo__filter-selection-container {
     min-width: 15.4rem;
@@ -1021,7 +1023,7 @@ body {
     border-radius: .9rem;
     display: flex;
     justify-content: space-between;
-    background-color: #FFCED1;
+    background-color: #BDBDBD;
     align-items: center;
     padding-left: 2rem;
     position: relative; }
@@ -1034,9 +1036,9 @@ body {
       right: 0;
       padding-left: 1.5rem;
       top: 3.44rem;
-      border-radius: 0rem;
+      border-radius: 0.5rem;
       border-width: 2rem;
-      background-color: #FFCED1;
+      background-color: #BDBDBD;
       padding-left: 0.8rem 1.6rem;
       list-style: none; }
   .brandinfo__filter-selection {
@@ -1049,7 +1051,34 @@ body {
     display: block;
     padding: 0.4rem 0; }
     .brandinfo__select-input:hover {
+      color: #757575; }
+  .brandinfo__tag-container {
+    flex: auto;
+    padding: 2rem;
+    margin: 10rem 5rem; }
+  .brandinfo__tag-size {
+    padding: 1rem;
+    font-weight: 600;
+    color: #FF7D00; }
+  .brandinfo__tag {
+    border-bottom: 0.1rem solid #BDBDBD;
+    padding: 1rem;
+    margin: 0.2rem; }
+    .brandinfo__tag p:hover {
       color: #FF7D00; }
+  .brandinfo__float {
+    align-items: flex-start;
+    display: flex; }
+  .brandinfo__product {
+    flex: auto; }
+    .brandinfo__product img {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 85%;
+      height: auto; }
+  .brandinfo__product-container {
+    margin: 0.1rem; }
 
 .policy {
   margin-bottom: 15rem; }
