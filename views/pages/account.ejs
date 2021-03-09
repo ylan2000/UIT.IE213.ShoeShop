@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang = "en">
     <head>
         <title>Personal Information</title>
+        <%- include('../partials/head'); -%>
     </head>
     <body>
+        <%- include('../partials/nav'); -%>
         <div class = "flex_container">
                 <div class = "left_flex_container">
                     <img src="images/undraw_personalization.svg"/>
@@ -45,7 +48,9 @@
                 return !(charCode > 31 && (charCode < 48 || charCode > 57));
             }
             </script>
+            <%- include('../partials/script-line'); -%>
     </body>
+    <%- include('../partials/footer'); -%>
 </html>
 
 

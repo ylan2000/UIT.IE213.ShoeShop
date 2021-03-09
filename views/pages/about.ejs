@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <title>About us</title>
+    <%- include('../partials/head.ejs'); -%>
   </head>
   <body>
+    <%- include('../partials/nav'); -%>
     <div class="container">
       <nav>
         <ul class="breadcrumb">
@@ -54,7 +57,7 @@
         <div class="about__gallery-container">
           <div class="about__gallery">
             <a target="_blank" href="images/lan.jpeg">
-              <img src="images/lan.jpg" alt="Dat" width="600" height="400" />
+              <img src="images/lan.jpeg" alt="Dat" width="600" height="400" />
             </a>
             <div class="about__desc">
               <p>Lan Truong</p>
@@ -103,5 +106,7 @@
         </div>
       </div>
     </div>
+    <%- include('../partials/script-line'); -%>
   </body>
+  <%- include('../partials/footer'); -%>
 </html>
