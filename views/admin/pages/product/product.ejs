@@ -1,8 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <title>Product</title>
+    <%- include('../../template/header.ejs'); -%>
   </head>
   <body>
+    <%- include('../../template/sidebar.ejs'); -%>
+    <%- include('../../template/navbar.ejs'); -%>
     <div class="d-flex justify-content-between">
       <h1 class="text-primary">Products</h1>
       <form>
@@ -184,6 +188,7 @@
       });
     </script>
   </body>
+  <%- include('../../template/footer.ejs'); -%>
 </html>
 
 <!-- <div class="modal fade" id="productDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
