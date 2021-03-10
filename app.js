@@ -10,6 +10,42 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(`${__dirname}/public`));
 
 //~~~~~~ROUTING~~~~~~~
+//Admin
+app.get("/admin/category", (req,res) =>
+{
+  res.sendFile(__dirname + '/views/admin/pages/category/category.html');
+})
+
+app.get("/admin/order", (req,res) =>
+{
+  res.sendFile(__dirname + '/views/admin/pages/order/order.html');
+})
+
+app.get("/admin/product-add", (req,res) =>
+{
+  res.sendFile(__dirname + '/views/admin/pages/product/product-add.html');
+})
+
+app.get("/admin/product-edit", (req,res) =>
+{
+  res.sendFile(__dirname + '/views/admin/pages/product/product-edit.html');
+})
+
+app.get("/admin/user-add", (req,res) =>
+{
+  res.sendFile(__dirname + '/views/admin/pages/user/user-add.html');
+})
+
+app.get("/admin/user", (req,res) =>
+{
+  res.sendFile(__dirname + '/views/admin/pages/user/user.html');
+})
+
+app.get("/admin/dashboard", (req,res) =>
+{
+  res.sendFile(__dirname + '/views/admin/pages/dashboard.html');
+})
+
 //Landing Pages
 app.get("/", (req, res) => {
   res.status(200).render("pages/home");
