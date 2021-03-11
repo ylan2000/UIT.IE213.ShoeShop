@@ -1,6 +1,6 @@
 .nav {
   padding: 3rem 0;
-  transition: all .2s linear;
+  transition: all 0.2s linear;
   transform-origin: top;
   position: sticky;
   top: 0;
@@ -8,7 +8,32 @@
   z-index: 1000;
   height: $nav-height;
   background-color: $color-white;
-  box-shadow: 0 1px 25px rgba($color-black, .1);
+  box-shadow: 0 1px 25px rgba($color-black, 0.1);
+  position: relative;
+
+  &--hover {
+    cursor: pointer;
+  }
+
+  &__sub-menu {
+    visibility: hidden;
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: $color-white;
+    justify-content: space-evenly;
+    padding: 2rem 0 6rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  &__img {
+    width: 10rem;
+    height: 10rem;
+  }
 
   &__button {
     cursor: pointer;
@@ -43,7 +68,7 @@
 
   & .list-pages > li {
     position: relative;
-  
+
     &::after {
       content: "";
       position: absolute;
@@ -63,6 +88,3 @@
     }
   }
 }
-
-
-
