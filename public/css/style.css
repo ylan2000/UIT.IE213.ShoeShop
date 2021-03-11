@@ -28,7 +28,8 @@ img {
   width: 120rem;
   margin: 0 auto; }
 
-.active, .text-bold {
+.active,
+.text-bold {
   font-weight: 700; }
 
 .d-flex {
@@ -410,8 +411,11 @@ body {
   z-index: 1000;
   height: 100px;
   background-color: #fff;
-  box-shadow: 0 1px 25px rgba(34, 34, 34, 0.1);
-  position: relative; }
+  box-shadow: 0 1px 25px rgba(34, 34, 34, 0.1); }
+  .nav__logo {
+    position: relative; }
+    .nav__logo .logo {
+      top: 0; }
   .nav--hover {
     cursor: pointer; }
   .nav__sub-menu {
