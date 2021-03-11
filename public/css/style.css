@@ -373,10 +373,15 @@ body {
   color: #fff;
   position: relative; }
 <<<<<<< HEAD
+<<<<<<< HEAD
   .footer .logo {
     top: 20%; }
 =======
 >>>>>>> #2 Add logo component
+=======
+  .footer .logo {
+    top: 20%; }
+>>>>>>> #2 Footer restyle
   .footer__column {
     flex: 1; }
     .footer__column:not(:first-child) li::before {
