@@ -4,7 +4,7 @@
   "description": "Sells professional shoes",
   "main": "app.js",
   "scripts": {
-    "nodemon": "nodemon server.js",
+    "nodemon": "nodemon server/server.js",
     "watch:sass": "node-sass sass/main.scss public/css/style.css -w",
     "start": "npm-run-all --parallel watch:sass nodemon"
   },
@@ -13,7 +13,9 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongodb": "^3.6.4",
+    "mongoose": "^5.11.19"
   },
   "devDependencies": {
     "node-sass": "^5.0.0",
