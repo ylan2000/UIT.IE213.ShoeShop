@@ -78,8 +78,13 @@ body {
 // logo
 .logo {
   text-align: center;
-  position: relative;
-  // color: $color-primary-blue-dark-1;
+  position: absolute;
+  display: block;
+  text-align: center;
+  width: 20rem;
+  top: 4.5rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   &__name {
     font-weight: 700;
@@ -87,11 +92,11 @@ body {
 
     &::before {
       content: "";
-      width: 30%;
-      height: 2px;
+      width: 25%;
+      height: 4px;
       position: absolute;
-      left: 0;
-      top: 25%;
+      left: -22%;
+      top: 50%;
       background-color: $color-primary-orange;
     }
   }
