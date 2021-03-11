@@ -374,6 +374,7 @@ body {
   position: relative; }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   .footer .logo {
     top: 20%; }
 =======
@@ -382,6 +383,10 @@ body {
   .footer .logo {
     top: 20%; }
 >>>>>>> #2 Footer restyle
+=======
+  .footer .logo {
+    top: 20%; }
+>>>>>>> bc41f3b51077667c66fcca623acd1eec9adffe4e
   .footer__column {
     flex: 1; }
     .footer__column:not(:first-child) li::before {
