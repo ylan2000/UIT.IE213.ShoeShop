@@ -398,7 +398,7 @@ body {
 
 .nav {
   padding: 3rem 0;
-  transition: all .2s linear;
+  transition: all 0.2s linear;
   transform-origin: top;
   position: sticky;
   top: 0;
@@ -406,7 +406,29 @@ body {
   z-index: 1000;
   height: 100px;
   background-color: #fff;
-  box-shadow: 0 1px 25px rgba(34, 34, 34, 0.1); }
+  box-shadow: 0 1px 25px rgba(34, 34, 34, 0.1);
+  position: relative; }
+  .nav--hover {
+    cursor: pointer; }
+  .nav--hover:hover .nav__sub-menu {
+    background: red;
+    visibility: hidden; }
+  .nav__sub-menu {
+    visibility: hidden;
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    justify-content: space-evenly;
+    padding: 2rem 0 6rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center; }
+  .nav__img {
+    width: 10rem;
+    height: 10rem; }
   .nav__button {
     cursor: pointer; }
   .nav li:not(:last-child) {
