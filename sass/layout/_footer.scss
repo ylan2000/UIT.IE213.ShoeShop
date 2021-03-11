@@ -1,7 +1,12 @@
 .footer {
-  padding: 7rem 0;
+  padding: 9rem 0 4rem;
   background-color: $color-black;
   color: $color-white;
+  position: relative;
+
+  & .logo {
+    top: 20%;
+  }
 
   &__column {
     flex: 1;
@@ -9,17 +14,10 @@
     &:not(:first-child) li::before {
       content: "\2022"; /* CSS Code/unicode for a bullet */
       color: $color-primary-orange;
-      display: inline-block; 
-      width: 1em; 
+      display: inline-block;
+      width: 1em;
       margin-left: 0.5rem;
     }
-  }
-
-  &__logo {
-    display: block;
-    text-align: center;
-    width: 138px;
-    margin: 0 auto;
   }
 
   &__info {

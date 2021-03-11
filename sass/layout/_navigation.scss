@@ -9,7 +9,14 @@
   height: $nav-height;
   background-color: $color-white;
   box-shadow: 0 1px 25px rgba($color-black, 0.1);
-  position: relative;
+
+  &__logo {
+    position: relative;
+
+    & .logo {
+      top: 0;
+    }
+  }
 
   &--hover {
     cursor: pointer;

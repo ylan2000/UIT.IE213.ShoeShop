@@ -97,7 +97,7 @@ app.get("/vans", (req, res) => {
   });
 });
 
-app.get("/detail/show", (req, res) => {
+app.get("/detail", (req, res) => {
   res.status(200).render("pages/detail", {
     title: "Detail",
   });
@@ -116,12 +116,6 @@ app.get("/order-detail", (req, res) => {
 });
 
 //users
-app.get("/login/logout", (req, res) => {
-  res.status(200).render("pages/home", {
-    title: "products",
-  });
-});
-
 app.get("/account", (req, res) => {
   res.status(200).render("pages/account", {
     title: "Account",

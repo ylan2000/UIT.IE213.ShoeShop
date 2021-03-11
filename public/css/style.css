@@ -28,7 +28,8 @@ img {
   width: 120rem;
   margin: 0 auto; }
 
-.active, .text-bold {
+.active,
+.text-bold {
   font-weight: 700; }
 
 .d-flex {
@@ -147,17 +148,23 @@ body {
 
 .logo {
   text-align: center;
-  position: relative; }
+  position: absolute;
+  display: block;
+  text-align: center;
+  width: 20rem;
+  top: 4.5rem;
+  left: 50%;
+  transform: translate(-50%, -50%); }
   .logo__name {
     font-weight: 700;
     font-size: 25px; }
     .logo__name::before {
       content: "";
-      width: 30%;
-      height: 2px;
+      width: 25%;
+      height: 4px;
       position: absolute;
-      left: 0;
-      top: 25%;
+      left: -22%;
+      top: 50%;
       background-color: #FF7D00; }
 
 .section__link {
@@ -361,9 +368,12 @@ body {
       animation-timing-function: ease-in; }
 
 .footer {
-  padding: 7rem 0;
+  padding: 9rem 0 4rem;
   background-color: #222;
-  color: #fff; }
+  color: #fff;
+  position: relative; }
+  .footer .logo {
+    top: 20%; }
   .footer__column {
     flex: 1; }
     .footer__column:not(:first-child) li::before {
@@ -373,11 +383,6 @@ body {
       display: inline-block;
       width: 1em;
       margin-left: 0.5rem; }
-  .footer__logo {
-    display: block;
-    text-align: center;
-    width: 138px;
-    margin: 0 auto; }
   .footer__info {
     margin-top: 3rem;
     display: flex;
@@ -406,8 +411,11 @@ body {
   z-index: 1000;
   height: 100px;
   background-color: #fff;
-  box-shadow: 0 1px 25px rgba(34, 34, 34, 0.1);
-  position: relative; }
+  box-shadow: 0 1px 25px rgba(34, 34, 34, 0.1); }
+  .nav__logo {
+    position: relative; }
+    .nav__logo .logo {
+      top: 0; }
   .nav--hover {
     cursor: pointer; }
   .nav__sub-menu {
