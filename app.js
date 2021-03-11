@@ -12,31 +12,57 @@ app.use(express.static(`${__dirname}/public`));
 //~~~~~~ROUTING~~~~~~~
 //Admin
 app.get("/admin/category", (req, res) => {
-  res.sendFile(__dirname + "/views/admin/pages/category/category.html");
+  res.status(200).render("admin/pages/category/category", {
+    title: "Category",
+  });
 });
 
 app.get("/admin/order", (req, res) => {
-  res.sendFile(__dirname + "/views/admin/pages/order/order.html");
+  res.status(200).render("admin/pages/order/order", {
+    title: "Order",
+  });
+});
+
+app.get("/products", (req, res) => {
+  res.status(200).render("admin/pages/product/product", {
+    title: "Products",
+  });
 });
 
 app.get("/admin/product-add", (req, res) => {
-  res.sendFile(__dirname + "/views/admin/pages/product/product-add.html");
+  res.status(200).render("admin/pages/product/product-add", {
+    title: "Add Product",
+  });
 });
 
 app.get("/admin/product-edit", (req, res) => {
-  res.sendFile(__dirname + "/views/admin/pages/product/product-edit.html");
+  res.status(200).render("admin/pages/product/product-edit", {
+    title: "Edit Product",
+  });
 });
 
 app.get("/admin/user-add", (req, res) => {
-  res.sendFile(__dirname + "/views/admin/pages/user/user-add.html");
+  res.status(200).render("admin/pages/user/user-add", {
+    title: "Add User",
+  });
 });
 
 app.get("/admin/user", (req, res) => {
-  res.sendFile(__dirname + "/views/admin/pages/user/user.html");
+  res.status(200).render("admin/pages/user/user", {
+    title: "Users",
+  });
 });
 
 app.get("/admin/dashboard", (req, res) => {
-  res.sendFile(__dirname + "/views/admin/pages/dashboard.html");
+  res.status(200).render("admin/pages/dashboard", {
+    title: "Dashboard",
+  });
+});
+
+app.get("/admin", (req, res) => {
+  res.status(200).render("admin/pages/dashboard", {
+    title: "Dashboard",
+  });
 });
 
 //Landing Pages
@@ -53,12 +79,6 @@ app.get("/about", (req, res) => {
 });
 
 //Products
-app.get("/products", (req, res) => {
-  res.sendFile(__dirname + "/views/admin/pages/product/product.html", {
-    title: "Products",
-  });
-});
-
 app.get("/converse", (req, res) => {
   res.status(200).render("pages/converse", {
     title: "Converse",
