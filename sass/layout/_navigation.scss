@@ -15,12 +15,6 @@
     cursor: pointer;
   }
 
-  &--hover:hover &__sub-menu {
-    // visibility: visible;
-    background: red;
-    visibility: hidden;
-  }
-
   &__sub-menu {
     visibility: hidden;
     display: flex;

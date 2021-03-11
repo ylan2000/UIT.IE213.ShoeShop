@@ -410,9 +410,6 @@ body {
   position: relative; }
   .nav--hover {
     cursor: pointer; }
-  .nav--hover:hover .nav__sub-menu {
-    background: red;
-    visibility: hidden; }
   .nav__sub-menu {
     visibility: hidden;
     display: flex;
