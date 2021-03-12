@@ -28,8 +28,7 @@ img {
   width: 120rem;
   margin: 0 auto; }
 
-.active,
-.text-bold {
+.active, .text-bold {
   font-weight: 700; }
 
 .d-flex {
@@ -372,21 +371,8 @@ body {
   background-color: #222;
   color: #fff;
   position: relative; }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   .footer .logo {
     top: 20%; }
-=======
->>>>>>> #2 Add logo component
-=======
-  .footer .logo {
-    top: 20%; }
->>>>>>> #2 Footer restyle
-=======
-  .footer .logo {
-    top: 20%; }
->>>>>>> bc41f3b51077667c66fcca623acd1eec9adffe4e
   .footer__column {
     flex: 1; }
     .footer__column:not(:first-child) li::before {
