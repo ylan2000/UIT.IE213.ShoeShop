@@ -4,7 +4,7 @@
   "description": "Sells professional shoes",
   "main": "app.js",
   "scripts": {
-    "nodemon": "nodemon server.js",
+    "nodemon": "nodemon server/server.js",
     "watch:sass": "node-sass sass/main.scss public/css/style.css -w",
     "start": "npm-run-all --parallel watch:sass nodemon"
   },
