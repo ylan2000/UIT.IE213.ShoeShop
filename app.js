@@ -9,6 +9,16 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(`${__dirname}/public`));
 
+//test
+const {Product} = require("./server/model/Product");
+//const express = require("express");
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+var urlencodedParser = bodyParser.urlencoded({extended: false});
+
+
 //~~~~~~ROUTING~~~~~~~
 //Admin
 app.get("/admin/category", (req, res) => {
@@ -23,7 +33,7 @@ app.get("/admin/order", (req, res) => {
   });
 });
 
-app.get("/products", (req, res) => {
+app.get("/admin/products", (req, res) => {
   res.status(200).render("admin/pages/product/product", {
     title: "Products",
   });
@@ -147,5 +157,22 @@ app.get("/404", (req, res) => {
     title: "404",
   });
 });
+
+//Insert
+app.post("/admin/product/insertData",async (req,res) =>
+{
+    const product = new Product
+    ({
+        Name: req.body.productName,
+    })
+    console.log(product.Name);
+    try {
+        const newProduct = await product.save();
+        res.send("Saved");
+    } catch (error) 
+    {
+        res.send("Hello World");    
+    }
+})
 
 module.exports = app;

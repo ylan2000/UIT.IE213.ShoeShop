@@ -28,8 +28,7 @@ img {
   width: 120rem;
   margin: 0 auto; }
 
-.active,
-.text-bold {
+.active, .text-bold {
   font-weight: 700; }
 
 .d-flex {

@@ -17,7 +17,7 @@
           <hr />
           <div class="ml-3">
             <form
-              enctype="multipart/form-data"
+              enctype="application/x-www-form-urlencoded"
               class="needs-validation"
               action="product/insertData"
               method="POST"
@@ -31,6 +31,7 @@
                     name="productName"
                     id="productName"
                     class="form-control"
+                    
                     required
                   />
                   <div class="invalid-feedback">Please fill in this field!</div>
@@ -45,6 +46,7 @@
                   <input
                     type="file"
                     class="form-control-file"
+                    
                     id="productImg"
                     name="productImg"
                     required
@@ -63,6 +65,7 @@
                     id="productDesc"
                     rows="3"
                     name="productDesc"
+                    
                     required
                   ></textarea>
                   <div class="invalid-feedback">Please fill in this field!</div>
@@ -80,6 +83,7 @@
                     rows="3"
                     maxlength="250"
                     name="productShortDesc"
+                    
                     required
                   ></textarea>
                   <div class="invalid-feedback">Please fill in this field!</div>
@@ -96,6 +100,7 @@
                     class="form-control"
                     id="productPrice"
                     name="productPrice"
+                    
                     required
                   />
                   <div class="invalid-feedback">Please fill in this field!</div>
@@ -111,6 +116,7 @@
                     name="productCate"
                     id="productCate"
                     class="form-control"
+                    
                     required
                   >
                     <option value=" "></option>
@@ -131,6 +137,7 @@
                       name="pIsNew"
                       id="true"
                       value="true"
+                      
                     />
                     <label class="form-check-label" for="true">True</label>
                   </div>
@@ -141,6 +148,7 @@
                       name="pIsNew"
                       id="false"
                       value="false"
+                      
                       checked
                     />
                     <label class="form-check-label" for="false">False</label>
@@ -159,6 +167,7 @@
                     class="form-control"
                     id="pSaleOff"
                     name="pSaleOff"
+                    
                     required
                   />
                   <div class="invalid-feedback">Please fill in this field!</div>
@@ -175,6 +184,7 @@
                     class="form-control"
                     id="quantity"
                     name="quantity"
+                    
                     required
                   />
                   <div class="invalid-feedback">Please fill in this field!</div>
