@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
-const UserSchema = schema
+const userSchema = schema
 ({
     Image: {type: Array, default:[]},
     Name: {type: String, maxlength: 10},
@@ -17,10 +17,10 @@ const UserSchema = schema
 })
 
 
-UserSchema.methods.comparePassword = function(PasswordIn)
+userSchema.methods.comparePassword = function(PasswordIn)
 {}
 
-const User = mongoose.model("User",UserSchema);
+const User = mongoose.model("User",userSchema);
 module.exports = {User};
 
 //Cần xác dịnh số nào tượng trưng cho role nào
