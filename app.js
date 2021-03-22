@@ -128,6 +128,12 @@ app.get("/wishlist", (req, res) => {
   });
 });
 
+app.get("/payment", (req, res) => {
+  res.status(200).render("pages/payment", {
+    title: "Payment",
+  });
+});
+
 //Check out
 app.get("/cart", (req, res) => {
   res.status(200).render("pages/cart", {
