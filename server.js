@@ -3,17 +3,24 @@ const app = require("./app");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const key = require("./server/config/key");
-
 dotenv.config({ path: "./config.env" });
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const connect = mongoose
-  .connect(key.MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("MongoDB Connected..."))
+const DB = process.env.DATABASE.replace(
+  "<PASSWORD>",
+  process.env.DATABASE_PASSWORD
+);
+
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
+  .then(() => console.log("DB connection successful"))
   .catch((err) => console.log(err));
 
 app.listen(port, () => {

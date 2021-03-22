@@ -2,8 +2,8 @@ var express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 
-const adminRouter = require("./server/routes/admin");
-const clientRouter = require("./server/routes/client");
+const adminRouter = require("./routes/admin");
+const clientRouter = require("./routes/client");
 
 var app = express();
 

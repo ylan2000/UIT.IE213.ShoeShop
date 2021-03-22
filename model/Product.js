@@ -22,5 +22,5 @@ productSchema.virtual("imagePath").get(function () {
     )}`;
 });
 
-const Product = mongoose.model("Product", ProductSchema);
+const Product = mongoose.model("Product", productSchema);
 module.exports = { Product };
