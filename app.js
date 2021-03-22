@@ -23,7 +23,7 @@ app.get("/admin/order", (req, res) => {
   });
 });
 
-app.get("/products", (req, res) => {
+app.get("/admin/products", (req, res) => {
   res.status(200).render("admin/pages/product/product", {
     title: "Products",
   });
@@ -79,21 +79,9 @@ app.get("/about", (req, res) => {
 });
 
 //Products
-app.get("/converse", (req, res) => {
-  res.status(200).render("pages/converse", {
-    title: "Converse",
-  });
-});
-
-app.get("/palladium", (req, res) => {
-  res.status(200).render("pages/palladium", {
-    title: "Palladium",
-  });
-});
-
-app.get("/vans", (req, res) => {
-  res.status(200).render("pages/vans", {
-    title: "Vans",
+app.get("/products", (req, res) => {
+  res.status(200).render("pages/products", {
+    title: "Product",
   });
 });
 
