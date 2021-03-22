@@ -45,12 +45,12 @@
                 <div class="col-sm-5">
                   <input
                     type="file"
-                    class="form-control-file"
-                    
+                    class="form-control-file filepond"
                     id="productImg"
                     name="productImg"
                     required
                   />
+              
                   <div class="invalid-feedback">Please fill in this field!</div>
                 </div>
               </div>
@@ -199,6 +199,11 @@
                 Add
               </button>
             </form>
+            <div>
+              <% product.forEach(product => { %>
+                <img height="100" width="100" src="<%= product.imagePath %>">
+              <% }) %>
+            </div>
           </div>
         </div>
       </div>
