@@ -5,6 +5,9 @@ const bodyParser = require("body-parser");
 const adminRouter = require("./routes/admin");
 const clientRouter = require("./routes/client");
 
+const adminRouter = require("./routes/admin");
+const clientRouter = require("./routes/client");
+
 var app = express();
 
 app.set("view engine", "ejs");

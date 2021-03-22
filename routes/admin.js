@@ -7,10 +7,9 @@ router.use("/product", productRouter);
 router.use("/user", userRouter);
 
 router.get("/", (req, res) => {
-  res.redirect("/dashboard");
-  /*res.status(200).render("admin/pages/dashboard", {
-        title: "Dashboard",
-    });*/
+  res.status(200).render("admin/pages/dashboard", {
+    title: "Dashboard",
+  });
 });
 
 router.get("/dashboard", (req, res) => {

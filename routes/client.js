@@ -14,20 +14,8 @@ router.get("/about", (req, res) => {
 });
 
 //Products
-router.get("/converse", (req, res) => {
-  res.status(200).render("pages/converse", {
-    title: "Converse",
-  });
-});
-
-router.get("/palladium", (req, res) => {
-  res.status(200).render("pages/palladium", {
-    title: "Palladium",
-  });
-});
-
-router.get("/vans", (req, res) => {
-  res.status(200).render("pages/vans", {
+router.get("/products", (req, res) => {
+  res.status(200).render("pages/products", {
     title: "Vans",
   });
 });
