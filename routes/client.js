@@ -64,6 +64,12 @@ router.get("/orders", (req, res) => {
   });
 });
 
+router.get("/payment", (req, res) => {
+  res.status(200).render("pages/payment", {
+    title: "Payment",
+  });
+});
+
 //Error Pages
 router.get("*", (req, res) => {
   res.status(404).render("pages/404", {
