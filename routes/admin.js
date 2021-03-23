@@ -30,4 +30,9 @@ router.get("/order", (req, res) => {
   });
 });
 
+router.get("/feedback", (req,res) => {
+  res.status(200).render("admin/pages/feedback", {
+    title: "Feedback",
+  });
+});
 module.exports = router;
