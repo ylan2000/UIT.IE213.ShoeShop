@@ -59,6 +59,12 @@ app.get("/admin/dashboard", (req, res) => {
   });
 });
 
+app.get("/admin/feedback",(req, res)=>{
+  res.status(200).render("admin/pages/feedback", {
+    title: "Feedback",
+  });
+});
+
 app.get("/admin", (req, res) => {
   res.status(200).render("admin/pages/dashboard", {
     title: "Dashboard",
