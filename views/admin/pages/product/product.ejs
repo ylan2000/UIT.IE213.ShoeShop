@@ -65,36 +65,44 @@
                 <th scope="col">Quantity In Stock</th>
                 <th scope="col">IsNew</th>
                 <th scope="col">Sales</th>
-                <th scopr="côl">Action</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
+              <!--Gọi sản phẩm-->
+              <% products.forEach(products => { %>
+              <!---------------->
               <tr>
+                <!--ID-->
                 <th
                   scope="row"
                   data-toggle="modal"
                   class="align-middle"
                   data-target="#productDetail"
                 ></th>
+                <!--Hình-->
                 <td
                   style="width: 150px"
                   data-toggle="modal"
                   data-target="#productDetail"
                 >
-                  <img src="<%= products.imagePath %>" alt="productImage" class="img-fluid" />
+                  <img height="100" width="100" src="<%= products.imagePath %>" alt="productImage" class="img-fluid" />
                 </td>
+                <!--Tên-->
                 <td
                   data-toggle="modal"
                   class="align-middle"
                   data-target="#productDetail"
-                ></td>
+                ><%= products.name %></td>
+                <!--Giá-->
                 <td
                   data-toggle="modal"
                   class="align-middle"
                   data-target="#productDetail"
                 >
-                  &dollar;
+                  &dollar;<%= products.price %>
                 </td>
+                <!--Số lượng-->
                 <td
                   data-toggle="modal"
                   class="align-middle"
@@ -104,21 +112,26 @@
                   class="align-middle text-center"
                   data-toggle="modal"
                   data-target="#productDetail"
-                ></td>
+                ><%= products.quantity %></td>
+                <!--Mới-->
                 <td
                   class="text-danger align-middle"
                   data-toggle="modal"
                   data-target="#productDetail"
-                ></td>
+                ><%= products.condition %></td>
+                <!--Sale-->
                 <td
                   data-toggle="modal"
                   class="align-middle"
                   data-target="#productDetail"
                 >
-                  %
+                <%= products.sale %>%
                 </td>
+                <!--Nút-->
                 <td class="align-middle">
-                  <a href="product/edit/ " class="btn btn-success">Edit</a>
+                  <!--Edit-->
+                  <a href="product/<%= products.id %>/edit/ " class="btn btn-success">Edit</a>
+                  <!--Xóa-->
                   <button
                     type="button"
                     class="btn btn-danger deleteBtn"
@@ -131,6 +144,7 @@
                   </button>
                 </td>
               </tr>
+              <% }) %>
             </tbody>
           </table>
 

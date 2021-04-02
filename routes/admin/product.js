@@ -1,8 +1,8 @@
-const { Product } = require("../../model/Product");
+const { Product } = require("../../models/productModel");
 const express = require("express");
 const { render } = require("ejs");
 const router = express.Router();
-const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
+const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
 
 //Get
 //Index
@@ -23,38 +23,47 @@ router.get("/add", (req, res) => {
 });
 
 //Edit
-router.get("/edit", (req, res) => {
-  res.status(200).render("admin/pages/product/product-edit", {
-    title: "Edit Product",
-  });
-});
+router.get("/:id/edit", async (req,res) =>{
+  try {
+    const product = await Product.findById(req.params.id);
+    res.status(200).render("admin/pages/product/product-edit", {
+      title: "Edit Product",
+      product: product
+    });
+  } catch (error) {
+    
+  }
+})
 
-//Test
-router.get("/image", async (req, res) => {
-  const product = await Product.find();
-  res.render("admin/pages/product/product-add", {
-    product: product,
-    searchOptions: req.query,
-  });
-  //for ejs
-  /* <div>
-              <% product.forEach(product => { %>
-                <img height="100" width="100" src="<%= product.imagePath %>">
-              <% }) %>
-            </div>*/
+router.put("/:id", async (req,res) =>{
+  let product
+
+  try {
+    product = await Product.findById(req.params.id);
+    product.description = req.body.productShortDesc;
+    product.price = req.body.productPrice;
+    const image = new Product()
+    saveImage(image,req.body.productImg)
+    product.image = image.image;
+    await product.save()
+    res.redirect("/admin/product");
+  } catch (error) {
+    if (product==null) res.send("can't find product");
+    else res.send("error");
+  }
 });
 
 //Post
 router.post("/insertData", async (req, res) => {
   const product = new Product({
-    Name: req.body.productName,
-    Description: req.body.productShortDesc,
-    Detail: req.body.productDesc,
-    Price: req.body.productPrice,
-    Brand: req.body.productCate,
-    Sale: req.body.pSaleOff,
-    Condition: req.body.pIsNew,
-    Quantity: req.body.quantity,
+    name: req.body.productName,
+    description: req.body.productShortDesc,
+    detail: req.body.productDesc,
+    price: req.body.productPrice,
+    brand: req.body.productCate,
+    sale: req.body.pSaleOff,
+    condition: req.body.pIsNew,
+    quantity: req.body.quantity,
   });
   saveImage(product, req.body.productImg);
   try {
@@ -69,9 +78,10 @@ function saveImage(product, coverEncoded) {
   if (coverEncoded == null) return;
   const image = JSON.parse(coverEncoded);
   if (image != null && imageMimeTypes.includes(image.type)) {
-    product.Image = new Buffer.from(image.data, "base64");
-    product.ImageType = image.type;
+    product.image.data = new Buffer.from(image.data,'base64');
+    product.image.type = image.type;
   }
 }
+
 
 module.exports = router;
