@@ -12,17 +12,26 @@
         <%- include('../../template/navbar.ejs'); -%>
         <div class="col-10 ml-auto">
           <div class="d-flex justify-content-between pt-3">
-            <h1 class="text-primary text-uppercase">Add User ID 001</h1>
+            <h1 class="text-primary text-uppercase">Add User</h1>
           </div>
           <hr />
           <div class="ml-2">
-            <form>
+            <form
+              enctype="application/x-www-form-urlencoded"
+              class="needs-validation"
+              method="POST"
+              action="/admin/user/insert"
+            >
               <div class="form-group row">
                 <div class="col-sm-2">
                   <label>Image</label>
                 </div>
-                <div class="col-sm-1">
-                  <input type="file" id="exampleFormControlFile1" />
+                <div class="col-sm-5">
+                  <input type="file" 
+                         class="filepond" 
+                         id="exampleFormControlFile1 usrImg" 
+                         name="usrImg"
+                  />
                 </div>
               </div>
               <div class="form-group row">
@@ -30,7 +39,7 @@
                   <label>Username</label>
                 </div>
                 <div class="col-sm-5">
-                  <textarea class="form-control" id="desc" rows="1"></textarea>
+                  <textarea class="form-control" id="username" name="username" rows="1"></textarea>
                 </div>
               </div>
               <div class="form-group row">
@@ -40,7 +49,8 @@
                 <div class="col-sm-5">
                   <textarea
                     class="form-control"
-                    id="shortdesc"
+                    id="email"
+                    name="email"
                     rows="1"
                     maxlength="250"
                   ></textarea>
@@ -53,7 +63,8 @@
                 <div class="col-sm-5">
                   <textarea
                     class="form-control"
-                    id="shortdesc"
+                    id="fullName"
+                    name="fullName"
                     rows="1"
                     maxlength="250"
                   ></textarea>
@@ -66,7 +77,8 @@
                 <div class="col-sm-5">
                   <textarea
                     class="form-control"
-                    id="shortdesc"
+                    id="address"
+                    name="address"
                     rows="3"
                     maxlength="250"
                   ></textarea>
@@ -79,7 +91,8 @@
                 <div class="col-sm-5">
                   <textarea
                     class="form-control"
-                    id="shortdesc"
+                    id="phone"
+                    name="phone"
                     rows="1"
                     maxlength="250"
                   ></textarea>

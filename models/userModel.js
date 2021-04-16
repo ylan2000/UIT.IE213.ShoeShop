@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const userSchema = schema({
-  image: { type: Array, default: [] },
+  image: { type: Object, default:
+  { 
+      data: {type: Buffer},
+      type: {type: String},
+  }  },
   fullName: { type: String, maxlength: 50 },
-  username: { type: String, trim: true, unique: 1 },
+  username: { type: String, trim: true, default:"1", unique: 1 },
   email: { type: String, trim: true, unique: 1 },
   address: { type: String },
   phone: { type: String, maxlength: 10 },
