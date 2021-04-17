@@ -20,7 +20,7 @@ router.use("/edit-product", adminController.getEditProduct);
 
 // users
 router.use("/users", adminController.getUsers);
-router.use("/add-user", adminController.getUsers);
+router.use("/add-user", adminController.getAddUser);
 
 // feedbacks
 router.use("/feedbacks", adminController.getFeedbacks);
