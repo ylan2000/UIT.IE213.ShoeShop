@@ -1,8 +1,8 @@
 var express = require("express");
 const path = require("path");
 
-const adminRouter = require("./routes/admin");
-const clientRouter = require("./routes/client");
+const adminRouter = require("./routes/viewAdminRoutes");
+const clientRouter = require("./routes/viewClientRoutes");
 
 var app = express();
 
