@@ -3,7 +3,11 @@ const schema = mongoose.Schema;
 
 const productSchema = schema({
   name: { type: String },
-  image: { type: Array, default: [] },
+  image: { type: Object, default: 
+  {
+    data: {type: Buffer},
+    type: {type: String}
+  } },
   description: { type: String },
   detail: { type: String },
   price: { type: Number, default: 0 },
@@ -15,8 +19,8 @@ const productSchema = schema({
 });
 
 productSchema.virtual("imagePath").get(function () {
-  if (this.Image != null && this.ImageType != null)
-    return `data:${this.ImageType};charset:utf-8;base64,${this.Image.toString(
+  if (this.image.data != null && this.image.type != null)
+    return `data:${this.image.type};charset:utf-8;base64,${this.image.data.toString(
       "base64"
     )}`;
 });
