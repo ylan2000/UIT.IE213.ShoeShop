@@ -119,3 +119,54 @@ exports.getFeedbacks = async (req, res, next) => {
 
   next();
 };
+
+//Product POST
+//add
+exports.postAddProduct = async(req,res,next) => {
+  const product = new Product({
+    name: req.body.productName,
+    description: req.body.productShortDesc,
+    detail: req.body.productDesc,
+    price: req.body.productPrice,
+    brand: req.body.productCate,
+    sale: req.body.pSaleOff,
+    condition: req.body.pIsNew,
+    quantity: req.body.quantity,
+  });
+  saveImage(product, req.body.productImg);
+  try {
+    const newProduct = await product.save();
+    res.redirect("/admin/product");
+  } catch (error) {
+    res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+}
+
+//Update
+exports.putUpdateProduct = async(req,res,next) => {
+  let product
+
+  try {
+    product = await Product.findById(req.params.id);
+    product.description = req.body.productShortDesc;
+    product.price = req.body.productPrice;
+    const image = new Product()
+    saveImage(image,req.body.productImg)
+    product.image = image.image;
+    await product.save()
+    res.redirect("/admin/product");
+  } catch (error) {
+    res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+function saveImage(product, coverEncoded) {
+  if (coverEncoded == null) return;
+  const image = JSON.parse(coverEncoded);
+  if (image != null && imageMimeTypes.includes(image.type)) {
+    product.image.data = new Buffer.from(image.data,'base64');
+    product.image.type = image.type;
+  }
+}
