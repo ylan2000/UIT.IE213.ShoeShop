@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 
 const categorySchema = new schema({
     name: { type: String, maxlength: 50, required: true },
-    image:{ type: Object, default:
+    categoryImage:{ type: Object, default:
     {
       data: {type: Buffer},
       type: {type: String}
@@ -12,8 +12,8 @@ const categorySchema = new schema({
 });
 
 categorySchema.virtual("imagePath").get(function () {
-    if (this.Image != null && this.ImageType != null)
-      return `data:${this.ImageType};charset:utf-8;base64,${this.Image.toString(
+    if (this.categoryImage.data != null && this.categoryImage.type != null)
+      return `data:${this.categoryImage.type};charset:utf-8;base64,${this.categoryImage.data.toString(
         "base64"
       )}`;
   });
