@@ -1,3 +1,6 @@
+const {Product} = require("../models/productModel")
+const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
+
 exports.getDashboard = async (req, res, next) => {
   try {
     // Render template
@@ -68,9 +71,12 @@ exports.getAddProduct = async (req, res, next) => {
 
 exports.getEditProduct = async (req, res, next) => {
   try {
+    //get product for edit
+    const product = await Product.findById(req.params.id);
     // Render template
     res.status(200).render("admin/pages/product/product-edit", {
       title: "Edit Product",
+      product: product,
     });
   } catch (err) {
     res.status(404).json({ status: "fail", message: err });
@@ -122,7 +128,7 @@ exports.getFeedbacks = async (req, res, next) => {
 
 //Product POST
 //add
-exports.postAddProduct = async(req,res,next) => {
+exports.postAddProduct = async (req,res,next) => {
   const product = new Product({
     name: req.body.productName,
     description: req.body.productShortDesc,
@@ -136,8 +142,8 @@ exports.postAddProduct = async(req,res,next) => {
   saveImage(product, req.body.productImg);
   try {
     const newProduct = await product.save();
-    res.redirect("/admin/product");
-  } catch (error) {
+    res.redirect("/admin/products");
+  } catch (err) {
     res.status(404).json({ status: "fail", message: err });
   }
 
@@ -156,8 +162,8 @@ exports.putUpdateProduct = async(req,res,next) => {
     saveImage(image,req.body.productImg)
     product.image = image.image;
     await product.save()
-    res.redirect("/admin/product");
-  } catch (error) {
+    res.redirect("/admin/products");
+  } catch (err) {
     res.status(404).json({ status: "fail", message: err });
   }
 }
@@ -166,7 +172,7 @@ function saveImage(product, coverEncoded) {
   if (coverEncoded == null) return;
   const image = JSON.parse(coverEncoded);
   if (image != null && imageMimeTypes.includes(image.type)) {
-    product.image.data = new Buffer.from(image.data,'base64');
-    product.image.type = image.type;
+    product.coverImage.data = new Buffer.from(image.data,'base64');
+    product.coverImage.type = image.type;
   }
 }
