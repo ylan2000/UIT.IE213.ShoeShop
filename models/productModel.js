@@ -18,7 +18,7 @@ const productSchema = schema({
   condition: { type: Boolean, default: true },
   quantity: { type: Number, default: 0 },
   createdDate: { type: Date, default: Date.now() },
-  transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
+  transaction: { type: mongoose.Schema.ObjectId, ref: 'Transaction' },
   category: { type: String, default: 0, required: true }
 });
 
@@ -36,7 +36,7 @@ productSchema.pre('save', function (next) {
 });
 
 // pre hook save: await embedded collections (category)
-tourSchema.pre('save', async function (next) {
+productSchema.pre('save', async function (next) {
   this.category = await Category.findById(this.category);
   next();
 });
