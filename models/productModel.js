@@ -22,8 +22,8 @@ const productSchema = schema({
 });
 
 productSchema.virtual("coverImagePath").get(function () {
-  if (this.Image != null && this.ImageType != null)
-    return `data:${this.ImageType};charset:utf-8;base64,${this.Image.toString(
+  if (this.coverImage.data != null && this.coverImage.type != null)
+    return `data:${this.coverImage.type};charset:utf-8;base64,${this.coverImage.data.toString(
       "base64"
     )}`;
 });
