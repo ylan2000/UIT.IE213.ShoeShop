@@ -19,8 +19,8 @@ const userSchema = schema({
 });
 
 userSchema.virtual("avatarImagePath").get(function () {
-  if (this.Image != null && this.ImageType != null)
-    return `data:${this.ImageType};charset:utf-8;base64,${this.Image.toString(
+  if (this.avatarImage.data != null && this.avatarImage.type != null)
+    return `data:${this.avatarImage.type};charset:utf-8;base64,${this.avatarImage.data.toString(
       "base64"
     )}`;
 });
