@@ -17,12 +17,8 @@
     "express": "^4.17.1",
     "method-override": "^3.0.0",
     "mongo": "^0.1.0",
-<<<<<<< HEAD
-    "mongoose": "^5.12.4"
-=======
-    "mongoose": "^5.12.1",
+    "mongoose": "^5.12.4",
     "slugify": "^1.5.0"
->>>>>>> d135b2f2d70ef2897e5d1a0126c4d24663ce4e7a
   },
   "devDependencies": {
     "node-sass": "^5.0.0",

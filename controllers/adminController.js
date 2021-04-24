@@ -1,4 +1,5 @@
 const {Product} = require("../models/productModel")
+const {Category} = require("../models/categoryModel")
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
 
 exports.getDashboard = async (req, res, next) => {
@@ -58,9 +59,12 @@ exports.getProducts = async (req, res, next) => {
 
 exports.getAddProduct = async (req, res, next) => {
   try {
+    const category = await Category.find();
     // Render template
     res.status(200).render("admin/pages/product/product-add", {
       title: "Add Product",
+      category: category,
+      searchOptions: req.query,
     });
   } catch (err) {
     res.status(404).json({ status: "fail", message: err });
