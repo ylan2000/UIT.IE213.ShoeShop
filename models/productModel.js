@@ -1,5 +1,6 @@
+const slugify = require('slugify');
 const mongoose = require("mongoose");
-const { Category } = require("./categoryModel");
+const Category  = require("./categoryModel");
 const schema = mongoose.Schema;
 
 const productSchema = schema({
@@ -9,16 +10,16 @@ const productSchema = schema({
       data: {type: Buffer},
       type: {type: String}
     } },
-  description: { type: String },
-  detail: { type: String },
+  images: String,
+  description: { type: String, required: true },
+  detail: { type: String, required: true },
   price: { type: Number, default: 0, required: true },
-  brand: { type: String },
   sale: { type: Number, default: 0 },
   condition: { type: Boolean, default: true },
-  quantity: { type: Number, default: 1 },
+  quantity: { type: Number, default: 0 },
   createdDate: { type: Date, default: Date.now() },
   //transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
-  category: Array
+  category: { type: String, default: 0, required: true }
 });
 
 productSchema.virtual("coverImagePath").get(function () {
@@ -45,7 +46,6 @@ productSchema.post('save', function (doc, next) {
   this.quantity++;
   next();
 });
-
 
 const Product = mongoose.model("Product", productSchema);
 module.exports = { Product };
