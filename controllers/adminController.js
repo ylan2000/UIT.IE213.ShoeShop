@@ -138,7 +138,7 @@ exports.postAddProduct = async (req,res,next) => {
     description: req.body.productShortDesc,
     detail: req.body.productDesc,
     price: req.body.productPrice,
-    brand: req.body.productCate,
+    category: [req.body.productCate],
     sale: req.body.pSaleOff,
     condition: req.body.pIsNew,
     quantity: req.body.quantity,

@@ -55,7 +55,7 @@
   <div class="col-sm-2">
     <select name="productCate" id="productCate" class="form-control" required>
       <% category.forEach(category => { %>
-        <option value="<%= category.name %> "><%= category.name%></option>
+        <option value="<%= category._id %>"><%= category.name%></option>
       <% }) %>
     </select>
 
