@@ -47,12 +47,12 @@ exports.getProducts = async (req, res, next) => {
   try {
     // Render template
     const status = req.query.status
-    res.status(200).render("admin/pages/product/product", {
+    return res.status(200).render("admin/pages/product/product", {
       title: "Products",
       status: status
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
