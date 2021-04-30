@@ -53,6 +53,19 @@ router.put("/:id", async (req,res) =>{
   }
 });
 
+router.delete("/delete/:id", async (req,res) =>{
+  let product
+
+  try {
+    product = await Product.findById(req.params.id);
+    await product.remove()
+    res.redirect("/admin/product");
+  } catch (error) {
+    if (product==null) res.send("can't find product");
+    else res.send("error");
+  }
+});
+
 //Post
 router.post("/insertData", async (req, res) => {
   const product = new Product({
