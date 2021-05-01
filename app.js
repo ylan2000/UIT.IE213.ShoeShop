@@ -1,7 +1,6 @@
 var express = require("express");
 const path = require("path");
-const methodOverride = require("method-override"); //Thêm cái này vào để thay method post = delete
-
+const methodOverride = require("method-override"); 
 const adminRouter = require("./routes/viewAdminRoutes");
 const clientRouter = require("./routes/viewClientRoutes");
 
@@ -13,7 +12,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(`${__dirname}/public`));
 
-app.use(methodOverride('_method')); //cái này là để gọi cái ở trên
+app.use(methodOverride('_method')); 
 
 //~~~~~~ROUTING~~~~~~~
 app.use("/admin", adminRouter);
