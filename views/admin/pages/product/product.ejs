@@ -122,7 +122,7 @@
                 <td class="align-middle d-flex">
                   <a href="edit-product" class="btn btn-success">Edit</a>
                   <button type="button" class="btn btn-danger deleteBtn" data-toggle="modal"
-                      data-target="#exampleModal" data-id="<%= product.id %>" data-link="products/">
+                      data-target="#exampleModal" data-id="<%= product.id %>" data-link="product/">
                       Delete
                     </button>
                 </td>
@@ -164,7 +164,7 @@
                   >
                     Close
                   </button>
-                  <form method="POST" id="deleteBtnHref">
+                  <form method="post" id="deleteBtnHref">
                     <input type="submit" class="btn btn-danger" value="Xóa">
                   </form>
                 </div>
@@ -189,11 +189,11 @@
     <script>
       $(document).on("click", ".deleteBtn", function () {
         var id = $(this).data("id");
-        //alert(id);
+        // alert(id);
         var link = $(this).data("link");
         $("#exampleModal #deleteBtnHref").attr(
           "action",
-          link + "delete/" + id +"?_method=DELETE"
+          link + "delete/" + id + "?_method=DELETE"
         );
         $("#exampleModal #idTeam").text(id);
       });

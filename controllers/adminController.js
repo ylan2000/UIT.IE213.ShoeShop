@@ -131,6 +131,7 @@ exports.delete = async (req, res) => {
   try {
     product = await Product.findById(req.params.id);
     await product.remove();
+    console.log("OK");
     res.redirect("/admin/products");
   } catch {
     res.status(404).json({ status: "fail", message: err });

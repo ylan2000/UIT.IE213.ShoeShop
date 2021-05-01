@@ -26,6 +26,6 @@ router.use("/add-user", adminController.getAddUser);
 router.use("/feedbacks", adminController.getFeedbacks);
 
 //delete
-router.delete ("/delete/:id", adminController.delete);
+router.delete("/product/delete/:id", adminController.delete); //Chỉnh route lại
 
 module.exports = router;
