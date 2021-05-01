@@ -17,17 +17,16 @@ const productSchema = schema({
   condition: { type: Boolean, default: true },
   quantity: { type: Number, default: 1 },
   createdDate: { type: Date, default: Date.now() },
-  transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
+ // transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
   category: Array
 });
 
 productSchema.virtual("coverImagePath").get(function () {
-  if (this.Image != null && this.ImageType != null)
-    return `data:${this.ImageType};charset:utf-8;base64,${this.Image.toString(
+  if (this.coverImage.data != null && this.coverImage.type != null)
+    return `data:${this.coverImage.type};charset:utf-8;base64,${this.coverImage.data.toString(
       "base64"
     )}`;
 });
-
 
 const Product = mongoose.model("Product", productSchema);
 module.exports = { Product };

@@ -25,4 +25,7 @@ router.use("/add-user", adminController.getAddUser);
 // feedbacks
 router.use("/feedbacks", adminController.getFeedbacks);
 
+//delete
+router.delete ("/delete/:id", adminController.delete);
+
 module.exports = router;

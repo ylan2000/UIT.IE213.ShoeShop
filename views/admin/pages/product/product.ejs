@@ -65,75 +65,71 @@
                 <th scope="col">Quantity In Stock</th>
                 <th scope="col">IsNew</th>
                 <th scope="col">Sales</th>
-                <th scopr="côl">Action</th>
+                <th scopr="col">Action</th>
               </tr>
             </thead>
             <tbody>
+              <% product.forEach(product => { %>
+
               <tr>
                 <th
                   scope="row"
                   data-toggle="modal"
                   class="align-middle"
-                  data-target="#productDetail"
+                  data-target="#productId"
                 ></th>
                 <td
                   style="width: 150px"
                   data-toggle="modal"
-                  data-target="#productDetail"
+                  data-target="#productImage"
                 >
-                  <img src="uploads/ " alt="productImage" class="img-fluid" />
+                <img src="<%= product.coverImagePath %>" alt="productImage" class="img-fluid" />
+              </td>
+                <td
+                  data-toggle="modal"
+                  class="align-middle"
+                  data-target="#productName"
+                ><%= product.name %></td>
+                <td
+                  data-toggle="modal"
+                  class="align-middle"
+                  data-target="#productPrice"
+                >
+                <%= product.price %>&dollar;
                 </td>
                 <td
                   data-toggle="modal"
                   class="align-middle"
-                  data-target="#productDetail"
-                ></td>
+                  data-target="#productCategory"
+                ><%= product.category %></td>
                 <td
+                  class="align-middle text-center d-flex"
                   data-toggle="modal"
-                  class="align-middle"
-                  data-target="#productDetail"
-                >
-                  &dollar;
-                </td>
-                <td
-                  data-toggle="modal"
-                  class="align-middle"
-                  data-target="#productDetail"
-                ></td>
-                <td
-                  class="align-middle text-center"
-                  data-toggle="modal"
-                  data-target="#productDetail"
-                ></td>
+                  data-target="#productQuantity"
+                ><%= product.quantity %></td>
                 <td
                   class="text-danger align-middle"
                   data-toggle="modal"
-                  data-target="#productDetail"
-                ></td>
+                  data-target="#productIsNew"
+                ><%= product.condition %></td>
                 <td
                   data-toggle="modal"
                   class="align-middle"
-                  data-target="#productDetail"
+                  data-target="#productSales"
                 >
-                  %
+                  <%= product.sale %> %
                 </td>
-                <td class="align-middle">
+                <td class="align-middle d-flex">
                   <a href="edit-product" class="btn btn-success">Edit</a>
-                  <button
-                    type="button"
-                    class="btn btn-danger deleteBtn"
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                    data-id=" "
-                    data-link="product/"
-                  >
-                    Delete
-                  </button>
+                  <button type="button" class="btn btn-danger deleteBtn" data-toggle="modal"
+                      data-target="#exampleModal" data-id="<%= product.id %>" data-link="products/">
+                      Delete
+                    </button>
                 </td>
               </tr>
+              <% }) %>
             </tbody>
           </table>
-
           <div
             class="modal fade"
             id="exampleModal"
@@ -168,12 +164,13 @@
                   >
                     Close
                   </button>
-                  <a type="submit" class="btn btn-danger" id="deleteBtnHref"
-                    >Xóa</a
-                  >
+                  <form method="POST" id="deleteBtnHref">
+                    <input type="submit" class="btn btn-danger" value="Xóa">
+                  </form>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -192,11 +189,11 @@
     <script>
       $(document).on("click", ".deleteBtn", function () {
         var id = $(this).data("id");
-        // alert(id);
+        //alert(id);
         var link = $(this).data("link");
         $("#exampleModal #deleteBtnHref").attr(
-          "href",
-          link + "/deletedb/" + id
+          "action",
+          link + "delete/" + id +"?_method=DELETE"
         );
         $("#exampleModal #idTeam").text(id);
       });
