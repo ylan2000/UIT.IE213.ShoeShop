@@ -46,11 +46,13 @@ exports.getOrders = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   try {
     // Render template
-    res.status(200).render("admin/pages/product/product", {
+    const status = req.query.status
+    return res.status(200).render("admin/pages/product/product", {
       title: "Products",
+      status: status
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
@@ -142,9 +144,9 @@ exports.postAddProduct = async (req,res,next) => {
   saveImage(product, req.body.productImg);
   try {
     const newProduct = await product.save();
-    res.redirect("/admin/products");
+    return res.redirect("/admin/products?status=Success");
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.redirect("/admin/products?status=Fail")
   }
 
   next();
