@@ -70,7 +70,6 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
@@ -85,12 +84,6 @@
               <% product.forEach(product => { %>
 
               <tr>
-                <th
-                  scope="row"
-                  data-toggle="modal"
-                  class="align-middle"
-                  data-target="#productId"
-                ></th>
                 <td
                   style="width: 150px"
                   data-toggle="modal"
@@ -114,7 +107,7 @@
                   data-toggle="modal"
                   class="align-middle"
                   data-target="#productCategory"
-                ><%= product.category %></td>
+                ><%= product.category[0].name %></td>
                 <td
                   class="align-middle text-center d-flex"
                   data-toggle="modal"
@@ -135,7 +128,7 @@
                 <td class="align-middle d-flex">
                   <a href="edit-product" class="btn btn-success">Edit</a>
                   <button type="button" class="btn btn-danger deleteBtn" data-toggle="modal"
-                      data-target="#exampleModal" data-id="<%= product.id %>" data-link="product/">
+                      data-target="#exampleModal" data-id="<%= product.id %>" data-name="<%= product.name %>" data-link="product/">
                       Delete
                     </button>
                 </td>
@@ -202,36 +195,16 @@
     <script>
       $(document).on("click", ".deleteBtn", function () {
         var id = $(this).data("id");
+        var name = $(this).data("name");
         // alert(id);
         var link = $(this).data("link");
         $("#exampleModal #deleteBtnHref").attr(
           "action",
           link + "delete/" + id + "?_method=DELETE"
         );
-        $("#exampleModal #idTeam").text(id);
+        $("#exampleModal #idTeam").text(name);
       });
     </script>
   </body>
   <%- include('../../template/footer.ejs'); -%>
 </html>
-
-<!-- <div class="modal fade" id="productDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-               <div class="modal-header">
-                    <h5 class="modal-title text-primary" id="exampleModalLongTitle">Product <span>1</span> detail</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                         <span aria-hidden="true">&times;</span>
-                    </button>
-               </div>
-               <div class="modal-body">
-                    <p><span class="text-success font-weight-bold">Name: </span><span>namemmmmm mmmmmmm</span></p>
-                    <p><span class="text-success font-weight-bold">Description: </span><span>namem mmmm mmmmmmm namemmmmmmmm mmmm namemm mmmmmmmm mm nam emmmmmmm mmmmmnam emmmm mmmmm mm mnamemmm mmmm m mmmmnamemmm mmmmmmmmm namemmmm mmm mmmmm namemmm mmmm mmmmm name mmmm mmm mmmmm namemm mmmm mmmmmm namemm mmmmmmm mmmnamemm mmmm mmmmm mnamemm mmmmmm mmmmnamem mmmmmm m mmmm namemmmmmmmm mmmm</span></p>
-                    <p><span class="text-success font-weight-bold">Short description: </span><span>namemmm mmmmmmmmm namemmmmm mm mmmmm namem mmmmmmmm mmm namemm mmmmm mmmm mnamemm mmm mmmmm mmnamem mmmm mmmmmmm nam emmmm mmm mmmmm na memmmmmm mmmmmm</span></p>
-               </div>
-               <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               </div>
-          </div>
-     </div>
-</div> -->
