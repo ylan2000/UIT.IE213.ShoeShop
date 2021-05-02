@@ -46,9 +46,10 @@ exports.getOrders = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   try {
     // Render template
+    const status = req.query.status
     const products =  await Product.find();
     res.status(200).render("admin/pages/product/product", {
-      title: "Products", product: products
+      title: "Products", product: products, status: status
     });
   } catch (err) {
     res.status(404).json({ status: "fail", message: err });
@@ -131,9 +132,9 @@ exports.delete = async (req, res) => {
   try {
     product = await Product.findById(req.params.id);
     await product.remove();
-    res.redirect("/admin/products");
+    return res.redirect("/admin/products?status=Success");
   } catch {
-    res.status(404).json({ status: "fail", message: err });
+    return res.redirect("/admin/products?status=Fail");
   }
 };
 

@@ -10,6 +10,19 @@
       </div>
       <div class="col-12 w-100 pr-0">
         <%- include('../../template/navbar.ejs'); -%>
+        <div class="col-10 ml-auto p-0">
+          <% if (status=="Success") { %>
+            <div class="col-5 ml-auto alert alert-success alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong>Thành công!</strong> Dữ liệu đã được gửi lên Database.
+            </div>
+            <% } else if (status=="Fail"){ %>
+              <div class="col-5 ml-auto alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Thất bại!</strong> Không thể gửi dữ liệu lên Database.
+              </div>
+              <% } %>
+        </div>
         <div class="col-10 ml-auto">
           <div class="d-flex justify-content-between">
             <h1 class="text-primary">Products</h1>
