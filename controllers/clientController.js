@@ -127,6 +127,17 @@ exports.get404 = async (req, res, next) => {
   next();
 };
 
-/*exports.getCheckout = async (req,res) => {
+exports.postCheckout = async (req,res) => {
+  const total = req.body.cart__totalMoney
+  try
+  {
+    return res.status(200).render("pages/payment", {
+      title: "Checkout",
+      total: total
+    })
+  }
+  catch (err)
+  {
 
-}*/
+  }
+}

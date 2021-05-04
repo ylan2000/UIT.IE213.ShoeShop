@@ -40,6 +40,6 @@ router.get("/cart", clientController.getCart);
 //Error Pages
 router.get("*", clientController.get404);
 
-router.post("/payment", clientController.getPayment)
+router.post("/payment", clientController.postCheckout)
 
 module.exports = router;
