@@ -4,7 +4,7 @@ const {Category}  = require("./categoryModel");
 const schema = mongoose.Schema;
 
 const productSchema = schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   coverImage: { type: Object, default:
     {
       data: {type: Buffer},
