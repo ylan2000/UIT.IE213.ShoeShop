@@ -164,15 +164,21 @@ exports.putUpdateProduct = async(req,res,next) => {
 
   try {
     product = await Product.findById(req.params.id);
+    product.name = req.body.productName,
     product.description = req.body.productShortDesc;
+    product.detail = req.body.productDesc;
+    product.category = [req.body.productCate];
+    product.sale = req.body.pSaleOff;
+    product.condition = req.body.pIsNew;
+    product.quantity = req.body.quantity;
     product.price = req.body.productPrice;
     const image = new Product()
     saveImage(image,req.body.productImg)
     product.image = image.image;
     await product.save()
-    res.redirect("/admin/products");
+    return res.redirect("/admin/products?status=Success");
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.redirect("/admin/products?status=Fail")
   }
 }
 
