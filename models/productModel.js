@@ -5,6 +5,7 @@ const schema = mongoose.Schema;
 
 const productSchema = schema({
   name: { type: String, required: true },
+  slug: String,
   coverImage: { type: Object, default:
     {
       data: {type: Buffer},
