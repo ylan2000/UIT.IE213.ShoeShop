@@ -4,11 +4,11 @@ const {Product} = require('../models/productModel')
 exports.getDashboard = async (req, res, next) => {
   try {
     // Render template
-    res.status(200).render("admin/pages/dashboard", {
+    return res.status(200).render("admin/pages/dashboard", {
       title: "Dashboard",
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
@@ -18,11 +18,11 @@ exports.getDashboard = async (req, res, next) => {
 exports.getCategories = async (req, res, next) => {
   try {
     // Render template
-    res.status(200).render("admin/pages/category/category", {
+    return res.status(200).render("admin/pages/category/category", {
       title: "Categories",
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
@@ -32,11 +32,11 @@ exports.getCategories = async (req, res, next) => {
 exports.getOrders = async (req, res, next) => {
   try {
     // Render template
-    res.status(200).render("admin/pages/order/order", {
+    return res.status(200).render("admin/pages/order/order", {
       title: "Orders",
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
@@ -52,7 +52,7 @@ exports.getProducts = async (req, res, next) => {
       title: "Products", product: products, status: status
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
@@ -61,11 +61,11 @@ exports.getProducts = async (req, res, next) => {
 exports.getAddProduct = async (req, res, next) => {
   try {
     // Render template
-    res.status(200).render("admin/pages/product/product-add", {
+    return res.status(200).render("admin/pages/product/product-add", {
       title: "Add Product",
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
@@ -74,11 +74,11 @@ exports.getAddProduct = async (req, res, next) => {
 exports.getEditProduct = async (req, res, next) => {
   try {
     // Render template
-    res.status(200).render("admin/pages/product/product-edit", {
+    return res.status(200).render("admin/pages/product/product-edit", {
       title: "Edit Product",
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
@@ -88,11 +88,11 @@ exports.getEditProduct = async (req, res, next) => {
 exports.getUsers = async (req, res, next) => {
   try {
     // Render template
-    res.status(200).render("admin/pages/user/user", {
+    return res.status(200).render("admin/pages/user/user", {
       title: "Users",
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
@@ -101,11 +101,11 @@ exports.getUsers = async (req, res, next) => {
 exports.getAddUser = async (req, res, next) => {
   try {
     // Render template
-    res.status(200).render("admin/pages/user/user-add", {
+    return res.status(200).render("admin/pages/user/user-add", {
       title: "Add User",
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
@@ -115,11 +115,11 @@ exports.getAddUser = async (req, res, next) => {
 exports.getFeedbacks = async (req, res, next) => {
   try {
     // Render template
-    res.status(200).render("admin/pages/feedback", {
+    return res.status(200).render("admin/pages/feedback", {
       title: "Add User",
     });
   } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
+    return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
