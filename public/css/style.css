@@ -440,7 +440,8 @@ body {
     padding: 2rem 0 6rem;
     text-transform: uppercase;
     font-weight: 700;
-    text-align: center; }
+    text-align: center;
+    box-shadow: 0 80px 10px rgba(34, 34, 34, 0.1); }
   .nav__img {
     width: 10rem;
     height: 10rem; }
