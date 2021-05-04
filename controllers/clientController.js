@@ -126,3 +126,7 @@ exports.get404 = async (req, res, next) => {
 
   next();
 };
+
+/*exports.getCheckout = async (req,res) => {
+
+}*/

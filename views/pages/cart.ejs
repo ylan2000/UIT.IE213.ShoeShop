@@ -5,7 +5,7 @@
   </head>
   <body>
     <%- include('../partials/nav'); -%>
-    <div class="cart">
+    <form action="/payment" method="post" class="cart">
       <div class="container">
         <h3 class="cart__title">Cart</h3>
         <div class="cart__page">
@@ -70,13 +70,15 @@
             </tr>
             <tr class="cart__total-resut">
               <td>Total</td>
-              <td>$471.25</td>
+              <td>
+                <input type="text" id="cart__totalMoney" name="cart__totalMoney" value="$471.25">
+              </td>
             </tr>
           </table>
         </div>
-        <input class="cart__OrdBtn" type="button" value="Proceed to checkout" />
+          <input class="cart__OrdBtn" type="submit" value="Proceed to checkout" />
       </div>
-    </div>
+    </form>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>
   </body>

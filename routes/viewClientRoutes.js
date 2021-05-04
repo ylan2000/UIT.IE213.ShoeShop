@@ -37,9 +37,9 @@ router.get("/wishlist", clientController.getWishlist);
 //Check out
 router.get("/cart", clientController.getCart);
 
-router.get("/payment", clientController.getPayment);
-
 //Error Pages
 router.get("*", clientController.get404);
+
+router.post("/payment", clientController.getPayment)
 
 module.exports = router;
