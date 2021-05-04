@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <%- include('../../template/header.ejs'); -%>
-</head>
-
-<body>
-  <div class="d-flex h-100">
-    <div class="col-2 pl-0 h-100 w-25 fixed-top">
-      <%- include('../../template/sidebar.ejs'); -%>
-    </div>
-    <div class="col-12 w-100 pr-0">
-      <%- include('../../template/navbar.ejs'); -%>
+  <head>
+    <%- include('../../template/header.ejs'); -%>
+  </head>
+  <body>
+    <div class="d-flex h-100">
+      <div class="col-2 pl-0 h-100 w-25 fixed-top">
+        <%- include('../../template/sidebar.ejs'); -%>
+      </div>
+      <div class="col-12 w-100 pr-0">
+        <%- include('../../template/navbar.ejs'); -%>
         <div class="col-10 ml-auto p-0">
           <% if (status=="Success") { %>
             <div class="col-5 ml-auto alert alert-success alert-dismissible">
@@ -58,7 +56,6 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
@@ -66,38 +63,73 @@
                 <th scope="col">Quantity In Stock</th>
                 <th scope="col">IsNew</th>
                 <th scope="col">Sales</th>
-                <th scopr="côl">Action</th>
+                <th scopr="col">Action</th>
               </tr>
             </thead>
             <tbody>
+              <% product.forEach(product => { %>
+
               <tr>
-                <th scope="row" data-toggle="modal" class="align-middle" data-target="#productDetail"></th>
-                <td style="width: 150px" data-toggle="modal" data-target="#productDetail">
-                  <img src="uploads/ " alt="productImage" class="img-fluid" />
+                <td
+                  style="width: 150px"
+                  data-toggle="modal"
+                  data-target="#productImage"
+                >
+                <img src="<%= product.coverImagePath %>" alt="productImage" class="img-fluid" />
+              </td>
+                <td
+                  data-toggle="modal"
+                  class="align-middle"
+                  data-target="#productName"
+                ><%= product.name %></td>
+                <td
+                  data-toggle="modal"
+                  class="align-middle"
+                  data-target="#productPrice"
+                >
+                <%= product.price %>&dollar;
                 </td>
-                <td data-toggle="modal" class="align-middle" data-target="#productDetail"></td>
-                <td data-toggle="modal" class="align-middle" data-target="#productDetail">
-                  &dollar;
+                <td
+                  data-toggle="modal"
+                  class="align-middle"
+                  data-target="#productCategory"
+                ><%= product.category[0].name %></td>
+                <td
+                  class="align-middle text-center d-flex"
+                  data-toggle="modal"
+                  data-target="#productQuantity"
+                ><%= product.quantity %></td>
+                <td
+                  class="text-danger align-middle"
+                  data-toggle="modal"
+                  data-target="#productIsNew"
+                ><%= product.condition %></td>
+                <td
+                  data-toggle="modal"
+                  class="align-middle"
+                  data-target="#productSales"
+                >
+                  <%= product.sale %> %
                 </td>
-                <td data-toggle="modal" class="align-middle" data-target="#productDetail"></td>
-                <td class="align-middle text-center" data-toggle="modal" data-target="#productDetail"></td>
-                <td class="text-danger align-middle" data-toggle="modal" data-target="#productDetail"></td>
-                <td data-toggle="modal" class="align-middle" data-target="#productDetail">
-                  %
-                </td>
-                <td class="align-middle">
-                  <a href="/admin/edit-product/:id" class="btn btn-success">Edit</a>
-                  <button type="button" class="btn btn-danger deleteBtn" data-toggle="modal" data-target="#exampleModal"
-                    data-id=" " data-link="product/">
-                    Delete
-                  </button>
+                <td class="align-middle d-flex">
+                  <a href="edit-product" class="btn btn-success">Edit</a>
+                  <button type="button" class="btn btn-danger deleteBtn" data-toggle="modal"
+                      data-target="#exampleModal" data-id="<%= product.id %>" data-name="<%= product.name %>" data-link="product/">
+                      Delete
+                    </button>
                 </td>
               </tr>
+              <% }) %>
             </tbody>
           </table>
-
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -115,10 +147,13 @@
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     Close
                   </button>
-                  <a type="submit" class="btn btn-danger" id="deleteBtnHref">Xóa</a>
+                  <form method="post" id="deleteBtnHref">
+                    <input type="submit" class="btn btn-danger" value="Xóa">
+                  </form>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
     </div>
@@ -145,25 +180,24 @@
 </body>
 <%- include('../../template/footer.ejs'); -%>
 
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).on("click", ".deleteBtn", function () {
+        var id = $(this).data("id");
+        var name = $(this).data("name");
+        // alert(id);
+        var link = $(this).data("link");
+        $("#exampleModal #deleteBtnHref").attr(
+          "action",
+          link + "delete/" + id + "?_method=DELETE"
+        );
+        $("#exampleModal #idTeam").text(name);
+      });
+    </script>
+  </body>
+  <%- include('../../template/footer.ejs'); -%>
 </html>
-
-<!-- <div class="modal fade" id="productDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-               <div class="modal-header">
-                    <h5 class="modal-title text-primary" id="exampleModalLongTitle">Product <span>1</span> detail</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                         <span aria-hidden="true">&times;</span>
-                    </button>
-               </div>
-               <div class="modal-body">
-                    <p><span class="text-success font-weight-bold">Name: </span><span>namemmmmm mmmmmmm</span></p>
-                    <p><span class="text-success font-weight-bold">Description: </span><span>namem mmmm mmmmmmm namemmmmmmmm mmmm namemm mmmmmmmm mm nam emmmmmmm mmmmmnam emmmm mmmmm mm mnamemmm mmmm m mmmmnamemmm mmmmmmmmm namemmmm mmm mmmmm namemmm mmmm mmmmm name mmmm mmm mmmmm namemm mmmm mmmmmm namemm mmmmmmm mmmnamemm mmmm mmmmm mnamemm mmmmmm mmmmnamem mmmmmm m mmmm namemmmmmmmm mmmm</span></p>
-                    <p><span class="text-success font-weight-bold">Short description: </span><span>namemmm mmmmmmmmm namemmmmm mm mmmmm namem mmmmmmmm mmm namemm mmmmm mmmm mnamemm mmm mmmmm mmnamem mmmm mmmmmmm nam emmmm mmm mmmmm na memmmmmm mmmmmm</span></p>
-               </div>
-               <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               </div>
-          </div>
-     </div>
-</div> -->

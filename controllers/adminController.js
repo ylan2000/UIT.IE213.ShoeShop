@@ -2,6 +2,8 @@ const {Product} = require("../models/productModel")
 const {Category} = require("../models/categoryModel")
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
 
+const { Router } = require('express');
+const { mongo } = require('mongoose');
 exports.getDashboard = async (req, res, next) => {
   try {
     // Render template
@@ -48,9 +50,9 @@ exports.getProducts = async (req, res, next) => {
   try {
     // Render template
     const status = req.query.status
-    return res.status(200).render("admin/pages/product/product", {
-      title: "Products",
-      status: status
+    const products =  await Product.find();
+    res.status(200).render("admin/pages/product/product", {
+      title: "Products", product: products, status: status
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -182,3 +184,17 @@ function saveImage(product, coverEncoded) {
     product.coverImage.type = image.type;
   }
 }
+//Admin delete
+
+exports.delete = async (req, res) => {
+  let product
+  try {
+    product = await Product.findById(req.params.id);
+    await product.remove();
+    return res.redirect("/admin/products?status=Success");
+  } catch {
+    return res.redirect("/admin/products?status=Fail");
+  }
+};
+
+
