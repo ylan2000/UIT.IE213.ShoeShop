@@ -67,17 +67,18 @@
 
           <div class="product">
             <div class="row d-flex">
-              <div href="#" class="product__item">
+              <% product.forEach(product => { %>
+              <div href="detail" class="product__item">
                 <span class="product__new">NEW</span>
 
-                <span class="product__sale">%</span>
+                <span class="product__sale"><%= product.sale%>%</span>
 
                 <a class="product__image">
-                  <img src="uploads/" alt="item-img" />
+                  <img src="<%= product.coverImagePath %>" alt="productImage" class="img-fluid" />
                 </a>
                 <div class="product__summary">
                   <div class="product__info">
-                    <p class="product__name"></p>
+                    <p class="product__name"><%= product.name %></p>
                     <p class="product__price"></p>
                   </div>
                   <div class="product__action d-flex">
@@ -93,6 +94,7 @@
                   </div>
                 </div>
               </div>
+              <% }) %>
             </div>
           </div>
         </div>
