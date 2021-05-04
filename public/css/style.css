@@ -228,14 +228,15 @@ body {
 
 .row {
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   flex-wrap: wrap; }
   .row:not(:last-child) {
     margin-bottom: 4rem; }
 
 .product__item {
-  margin-top: 100px;
+  margin-top: 5rem;
+  margin-right: 1.5rem;
   height: 40.2rem;
   overflow: hidden;
   width: calc(25% - 15px);
