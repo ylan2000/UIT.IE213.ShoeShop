@@ -95,7 +95,7 @@
                   data-target="#productCategory"
                 ><%= product.category[0].name %></td>
                 <td
-                  class="align-middle text-center d-flex"
+                  class="align-middle"
                   data-toggle="modal"
                   data-target="#productQuantity"
                 ><%= product.quantity %></td>
@@ -111,7 +111,7 @@
                 >
                   <%= product.sale %> %
                 </td>
-                <td class="align-middle d-flex">
+                <td class="align-middle">
                   <a href="edit-product" class="btn btn-success">Edit</a>
                   <button type="button" class="btn btn-danger deleteBtn" data-toggle="modal"
                       data-target="#exampleModal" data-id="<%= product.id %>" data-name="<%= product.name %>" data-link="product/">
