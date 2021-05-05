@@ -1,3 +1,4 @@
+const {Product} = require("../models/productModel")
 exports.getHome = async (req, res, next) => {
   try {
     // Render template
@@ -25,6 +26,51 @@ exports.getProducts = async (req, res, next) => {
     // Render template
     res.status(200).render("pages/products", {
       title: "Products",
+    });
+  } catch (err) {
+    res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+exports.getVans = async (req, res, next) => {
+  try {
+    const product = await Product.find();
+    // Render template
+    res.status(200).render("pages/products", {
+      title: "Vans",
+      products: product,
+    });
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+exports.getPalladium = async (req, res, next) => {
+  try {
+    const product = await Product.find();
+    // Render template
+    res.status(200).render("pages/products", {
+      title: "Palladium",
+      products: product,
+    });
+  } catch (err) {
+    res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+exports.getConverse = async (req, res, next) => {
+  try {
+    const product = await Product.find();
+    // Render template
+    res.status(200).render("pages/products", {
+      title: "Converse",
+      products: product,
     });
   } catch (err) {
     res.status(404).json({ status: "fail", message: err });
