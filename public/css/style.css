@@ -250,8 +250,8 @@ body {
   transform: translateY(0);
   position: absolute;
   left: 20px;
-  width: 24.5rem;
-  height: 12.4rem;
+  width: 23.5rem;
+  height: 13.4rem;
   bottom: 0; }
 
 .product__item:hover .product__action {
@@ -1091,9 +1091,9 @@ body {
     .brandinfo__select-input:hover {
       color: #757575; }
   .brandinfo__tag-container {
-    flex: auto;
-    padding: 2rem;
-    margin: 10rem 5rem; }
+    flex: 0;
+    padding-top: 5.3rem;
+    padding-right: 2rem; }
   .brandinfo__tag-size {
     padding: 1rem;
     font-weight: 600;
@@ -1105,7 +1105,6 @@ body {
     .brandinfo__tag p:hover {
       color: #FF7D00; }
   .brandinfo__float {
-    align-items: flex-start;
     display: flex; }
   .brandinfo__product {
     flex: auto; }
@@ -1117,6 +1116,8 @@ body {
       height: auto; }
   .brandinfo__product-container {
     margin: 0.1rem; }
+  .brandinfo__product {
+    padding-right: 2rem; }
 
 .policy {
   margin-bottom: 15rem; }

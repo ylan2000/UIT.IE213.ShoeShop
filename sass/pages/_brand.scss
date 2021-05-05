@@ -135,9 +135,9 @@
         }
       }
       &__tag-container{
-        flex: auto;
-        padding: 2rem;
-        margin: 10rem 5rem;
+        flex: 0;
+        padding-top:5.3rem;
+        padding-right: 2rem;
       }
       &__tag-size{
         padding: 1rem;
@@ -155,9 +155,9 @@
       }
       }
       &__float{
-        align-items:flex-start;
-       display: flex;
+       display:flex;
       }
+
       &__product{
        flex:auto;
        img{
@@ -170,6 +170,9 @@
       }
       &__product-container{
         margin:0.1rem;
+      }
+      &__product{
+        padding-right: 2rem;
       }
 }
 

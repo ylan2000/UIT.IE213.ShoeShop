@@ -83,22 +83,30 @@
             <div class="brandinfo__product-container">
               <div class="product">
                 <div class="row d-flex">
-                  <div href="#" class="product__item">
-                    <span class="product__new">NEW</span>
+                  <% product.forEach(product => { %>
+                  <div href="detail" class="product__item">
+                    <% if (product.condition) { %>
+                      <span class="product__new">NEW</span>
+                    <% } %>
+    
+                    <% if (product.sale > 0) { %>
+                      <span class="product__sale"><%= product.sale%>%</span>
+                    <% } %>
+    
                     <a class="product__image">
-                      <img src="images/image-1.png" alt="" />
+                      <img src="<%= product.coverImagePath %>" alt="productImage" class="img-fluid" />
                     </a>
                     <div class="product__summary">
                       <div class="product__info">
-                        <p class="product__name">Knit Throw</p>
-                        <p class="product__price">&dollar;35.00</p>
+                        <p class="brandinfo__product"><%= product.name %></p>
+                        <p class="product__price"></p>
                       </div>
-                      <div class="product__action d-flex">
+                      <div class="product__action">
                         <span class="product__add">ADD TO CART</span>
                         <div class="product__action--right">
-                          <span class="product__view"
+                          <a href="detail/show/" class="product__view"
                             ><i class="far fa-eye product__icon"></i
-                          ></span>
+                          ></a>
                           <span class="product__love"
                             ><i class="far fa-heart product__icon"></i
                           ></span>
@@ -106,170 +114,7 @@
                       </div>
                     </div>
                   </div>
-
-                  <div href="#" class="product__item">
-                    <a class="product__image">
-                      <img src="images/image-1.png" alt="" />
-                    </a>
-                    <div class="product__summary">
-                      <div class="product__info">
-                        <p class="product__name">Knit Throw</p>
-                        <p class="product__price">&dollar;35.00</p>
-                      </div>
-                      <div class="product__action d-flex">
-                        <span class="product__add">ADD TO CART</span>
-                        <div class="product__action--right">
-                          <span class="product__view"
-                            ><i class="far fa-eye product__icon"></i
-                          ></span>
-                          <span class="product__love"
-                            ><i class="far fa-heart product__icon"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div href="#" class="product__item">
-                    <a class="product__image">
-                      <img src="images/image-1.png" alt="" />
-                    </a>
-                    <div class="product__summary">
-                      <div class="product__info">
-                        <p class="product__name">Knit Throw</p>
-                        <p class="product__price">&dollar;35.00</p>
-                      </div>
-                      <div class="product__action d-flex">
-                        <span class="product__add">ADD TO CART</span>
-                        <div class="product__action--right">
-                          <span class="product__view"
-                            ><i class="far fa-eye product__icon"></i
-                          ></span>
-                          <span class="product__love"
-                            ><i class="far fa-heart product__icon"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div href="#" class="product__item">
-                    <a class="product__image">
-                      <img src="images/image-1.png" alt="" />
-                    </a>
-                    <div class="product__summary">
-                      <div class="product__info">
-                        <p class="product__name">Knit Throw</p>
-                        <p class="product__price">&dollar;35.00</p>
-                      </div>
-                      <div class="product__action d-flex">
-                        <span class="product__add">ADD TO CART</span>
-                        <div class="product__action--right">
-                          <span class="product__view"
-                            ><i class="far fa-eye product__icon"></i
-                          ></span>
-                          <span class="product__love"
-                            ><i class="far fa-heart product__icon"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row d-flex">
-                  <div href="#" class="product__item">
-                    <a class="product__image">
-                      <img src="images/image-1.png" alt="" />
-                    </a>
-                    <div class="product__summary">
-                      <div class="product__info">
-                        <p class="product__name">Knit Throw</p>
-                        <p class="product__price">&dollar;35.00</p>
-                      </div>
-                      <div class="product__action d-flex">
-                        <span class="product__add">ADD TO CART</span>
-                        <div class="product__action--right">
-                          <span class="product__view"
-                            ><i class="far fa-eye product__icon"></i
-                          ></span>
-                          <span class="product__love"
-                            ><i class="far fa-heart product__icon"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div href="#" class="product__item">
-                    <a class="product__image">
-                      <img src="images/image-1.png" alt="" />
-                    </a>
-                    <div class="product__summary">
-                      <div class="product__info">
-                        <p class="product__name">Knit Throw</p>
-                        <p class="product__price">&dollar;35.00</p>
-                      </div>
-                      <div class="product__action d-flex">
-                        <span class="product__add">ADD TO CART</span>
-                        <div class="product__action--right">
-                          <span class="product__view"
-                            ><i class="far fa-eye product__icon"></i
-                          ></span>
-                          <span class="product__love"
-                            ><i class="far fa-heart product__icon"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div href="#" class="product__item">
-                    <span class="product__sale">SALE</span>
-                    <a class="product__image">
-                      <img src="images/image-1.png" alt="" />
-                    </a>
-                    <div class="product__summary">
-                      <div class="product__info">
-                        <p class="product__name">Knit Throw</p>
-                        <p class="product__price">&dollar;35.00</p>
-                      </div>
-                      <div class="product__action d-flex">
-                        <span class="product__add">ADD TO CART</span>
-                        <div class="product__action--right">
-                          <span class="product__view"
-                            ><i class="far fa-eye product__icon"></i
-                          ></span>
-                          <span class="product__love"
-                            ><i class="far fa-heart product__icon"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div href="#" class="product__item">
-                    <a class="product__image">
-                      <img src="images/image-1.png" alt="" />
-                    </a>
-                    <div class="product__summary">
-                      <div class="product__info">
-                        <p class="product__name">Knit Throw</p>
-                        <p class="product__price">&dollar;35.00</p>
-                      </div>
-                      <div class="product__action d-flex">
-                        <span class="product__add">ADD TO CART</span>
-                        <div class="product__action--right">
-                          <span class="product__view"
-                            ><i class="far fa-eye product__icon"></i
-                          ></span>
-                          <span class="product__love"
-                            ><i class="far fa-heart product__icon"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <% }) %>
                 </div>
               </div>
             </div>

@@ -26,8 +26,9 @@ exports.getAbout = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   try {
     // Render template
+    const products = await (await Product.find()).slice(0, 8);
     return res.status(200).render("pages/products", {
-      title: "Products",
+      title: "Products", product: products
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -40,7 +41,7 @@ exports.getProduct = async (req, res, next) => {
   try {
     // Render template
     return res.status(200).render("pages/detail", {
-      title: "Detail",
+      title: "Detail", 
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
