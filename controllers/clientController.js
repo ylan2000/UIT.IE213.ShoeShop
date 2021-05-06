@@ -1,3 +1,4 @@
+const {Category} = require("../models/categoryModel");
 const {Product} = require("../models/productModel")
 exports.getHome = async (req, res, next) => {
   try {
@@ -25,8 +26,10 @@ exports.getAbout = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   try {
     // Render template
+    
     return res.status(200).render("pages/products", {
       title: "Products",
+      
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -37,11 +40,12 @@ exports.getProducts = async (req, res, next) => {
 
 exports.getVans = async (req, res, next) => {
   try {
-    const product = await Product.find();
+    const product = await Product.find({"category.0.name" : "Vans"});
     // Render template
     res.status(200).render("pages/products", {
       title: "Vans",
       products: product,
+
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -52,31 +56,32 @@ exports.getVans = async (req, res, next) => {
 
 exports.getPalladium = async (req, res, next) => {
   try {
-    const product = await Product.find();
-    // Render template
-    res.status(200).render("pages/products", {
-      title: "Palladium",
-      products: product,
-    });
-  } catch (err) {
-    res.status(404).json({ status: "fail", message: err });
-  }
+    const product = await Product.find({"category.0.name" : "Palladium"});
+      // Render template
+      res.status(200).render("pages/products", {
+        title: "Palladium",
+        products: product,
+      });
+    } 
+    catch (err) {
+      res.status(404).json({ status: "fail", message: err });}
 
   next();
 };
 
 exports.getConverse = async (req, res, next) => {
   try {
-    const product = await Product.find();
-    // Render template
-    res.status(200).render("pages/products", {
-      title: "Converse",
-      products: product,
+    const product = await Product.find({"category.0.name" : "Converse"});
+         // Render template
+        res.status(200).render("pages/products", {
+        title: "Converse",
+        products: product,
     });
-  } catch (err) {
+    
+  } 
+  catch (err) {
     res.status(404).json({ status: "fail", message: err });
   }
-
   next();
 };
 
