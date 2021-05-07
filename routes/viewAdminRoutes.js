@@ -16,7 +16,7 @@ router.get("/orders", adminController.getOrders);
 // products
 router.use("/products", adminController.getProducts);
 router.use("/add-product", adminController.getAddProduct);
-router.use("/edit-product", adminController.getEditProduct);
+router.use("/edit-product/:id", adminController.getEditProduct);
 
 // users
 router.use("/users", adminController.getUsers);

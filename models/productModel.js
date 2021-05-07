@@ -1,10 +1,11 @@
 const slugify = require('slugify');
 const mongoose = require("mongoose");
-const Category  = require("./categoryModel");
+const {Category}  = require("./categoryModel");
 const schema = mongoose.Schema;
 
 const productSchema = schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
+  slug: String,
   coverImage: { type: Object, default:
     {
       data: {type: Buffer},
@@ -18,7 +19,7 @@ const productSchema = schema({
   condition: { type: Boolean, default: true },
   quantity: { type: Number, default: 0 },
   createdDate: { type: Date, default: Date.now() },
- // transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
+  //transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
   category: Array
 });
 
@@ -37,7 +38,7 @@ productSchema.pre('save', function (next) {
 
 // pre hook save: await embedded collections (category)
 productSchema.pre('save', async function (next) {
-  this.category = await Category.findById(this.category);
+  this.category = await Category.findById(this.category).select('-categoryImage');
   next();
 });
 
