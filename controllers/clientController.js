@@ -11,8 +11,9 @@ const stripe = require('stripe')(stripeSecretKey)
 
 exports.getHome = async (req, res, next) => {
   try {
+    // Render template
     const products = await (await Product.find().sort({createdDate: -1})).slice(0, 8);
-    return res.status(200).render("pages/home", { title: "Home", product: products});
+    res.status(200).render("pages/home", { title: "Home", product: products});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }

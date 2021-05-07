@@ -69,9 +69,13 @@
             <div class="row d-flex">
               <% product.forEach(product => { %>
               <div href="detail" class="product__item">
-                <span class="product__new">NEW</span>
+                <% if (product.condition) { %>
+                  <span class="product__new">NEW</span>
+                <% } %>
 
-                <span class="product__sale"><%= product.sale%>%</span>
+                <% if (product.sale > 0) { %>
+                  <span class="product__sale"><%= product.sale%>%</span>
+                <% } %>
 
                 <a class="product__image">
                   <img src="<%= product.coverImagePath %>" alt="productImage" class="img-fluid" />
