@@ -185,5 +185,12 @@
     <%- include('../partials/footer'); -%>
     <script src="js/countDown.js"></script>
     <%- include('../partials/script-line'); -%>
+    <script defer>
+      const message = sessionStorage.getItem("message")
+      if(message != null) {
+        alert(message)
+        sessionStorage.removeItem("message")
+      }
+  </script>
   </body>
 </html>
