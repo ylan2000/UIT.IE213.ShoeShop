@@ -868,6 +868,7 @@ body {
     color: #FF7D00;
     font-weight: 700; }
     .cart__total-resut input {
+      width: 30%;
       border: none;
       background: transparent;
       color: #FF7D00;
@@ -1412,10 +1413,13 @@ body {
   white-space: nowrap;
   padding: 6px 12px;
   height: 8rem;
-  width: 100%;
-  margin-top: 10px;
+  width: 50%;
+  margin-left: 11rem;
   text-align: center;
   vertical-align: middle; }
+  .button:hover {
+    background-color: #78290F;
+    color: #fff; }
 
 .listgroup {
   background-color: #f1f1f1; }
@@ -1432,6 +1436,9 @@ body {
   width: 30%;
   text-align: center;
   vertical-align: middle; }
+  .button-right:hover {
+    background-color: #78290F;
+    color: #fff; }
 
 .cost {
   color: #FF7D00; }
