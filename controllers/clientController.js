@@ -4,7 +4,7 @@ exports.getHome = async (req, res, next) => {
   try {
     // Render template
     const products = await (await Product.find().sort({createdDate: -1})).slice(0, 8);
-    res.status(200).render("pages/home", { title: "Home", product: products});
+    return res.status(200).render("pages/home", { title: "Home", product: products});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
@@ -126,3 +126,18 @@ exports.get404 = async (req, res, next) => {
 
   next();
 };
+
+exports.postCheckout = async (req,res) => {
+  const total = req.body.cart__totalMoney
+  try
+  {
+    return res.status(200).render("pages/payment", {
+      title: "Checkout",
+      total: total
+    })
+  }
+  catch (err)
+  {
+
+  }
+}

@@ -51,7 +51,7 @@ exports.getProducts = async (req, res, next) => {
     // Render template
     const status = req.query.status
     const products =  await Product.find();
-    res.status(200).render("admin/pages/product/product", {
+    return res.status(200).render("admin/pages/product/product", {
       title: "Products", product: products, status: status
     });
   } catch (err) {

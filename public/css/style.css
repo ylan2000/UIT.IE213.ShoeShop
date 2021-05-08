@@ -879,6 +879,13 @@ body {
   .cart__total-resut {
     color: #FF7D00;
     font-weight: 700; }
+    .cart__total-resut input {
+      border: none;
+      background: transparent;
+      color: #FF7D00;
+      font-weight: 700;
+      font-size: 2rem;
+      text-align: right; }
 
 .wishlist {
   margin: 5rem 0; }

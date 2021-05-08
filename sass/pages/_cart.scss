@@ -121,5 +121,13 @@
     &__total-resut {
         color: $color-primary-orange;
         font-weight: 700;
+        input{
+            border: none;
+            background: transparent;
+            color: $color-primary-orange;
+            font-weight: 700;
+            font-size: 2rem;
+            text-align: right;
+        }
     }
 }
