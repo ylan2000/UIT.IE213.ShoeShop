@@ -8,6 +8,7 @@
     <form action="/payment" method="post" class="cart">
       <div class="container">
         <h3 class="cart__title">Cart</h3>
+        <% if (products) { %>
         <div class="cart__page">
           <table class="cart__table">
             <tr>
@@ -16,43 +17,27 @@
               <th class="cart__header">Subtotal</th>
               <th class="cart__header"></th>
             </tr>
+            <% products.forEach(product => { %>
             <tr>
               <td>
                 <div class="cart__info">
-                  <img src="images/UtraBoost_Summer.jpg" alt="Ultra boost" />
+                  <img src="<%= product.item.coverImagePath %>" alt="<%= product.item.name %>" />
                   <div>
                     <p class="cart__product-name">
-                      ULTRABOOST SUMMER.RDY - White
+                      <%= product.item.name %>
                     </p>
                     <small
                       >Price:
-                      <span class="cart__product-price">$220,00</span></small
+                      <span class="cart__product-price">$<%= product.item.price %></span></small
                     >
                   </div>
                 </div>
               </td>
-              <td><input type="number" value="1" min="1" max="999" /></td>
-              <td>$216,25</td>
+              <td><input type="number" value="<%= product.qty; %>" min="1" max="999" /></td>
+              <td>$<%= product.price %></td>
               <td><i class="fas fa-trash-alt icon-trash"></i></td>
             </tr>
-
-            <tr>
-              <td>
-                <div class="cart__info">
-                  <img src="images/UtraBoost_Summer.jpg" alt="Ultra boost" />
-                  <div>
-                    <p class="cart__product-name">ULTRABOOST SUMMER.RDY</p>
-                    <small
-                      >Price:
-                      <span class="cart__product-price">$220,00</span></small
-                    >
-                  </div>
-                </div>
-              </td>
-              <td><input type="number" value="1" min="1" max="999" /></td>
-              <td>$220,00</td>
-              <td><i class="fas fa-trash-alt icon-trash"></i></td>
-            </tr>
+            <% }); %>
           </table>
         </div>
       </div>
@@ -60,23 +45,18 @@
       <div class="container cart__bottom">
         <div class="cart__total">
           <table>
-            <tr>
-              <td>Subtotal</td>
-              <td>$436.25</td>
-            </tr>
-            <tr>
-              <td>Tax</td>
-              <td>$35.00</td>
-            </tr>
             <tr class="cart__total-resut">
               <td>Total</td>
               <td>
-                <input type="text" id="cart__totalMoney" name="cart__totalMoney" value="$471.25">
+                <input type="text" id="cart__totalMoney" name="cart__totalMoney" value="$<%= totalPrice %>">
               </td>
             </tr>
           </table>
         </div>
           <input class="cart__OrdBtn" type="submit" value="Proceed to checkout" />
+          <% } else { %>
+            <p>no products</p>
+            <% } %>
       </div>
     </form>
     <%- include('../partials/footer'); -%> <%-

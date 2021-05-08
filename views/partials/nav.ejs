@@ -52,8 +52,13 @@
       <li>
         <a href="cart" class="flex-center"
           ><img src="/icon/shopping-bags.svg" alt="Cart" class="icon" /><span
-            class="nav__notification"
-            >0</span
+            class="nav__notification" id="cart-number"
+            >
+            <% if (typeof session.cart != 'undefined') {%>
+              <%= session.cart.totalQty %>
+            <%} else {%>
+              <%= 0%>
+            <%}%></span
           ></a
         >
       </li>
