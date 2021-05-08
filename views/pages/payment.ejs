@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <%- include('../partials/head'); -%>
+    <script>
+        var stripePublicKey = '<%= stripePublicKey %>'
+    </script>
 </head>
 <body>
     <%- include('../partials/nav'); -%>
+    <!--<form class="payment" id="payment_form" action="/payment/checkout" method="POST">-->
     <div class="payment">
         <div class="payment__main">
-            <div class="payment__main-row">
+            <section class="payment__main-row">
                 <form class="payment__form">
                     <div class="payment__form-title">Shipment Details</div>
                    
@@ -102,14 +106,14 @@
                         </select>
                     </div>
                     <div class="payment__form-fomat">
-                        <input class="payment__input" type="checkbox" >
+                        <input class="payment__input" type="checkbox" name="update" >
                         Update the latest program information from Sneaker City
                     </div>
 
                     <div class=" payment__form-title">method of delivery</div>
 
                     <div class="payment__form-fomat col-2">
-                        <input class="payment__input" type="radio"  value="normal" checked >
+                        <input class="payment__input" type="radio" name="delivery" value="normal" checked >
                         Standard speed (2 - 5 working days)
                     </div>
                     <div class="payment__form-fomat col-3">$0</div>
@@ -124,16 +128,16 @@
                         Payment by international and domestic card (ATM)
                         <img class="payment__img"  src="/images/visa-logo.jpg" alt="visa">
                     </div>
-                    <div class="payment__form-fomat">
+                    <!--<div class="payment__form-fomat">
                         <input class="payment__input" type="radio" name="type" value="momo">
                         Payment by Momo wallet
                             <img class="payment__img" src="/images/MoMo_Logo.jpg" alt="momo">
-                    </div>
+                    </div>-->
                 </form> 
-            </div>
+            </section>
             
             
-            <div class="payment__main-sidebar col-1"> 
+            <section class="payment__main-sidebar col-1"> 
                 <ul class="listgroup">
                     <li class="listgroup__item title">ORDER SUMMARY</li>
                     <li class="divider"></li>
@@ -191,14 +195,23 @@
                         </span>
                     </li>
                     <li class="listgroup__item">
-                        <button class="button">Order Success</button>
+                        <!--<input type="submit" class="button" id="orderBtn" value="Order Success">-->
+                        <button type="button" class="button" id="orderBtn">Order</button>
                     </li>
                 </ul>
-            </div>
+            </section>
         </div>
-    </div>
+    </div><!--</form>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script>
+        $("#payment_form").submit(function(){
+            var link = "/direct";
+            if($("input[name='type'][value='momo']").prop("checked")) link = "/momo";
+            if($("input[name='type'][value='onepay']").prop("checked")) link = "/card";
+            $("#payment_form").attr("action",link)
+        })
+    </script>-->
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>  
-
 </body>
 </html>

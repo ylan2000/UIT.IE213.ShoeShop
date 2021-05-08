@@ -86,7 +86,7 @@
     background-color: $color-dark-3;
     border: none;
     clear: both;
-    overflow: hidden;  
+    overflow: hidden;
 }
 .title{
     font-size: 2.3rem;
@@ -116,10 +116,14 @@
     white-space: nowrap;
     padding: 6px 12px;
     height: 8rem;
-    width: 100%;
-    margin-top: 10px;
+    width: 50%;
+    margin-left: 11rem;
     text-align: center;
     vertical-align: middle;
+    &:hover{
+        background-color: $color-primary-brown;
+        color: $color-white;
+    }
 }
 .listgroup{
     background-color: $color-dark-3;
@@ -136,7 +140,10 @@
     width: 30%;
     text-align: center;
     vertical-align: middle;
-
+    &:hover{
+        background-color: $color-primary-brown;
+        color: $color-white;
+    }
 }
 .cost{
     color: $color-primary-orange;

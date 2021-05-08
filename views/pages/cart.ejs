@@ -5,7 +5,7 @@
   </head>
   <body>
     <%- include('../partials/nav'); -%>
-    <form action="/payment" method="post" class="cart">
+    <!--<form action="/payment" method="post" class="cart">--><div class="cart">
       <div class="container">
         <h3 class="cart__title">Cart</h3>
         <% if (products) { %>
@@ -58,7 +58,7 @@
             <p>no products</p>
             <% } %>
       </div>
-    </form>
+    <!--</form>--></div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>
   </body>

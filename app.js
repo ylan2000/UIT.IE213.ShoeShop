@@ -19,6 +19,8 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
+app.use(bodyParser.json())
+
 app.use(methodOverride('_method'));
 
 app.use(session({
