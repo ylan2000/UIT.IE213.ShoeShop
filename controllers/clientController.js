@@ -1,4 +1,5 @@
 const {Product} = require('../models/productModel');
+const Cart = require("../models/cartModel");
 
 exports.getHome = async (req, res, next) => {
   try {
@@ -90,10 +91,21 @@ exports.getWishlist = async (req, res, next) => {
 
 exports.getCart = async (req, res, next) => {
   try {
-    // Render template
-    return res.status(200).render("pages/cart", {
-      title: "Cart",
-    });
+    if (!req.session.cart) {
+      return res.status(200).render("pages/cart", {
+          title: "Cart",   
+          products: null
+        }
+      );
+    }
+
+    var cart = new Cart(req.session.cart);
+    res.status(200).render("pages/cart", {
+        title: "Cart",   
+        products: cart.generateArr(),
+        totalPrice: cart.totalPrice,
+      }
+    );
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
