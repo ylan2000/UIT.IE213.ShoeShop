@@ -788,7 +788,11 @@ body {
     transition: 0.5s; }
 
 .cart {
-  margin-top: 5rem; }
+  min-height: calc(100vh - 26.6rem - 10rem - 5rem); }
+  .cart__noti {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 700; }
   .cart__title {
     font-size: 4rem;
     text-align: center;
