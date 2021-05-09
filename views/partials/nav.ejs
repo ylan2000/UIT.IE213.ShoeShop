@@ -43,8 +43,12 @@
       <li>
         <a href="wishlist" class="flex-center"
           ><img src="/icon/like.svg" alt="Wish list" class="icon" /><span
-            class="nav__notification"
-            >0</span
+            class="nav__notification" id="wishlist-number"
+            ><% if (typeof session.wishlist != 'undefined') {%>
+              <%= session.wishlist.totalQty %>
+            <%} else {%>
+              <%= 0%>
+            <%}%></span
           ></a
         >
       </li>
