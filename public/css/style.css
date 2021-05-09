@@ -935,9 +935,13 @@ body {
       line-height: 4rem; }
   .wishlist__addcart {
     background-color: #FFCED1;
-    padding: 0.5rem;
+    padding: 1rem 3rem;
     font-weight: bold;
-    color: #15616D; }
+    color: #15616D;
+    cursor: pointer; }
+    .wishlist__addcart:hover {
+      background-color: #FF7D00;
+      color: #fff; }
   .wishlist__product-name {
     color: #15616D;
     font-weight: 700; }

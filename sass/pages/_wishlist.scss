@@ -58,9 +58,15 @@
     }
     &__addcart{
         background-color:$color-primary-pink;
-        padding: 0.5rem;
+        padding: 1rem 3rem;
         font-weight: bold;
         color: $color-primary-blue;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-primary-orange;
+            color: $color-white;
+        }
     }
     &__product-name {
         color: $color-primary-blue;
