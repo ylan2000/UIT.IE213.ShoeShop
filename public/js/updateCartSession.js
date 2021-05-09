@@ -4,8 +4,8 @@
     $(this).on("click", function (e) {
       var id = $(this).data("id");
       $.ajax({
-        url: "/client/api/add-to-cart/" + id,
-        type: "get",
+        url: "/client/api/cart/" + id,
+        type: "post",
         xhrFields: { withCredentials: true },
         data: { id: id },
         success: function (data) {
@@ -26,7 +26,7 @@
       // console.log()
       if (confirmRemove) {
         $.ajax({
-          url: "/client/api/remove-from-cart/" + id,
+          url: "/client/api/cart/" + id,
           type: "delete",
           xhrFields: { withCredentials: true },
           data: { id: id },
@@ -48,7 +48,7 @@
       var id = $(this).data("id");
       var qty = $(this).val();
       $.ajax({
-        url: "/client/api/update-cart/" + id,
+        url: "/client/api/cart/" + id,
         type: "patch",
         xhrFields: { withCredentials: true },
         data: { id: id, newQty: qty },
