@@ -141,23 +141,18 @@
                 <ul class="listgroup">
                     <li class="listgroup__item title">ORDER SUMMARY</li>
                     <li class="divider"></li>
+                    <% products.forEach(product => { %>
                     <li class="listgroup__item ">
-                        <span class="text-left">Blank Shoelaces - Carrot</span>
-                        <span class="text-right">$57</span>
+                        <span class="text-left"><%= product.item.name %></span>
+                        <span class="text-right">$<%= product.item.price %></span>
+                        <span class="remove-from-cart" data-id="<%= product.item._id %>"><i class="fas fa-trash-alt icon-trash"></i></span>
                     </li>
                     <li class="listgroup__item">
                         <span class="text-left">Size: 37</span>
-                        <span >x 1</span>
+                        <input type="number" value="<%= product.qty; %>" class="product-quantity" data-id="<%= product.item._id %>" min="1" max="999" />
                     </li>
-                    <li class="listgroup__item">
-                        <span class="text-left">Basic Tee - Ananas Typo - Black</span>
-                        <span  class="text-right">$56</span>
-                    </li>
-                    <li  class="listgroup__item">
-                        <span class="text-left">Size: 40</span>
-                        <span>x 1</span>
-                    </li>
-                    <li class="divider"></li>
+                    <% }); %>
+                    <li class="divider"></li>                    
                     <li class="listgroup__item">
                         <input class="text-left payment__form-control" placeholder="Coupon Code"></input>
                         <button class="text-right button-right"> Use</button>
@@ -165,7 +160,7 @@
                     <li class="listgroup__item">
                         <span class="text-left">Subtotal</span>
                         <span class="text-right"> 
-                            $<span>59</span>
+                            $<span><%= total%></span>
                         </span>
                     </li>
                     
