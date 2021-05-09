@@ -5,6 +5,7 @@
   </head>
   <body>
     <%- include('../partials/nav'); -%>
+    <div class="container">
     <div class="wishlist">
       <h3 class="wishlist__title">Wishlist</h3>
       <% if (products) { %>
@@ -21,7 +22,7 @@
             <tr>
               <td>
                 <div class="wishlist__info">
-                  <img src="images/Vans.jpg" alt="<%= product.item.name %>" />
+                  <img src="<%= product.item.coverImagePath %>" alt="<%= product.item.name %>" />
                   <div>
                     <p class="wishlist__product-name">
                       <%= product.item.name %>
@@ -56,6 +57,7 @@
         <p class="wishlist__noti">No items!</p>
         <% } %>
     </div>
+  </div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>
   </body>

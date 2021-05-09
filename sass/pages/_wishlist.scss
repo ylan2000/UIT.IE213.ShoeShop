@@ -1,6 +1,5 @@
 .wishlist{
-    margin: 10rem 0;
-    min-height: calc(100vh - 26.6rem - 10rem - 5rem); // minus footer height, nav height,..
+    min-height: calc(100vh - 26.6rem - 10rem - 5rem); // minus footer height, nav height,.. 
 
     &__noti {
         text-align: center;
@@ -17,7 +16,7 @@
         margin-bottom: 2rem; 
     }
     &__page{
-        margin: 0  auto 3rem;
+        margin: 0  auto 10rem;
     }
     &__header{
         text-align: left;
@@ -31,7 +30,6 @@
         max-width: 120rem;
         width: 100%;
         border-collapse: collapse;
-        margin: 0 auto;
         font-size: 2rem;
         tr:not(:last-child){
             border-bottom: 2px solid #FF7D00;
