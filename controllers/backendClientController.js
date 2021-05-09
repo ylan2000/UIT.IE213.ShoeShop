@@ -37,6 +37,11 @@ exports.removeFromCart = async (req, res, next) => {
      
       cart.remove(p, productId);
       req.session.cart = cart;
+
+      if (req.session.cart.totalQty == 0) {
+        req.session.cart = undefined;
+      }
+
       req.session.save();
     });
     return res.send(req.session.cart);
