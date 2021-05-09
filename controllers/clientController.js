@@ -1,5 +1,6 @@
 const {Product} = require('../models/productModel');
 const Cart = require("../models/cartModel");
+const Wishlist = require("../models/wishlistModel");
 const {Transaction} = require('../models/transactionModel')
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
@@ -87,9 +88,19 @@ exports.getAccount = async (req, res, next) => {
 
 exports.getWishlist = async (req, res, next) => {
   try {
-    // Render template
+    if (!req.session.wishlist) {
+      return res.status(200).render("pages/cart", {
+          title: "Cart",   
+          products: null
+        }
+      );
+    }
+
+    var wishlist = new Wishlist(req.session.wishlist);
+
     return res.status(200).render("pages/wishlist", {
       title: "Wishlist",
+      products: wishlist.generateArr(),
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });

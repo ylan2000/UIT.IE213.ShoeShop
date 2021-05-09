@@ -8,4 +8,9 @@ router
   .delete(backendClientController.removeFromCart)
   .patch(backendClientController.updateCart);
 
+router
+  .route("/wishlist/:id")
+  .post(backendClientController.addToWishlist)
+  .delete(backendClientController.removeFromWishlist)
+
 module.exports = router;

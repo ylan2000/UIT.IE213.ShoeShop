@@ -1,5 +1,6 @@
 const {Product} = require("../models/productModel");
 const Cart = require("../models/cartModel");
+const Wishlist = require("../models/wishlistModel");
 
 exports.addToCart = async (req, res, next) => {
   try {
@@ -64,6 +65,52 @@ exports.updateCart = async (req, res, next) => {
       req.session.save();
     });
     return res.send(req.session.cart);
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+exports.addToWishlist = async (req, res, next) => {
+  try {
+    
+    var productId = req.params.id;
+    var wishlist = new Wishlist(req.session.wishlist ? req.session.wishlist: {items: {}});
+   
+    await Product.findById(productId, function (err, p) {
+      if (err) {
+        return res.status(404).json({ status: "fail", message: err });    
+      }
+     
+      wishlist.add(p, productId);
+      req.session.wishlist = wishlist;
+      req.session.save();
+    });
+    return res.send(req.session.wishlist);
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+
+exports.removeFromWishlist = async (req, res, next) => {
+  try {
+    var productId = req.params.id;
+    var wishlist = new Wishlist(req.session.wishlist);
+   
+    await Product.findById(productId, function (err, p) {
+      if (err) {
+        return res.status(404).json({ status: "fail", message: err });    
+      }
+     
+      wishlist.remove(productId);
+      req.session.wishlist = wishlist;
+      req.session.save();
+    });
+    return res.send(req.session.wishlist);
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
