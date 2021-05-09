@@ -45,6 +45,8 @@ router.post("/api/paymentDone",clientController.postPaymentDone);
 
 router.post("/api/paymentSuccess", (req,res) => {return res.send(req.body)})
 
+router.get("/checkout", clientController.getPayment);
+
 //Error Pages
 router.get("*", clientController.get404);
 

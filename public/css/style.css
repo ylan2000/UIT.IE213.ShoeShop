@@ -441,7 +441,7 @@ body {
     text-transform: uppercase;
     font-weight: 700;
     text-align: center;
-    box-shadow: 0 80px 10px rgba(34, 34, 34, 0.1); }
+    box-shadow: 0 8px 10px rgba(34, 34, 34, 0.1); }
   .nav__img {
     width: 10rem;
     height: 10rem; }
@@ -788,7 +788,11 @@ body {
     transition: 0.5s; }
 
 .cart {
-  margin-top: 5rem; }
+  min-height: calc(100vh - 26.6rem - 10rem - 5rem); }
+  .cart__noti {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 700; }
   .cart__title {
     font-size: 4rem;
     text-align: center;
@@ -1328,11 +1332,10 @@ body {
     text-align: center; }
 
 .payment {
-  margin-top: 3rem;
-  margin-right: auto;
-  margin-left: auto;
   max-width: 120rem;
-  padding: 0 1rem; }
+  margin: 7rem 0 10rem; }
+  .payment__product-list {
+    margin-top: 2.5rem; }
   .payment__img {
     vertical-align: middle;
     width: 3.3rem;
@@ -1347,9 +1350,6 @@ body {
       width: 58.33333333%;
       padding-left: 1.5rem;
       padding-right: 4rem; }
-    .payment__main-sidebar {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem; }
   .payment__form-title {
     margin: 0px 0px 2rem 0px;
     padding: 5px 2rem 5px 2rem;
@@ -1439,7 +1439,8 @@ body {
     color: #fff; }
 
 .listgroup {
-  background-color: #f1f1f1; }
+  background-color: #f1f1f1;
+  padding: 2rem; }
 
 .button-right {
   float: right;
@@ -1459,3 +1460,6 @@ body {
 
 .cost {
   color: #FF7D00; }
+
+.payment__product-name, .payment__product-price, .cost {
+  font-weight: bold; }

@@ -9,6 +9,7 @@
 <body>
     <%- include('../partials/nav'); -%>
     <!--<form class="payment" id="payment_form" action="/payment/checkout" method="POST">-->
+    <div class="container">
     <div class="payment">
         <div class="payment__main">
             <section class="payment__main-row">
@@ -142,17 +143,18 @@
                     <li class="listgroup__item title">ORDER SUMMARY</li>
                     <li class="divider"></li>
                     <% products.forEach(product => { %>
-                    <li class="listgroup__item ">
-                        <span class="text-left"><%= product.item.name %></span>
-                        <span class="text-right">$<%= product.item.price %></span>
-                        <span class="remove-from-cart" data-id="<%= product.item._id %>"><i class="fas fa-trash-alt icon-trash"></i></span>
-                    </li>
-                    <li class="listgroup__item">
-                        <span class="text-left">Size: 37</span>
-                        <input type="number" value="<%= product.qty; %>" class="product-quantity" data-id="<%= product.item._id %>" min="1" max="999" />
-                    </li>
+                    <div class="payment__product-list">
+                        <li class="listgroup__item ">
+                            <span class="text-left payment__product-name"><%= product.item.name %></span>
+                            <span class="text-right payment__product-price">$<%= product.item.price %></span>
+                        </li>
+                        <li class="listgroup__item">
+                            <span class="text-left">Size: 37</span>
+                            <span>x <%= product.qty; %></span>
+                        </li>
+                    </div>
                     <% }); %>
-                    <li class="divider"></li>                    
+                    <!-- <li class="divider"></li>                    
                     <li class="listgroup__item">
                         <input class="text-left payment__form-control" placeholder="Coupon Code"></input>
                         <button class="text-right button-right"> Use</button>
@@ -181,12 +183,12 @@
                         <span class="text-right">
                             $ <span>0</span>
                         </span>
-                    </li>
+                    </li> -->
                     <li class="divider"></li>
                     <li  class="listgroup__item">
                         <span class="text-left title">Total</span>
                         <span class="text-right cost">
-                            <%= total%>
+                            $ <%= total%>
                         </span>
                     </li>
                     <li class="listgroup__item">
@@ -196,7 +198,8 @@
                 </ul>
             </section>
         </div>
-    </div><!--</form>
+    </div>
+</div><!--</form>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script>
         $("#payment_form").submit(function(){

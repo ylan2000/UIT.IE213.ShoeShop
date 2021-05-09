@@ -135,9 +135,17 @@ exports.getCart = async (req, res, next) => {
 
 exports.getPayment = async (req, res, next) => {
   try {
-    // Render template
+    if (!req.session.cart.totalQty) {
+      return res.redirect('/home');
+    }
+
+    var cart = new Cart(req.session.cart);
+
     return res.status(200).render("pages/payment", {
-      title: "Payment",
+      title: "Checkout",
+      total:  cart.totalPrice,
+      products: cart.generateArr(),
+      stripePublicKey: stripePublicKey
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });

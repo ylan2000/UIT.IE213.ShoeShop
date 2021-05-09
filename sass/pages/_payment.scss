@@ -1,9 +1,11 @@
 .payment{
-    margin-top: 3rem;
-    margin-right: auto;
-    margin-left: auto;
     max-width: 120rem;
-    padding: 0 1rem; 
+    margin: 7rem 0 10rem;
+
+    &__product-list {
+        margin-top: 2.5rem;
+    }
+
     &__img{
         vertical-align: middle;
         width: 3.3rem;
@@ -20,10 +22,6 @@
             padding-left: 1.5rem;
             padding-right: 4rem;
             
-        }
-        &-sidebar{
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
         }
     }
     &__form{ 
@@ -127,6 +125,7 @@
 }
 .listgroup{
     background-color: $color-dark-3;
+    padding: 2rem;
 }
 .button-right{
     float: right;
@@ -149,4 +148,6 @@
     color: $color-primary-orange;
 }
 
-
+.payment__product-name, .payment__product-price, .cost {
+    font-weight: bold;
+}
