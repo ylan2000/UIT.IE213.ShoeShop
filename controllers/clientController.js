@@ -89,8 +89,8 @@ exports.getAccount = async (req, res, next) => {
 exports.getWishlist = async (req, res, next) => {
   try {
     if (!req.session.wishlist) {
-      return res.status(200).render("pages/cart", {
-          title: "Cart",   
+      return res.status(200).render("pages/wishlist", {
+          title: "Wishlist",   
           products: null
         }
       );
