@@ -33,9 +33,9 @@
                   </div>
                 </div>
               </td>
-              <td><input type="number" value="<%= product.qty; %>" min="1" max="999" /></td>
-              <td>$<%= product.price %></td>
-              <td><i class="fas fa-trash-alt icon-trash"></i></td>
+              <td><input type="number" value="<%= product.qty; %>" class="product-quantity" data-id="<%= product.item._id %>" min="1" max="999" /></td>
+              <td class="product-full-price" data-id="<%= product.item._id %>">$<%= product.price %></td>
+              <td class="remove-from-cart" data-id="<%= product.item._id %>"><i class="fas fa-trash-alt icon-trash"></i></td>
             </tr>
             <% }); %>
           </table>
@@ -53,7 +53,7 @@
             </tr>
           </table>
         </div>
-          <input class="cart__OrdBtn" type="submit" value="Proceed to checkout" />
+        <a href="/checkout" class="cart__OrdBtn" >Proceed to checkout</a>
           <% } else { %>
             <p>no products</p>
             <% } %>

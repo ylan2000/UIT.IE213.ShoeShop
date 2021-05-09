@@ -23,4 +23,24 @@ module.exports = function Cart(oldCart) {
     }
     return arr;
   }
+
+  this.remove = function(item, id) {
+    var currentItem = this.items[id];
+    var priceOfRemovedItem = currentItem.item.price * currentItem.qty;
+    this.totalPrice -= priceOfRemovedItem;
+    this.totalQty -= currentItem.qty;
+    delete this.items[id];
+  }
+
+  this.updateQty = function(item, id, newQty) {
+    var currentItem = this.items[id];
+    var oldQty = currentItem.qty;
+    var oldPrice = currentItem.price;
+
+    currentItem.qty = parseInt(newQty);
+    currentItem.price = currentItem.qty * currentItem.item.price;
+    
+    this.totalPrice = this.totalPrice - oldPrice + currentItem.price;
+    this.totalQty = this.totalQty - oldQty + currentItem.qty;
+  }
 };
