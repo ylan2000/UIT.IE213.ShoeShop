@@ -946,7 +946,8 @@ body {
     color: #15616D;
     font-weight: 700; }
   .wishlist__product-price {
-    color: #FF7D00; }
+    color: #FF7D00;
+    font-weight: 700; }
   .wishlist .fa, .wishlist .fas {
     font-weight: 900;
     font-size: large; }
