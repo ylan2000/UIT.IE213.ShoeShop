@@ -120,7 +120,7 @@ exports.getCart = async (req, res, next) => {
     }
 
     var cart = new Cart(req.session.cart);
-    res.status(200).render("pages/cart", {
+    return res.status(200).render("pages/cart", {
         title: "Cart",   
         products: cart.generateArr(),
         totalPrice: cart.totalPrice,
