@@ -34,7 +34,8 @@ var stripeHandler = StripeCheckout.configure({
     token: function(token){
         var priceElement = document.getElementsByClassName("cost")[0];
         var price = parseFloat(priceElement.innerText.replace('$','')) * 100;
-        axios.post("/api/paymentDone", {
+        axios.post("/client/api/payment/" + token.id, {
+            id: token.id,
             stripeTokenId: token.id,
             total: price
         }).then(function(res){
