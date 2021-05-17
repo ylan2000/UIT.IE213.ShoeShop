@@ -19,7 +19,7 @@ const productSchema = schema({
   condition: { type: Boolean, default: true },
   quantity: { type: Number, default: 0 },
   createdDate: { type: Date, default: Date.now() },
-  //transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
+  // transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
   category: Array
 });
 
