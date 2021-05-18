@@ -10,6 +10,12 @@ router.get("/home", clientController.getHome);
 
 router.get("/products", clientController.getProducts);
 
+router.get("/vans", clientController.getVans);
+
+router.get("/palladium", clientController.getPalladium);
+
+router.get("/converse", clientController.getConverse);
+
 router.get("/product/:slug", clientController.getProduct);
 
 router.get("/return-policy", clientController.getPolicy);

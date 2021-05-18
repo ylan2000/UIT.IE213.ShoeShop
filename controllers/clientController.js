@@ -7,6 +7,7 @@ dotenv.config({ path: "./config.env" });
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 
 
+const {Category} = require("../models/categoryModel");
 exports.getHome = async (req, res, next) => {
   try {
     // Render template
@@ -33,8 +34,9 @@ exports.getAbout = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   try {
     // Render template
+    const products = await (await Product.find()).slice(0, 8);
     return res.status(200).render("pages/products", {
-      title: "Products",
+      title: "Products", product: products
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -43,11 +45,58 @@ exports.getProducts = async (req, res, next) => {
   next();
 };
 
+exports.getVans = async (req, res, next) => {
+  try {
+    const product = await Product.find({"category.0.name" : "Vans"});
+    // Render template
+    res.status(200).render("pages/products", {
+      title: "Vans",
+      products: product,
+
+    });
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+exports.getPalladium = async (req, res, next) => {
+  try {
+    const product = await Product.find({"category.0.name" : "Palladium"});
+      // Render template
+      res.status(200).render("pages/products", {
+        title: "Palladium",
+        products: product,
+      });
+    } 
+    catch (err) {
+      res.status(404).json({ status: "fail", message: err });}
+
+  next();
+};
+
+exports.getConverse = async (req, res, next) => {
+  try {
+    const product = await Product.find({"category.0.name" : "Converse"});
+         // Render template
+        res.status(200).render("pages/products", {
+        title: "Converse",
+        products: product,
+    });
+    
+  } 
+  catch (err) {
+    res.status(404).json({ status: "fail", message: err });
+  }
+  next();
+};
+
 exports.getProduct = async (req, res, next) => {
   try {
     // Render template
     return res.status(200).render("pages/detail", {
-      title: "Detail",
+      title: "Detail", 
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
