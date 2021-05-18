@@ -1,15 +1,11 @@
 const {Product} = require('../models/productModel');
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
-const {Transaction} = require('../models/transactionModel')
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
-const axios = require("axios")
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 
-const stripe = require('stripe')(stripeSecretKey)
 
 exports.getHome = async (req, res, next) => {
   try {
@@ -167,38 +163,4 @@ exports.get404 = async (req, res, next) => {
   next();
 };
 
-exports.postCheckout = async (req,res) => {
-  const total = "$471.25"
-  try
-  {
-    return res.status(200).render("pages/payment", {
-      title: "Checkout",
-      total: total,
-      stripePublicKey: stripePublicKey
-    })
-  }
-  catch (err)
-  {
 
-  }
-}
-
-exports.postPaymentDone = async(req, res) => {
-  //console.log(req.body.stripeTokenId)
-  stripe.charges.create({
-    amount: req.body.total,
-    source: req.body.stripeTokenId,
-    currency: 'usd',
-  }).then(async function(){
-    const trans = new Transaction({
-      total: req.body.total,
-      status: true
-    })
-    const newTrans = await trans.save()
-    console.log('Charge Successful')
-    res.json({ message: 'Successfully purchased items' })
-  }).catch(function(err){
-    console.log(err)
-    res.status(500).end()
-  })
-}

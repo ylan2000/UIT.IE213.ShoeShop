@@ -37,14 +37,6 @@ router.get("/wishlist", clientController.getWishlist);
 //Check out
 router.get("/cart", clientController.getCart);
 
-router.post("/api/payment", clientController.postCheckout);
-
-router.get("/payment", clientController.postCheckout);
-
-router.post("/client/api/payment/:id",clientController.postPaymentDone);
-
-router.post("/api/paymentSuccess", (req,res) => {return res.send(req.body)})
-
 router.get("/checkout", clientController.getPayment);
 
 //Error Pages
