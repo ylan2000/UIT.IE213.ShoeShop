@@ -1,3 +1,57 @@
+
+//Order
+
+const order = document.getElementById('orderBtn');
+
+const list = document.getElementsByClassName("payment__product-list")
+var cart = []
+for (i=0; i < list.length; i++){
+    cart.push({
+        id: list[i].getElementsByClassName("product_id")[0].getAttribute("data-product-id"),
+        qty: parseInt(list[i].getElementsByClassName("qty")[0].innerText.replace("x ","")),
+    })
+}
+
+
+async function sendData(type,cart,token) {
+    let res = await axios.post("/client/api/payment/", {
+        type: type,
+        cart: cart,
+        token: token
+    })
+    sessionStorage.setItem("message", res.data.message)
+    await axios.delete("client/api/payment/")
+    window.location="/"
+}
+
+var stripeHandler = StripeCheckout.configure({
+    key: stripePublicKey,
+    locale: 'en',
+    token: async function(token){
+        await sendData("card",cart,token.id);
+    }
+});
+
+const purchase = async () => {
+    var priceElement = document.getElementsByClassName("cost")[0];
+    var price = parseFloat(priceElement.innerText.replace('$','')) * 100;
+    for (index = 2; index < 3 && !(document.getElementsByClassName("payment__input")[index].checked); index++);
+    switch (index) {
+        case 2:
+            await sendData("direct",cart,"0")
+            break;
+        case 3:
+            stripeHandler.open({ amount: price })
+            break;
+    }
+}
+
+
+order.addEventListener('click',purchase);
+
+
+
+
 /*const cart = []
 
 const bodyCart = document.getElementsByClassName("cart__info");
@@ -24,34 +78,3 @@ const submit = document.getElementById("submitBtn")
 
 submit.addEventListener('click',sendData)
 */
-//Order
-
-const order = document.getElementById('orderBtn')
-
-var stripeHandler = StripeCheckout.configure({
-    key: stripePublicKey,
-    locale: 'en',
-    token: function(token){
-        var priceElement = document.getElementsByClassName("cost")[0];
-        var price = parseFloat(priceElement.innerText.replace('$','')) * 100;
-        axios.post("/client/api/payment/" + token.id, {
-            id: token.id,
-            stripeTokenId: token.id,
-            total: price
-        }).then(function(res){
-            sessionStorage.setItem("message", res.data.message)
-        }).then(function(res){window.location = "/"}).catch(function(err){
-            console.error(err)
-        })
-    }
-})
-
-function purchase(){
-    var priceElement = document.getElementsByClassName("cost")[0];
-    var price = parseFloat(priceElement.innerText.replace('$','')) * 100;
-    stripeHandler.open({
-        amount: price
-    })
-}
-
-order.addEventListener('click',purchase)

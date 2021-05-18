@@ -145,16 +145,17 @@
                     <li class="listgroup__item title">ORDER SUMMARY</li>
                     <li class="divider"></li>
                     <% products.forEach(product => { %>
-                    <div class="payment__product-list">
-                        <li class="listgroup__item ">
-                            <span class="text-left payment__product-name"><%= product.item.name %></span>
-                            <span class="text-right payment__product-price">$<%= product.item.price %></span>
-                        </li>
-                        <li class="listgroup__item">
-                            <span class="text-left">Size: 37</span>
-                            <span>x <%= product.qty; %></span>
-                        </li>
-                    </div>
+                        <div class="payment__product-list">
+                            <div class="product_id" style="display: none;" data-product-id="<%= product.item._id %>"></div>
+                            <li class="listgroup__item ">
+                                <span class="text-left payment__product-name"><%= product.item.name %></span>
+                                <span class="text-right payment__product-price">$<%= product.item.price %></span>
+                            </li>
+                            <li class="listgroup__item">
+                                <span class="text-left">Size: 37</span>
+                                <span class="qty">x <%= product.qty; %></span>
+                            </li>
+                        </div>
                     <% }); %>
                     <!-- <li class="divider"></li>                    
                     <li class="listgroup__item">
@@ -195,7 +196,7 @@
                     </li>
                     <li class="listgroup__item">
                         <!--<input type="submit" class="button" id="orderBtn" value="Order Success">-->
-                        <button type="button" class="button" id="orderBtn" onclick="purchase()">Order</button>
+                        <button class="button" id="orderBtn">Order</button>
                     </li>
                 </ul>
             </section>

@@ -1,6 +1,14 @@
 const {Product} = require("../models/productModel");
+const {Transaction} = require('../models/transactionModel')
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+
+const stripe = require('stripe')(stripeSecretKey)
+
 
 exports.addToCart = async (req, res, next) => {
   try {
@@ -122,3 +130,48 @@ exports.removeFromWishlist = async (req, res, next) => {
 
   next();
 };
+
+exports.removeCart = async(req,res,next) => {
+  req.session.cart = undefined;
+  return res.send(req.session.cart)
+}
+
+exports.postPaymentDone = async (req, res) => {
+  var type = req.body.type
+  let total = 0
+  let cart = req.body.cart
+  let product = []
+  for (i = 0; i < cart.length; i++) {
+    const item = await Product.findById(cart[i].id)
+    total =  total + item.price * 100 * cart[i].qty
+    product.push({
+      info: cart[i].id,
+      qty: cart[i].qty
+    })
+  }
+  if (type == "card") {
+    await stripe.charges.create({
+      amount: total,
+      source: req.body.token,
+      currency: 'usd',
+    }).catch(function (err) {
+      console.log(err)
+      res.status(500).end()
+    })
+  }
+  try {
+    const trans = new Transaction({
+      total: total,
+      paymentType: type,
+      product: product,
+      status: true
+    })
+    const newTrans = await trans.save()
+    console.log('Charge Successful')
+    res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
+  } catch (err) {
+    console.log(err)
+    res.status(500).end()
+  }
+  
+}
