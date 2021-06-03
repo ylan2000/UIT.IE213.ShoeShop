@@ -20,6 +20,8 @@ router.get("/product/:slug", clientController.getProduct);
 
 router.get("/return-policy", clientController.getPolicy);
 
+router.get("/feedback", clientController.getFeedback);
+
 // --- protected routes
 router.get("/about", clientController.getAbout);
 

@@ -35,6 +35,19 @@ exports.getAbout = async (req, res, next) => {
   next();
 };
 
+exports.getFeedback = async (req, res, next) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/feedback", {
+      title: "Feedback",
+    });
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
 exports.getProducts = async (req, res, next) => {
   try {
     // Render template
