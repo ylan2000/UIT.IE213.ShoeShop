@@ -122,7 +122,7 @@
                       <div> not found</div>
                        <% } else {%>
                   <% product.forEach(product => { %>
-                  <div href="detail" class="product__item">
+                  <div  class="product__item">
                     <% if (product.condition) { %>
                       <span class="product__new">NEW</span>
                     <% } %>
@@ -142,7 +142,7 @@
                       <div class="product__action">
                         <span class="product__add">ADD TO CART</span>
                         <div class="product__action--right">
-                          <a href="detail/show/" class="product__view"
+                          <a href="product/<%= product.slug %>" class="product__view"
                             ><i class="far fa-eye product__icon"></i
                           ></a>
                           <span class="product__love"

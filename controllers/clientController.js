@@ -112,8 +112,10 @@ exports.getConverse = async (req, res, next) => {
 exports.getProduct = async (req, res, next) => {
   try {
     // Render template
+    const slug = req.params.slug;
+    const product = await Product.findOne({slug: slug}).exec();
     return res.status(200).render("pages/detail", {
-      title: "Detail", 
+      title: "Detail", product: product
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
