@@ -81,6 +81,15 @@
                 </li>
               </ul>
             </div>
+            <div class="brandinfo__filter-searchcontainer">
+             <form action="/products/searchProducts" method="GET">
+               <input name="q" type="text" placeholder="Search">
+               <div class="brandinfo__filter-searchcontainer-btn">
+                 <button>Search</button>
+          </div>
+          </form>
+        </div>
+      </div>
           </div>
         </div>
         <div class="brandinfo__float">
@@ -108,7 +117,10 @@
           <div class="brandinfo__product">
             <div class="brandinfo__product-container">
               <div class="product">
-                <div class="row d-flex">
+                <div class="row d-flex"> 
+                  <% if (product == null) {%>
+                      <div> not found</div>
+                       <% } else {%>
                   <% product.forEach(product => { %>
                   <div href="detail" class="product__item">
                     <% if (product.condition) { %>
@@ -141,6 +153,7 @@
                     </div>
                   </div>
                   <% }) %>
+                  <% } %>
                 </div>
               </div>
             </div>

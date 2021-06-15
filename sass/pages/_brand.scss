@@ -48,7 +48,7 @@
         margin: 2rem 10rem 2rem 15rem;
         align-items: center;
         display:flex;
-        padding: 1.2rem 7.2rem;
+        padding: 1.2rem;
         input[type=text] {
           width: 15rem;
           height: 2.7rem;
@@ -57,10 +57,35 @@
           border-radius: 0.4rem;
           outline:none;
           padding: 1.2rem 1.4rem;
-          &:hover{
-            background-color: $color-primary-pink;
-        }
       }
+      }
+      &__filter-searchcontainer{
+        display: flex;
+        margin-top:0.8rem;
+        
+        
+        
+      }
+      &__filter-searchcontainer-btn{
+        float: right;
+        margin-right: 1.6rem;
+        button{ 
+          margin-left:1.2rem;
+          height: 3rem;
+          border-radius: 1.9rem;
+          border-width: 0;
+          padding: 0 1.2rem;
+          outline: none;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content:center;
+          background-color: $color-dark-4;
+          &:hover{
+            color:$color-dark-1;
+            transition:0.3s;
+          }
+        }
       }
       &__filter-label{
         margin-right:1.6rem;
@@ -88,7 +113,7 @@
       }
       &__filter-selection-container{
         min-width: 15.4rem;
-        padding: 0 2.2rem;
+        padding: 0 .2rem;
         height:3.4rem;
         border-radius:.9rem;
         display:flex;
