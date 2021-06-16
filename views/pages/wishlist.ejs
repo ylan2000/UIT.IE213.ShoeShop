@@ -22,10 +22,10 @@
             <tr>
               <td>
                 <div class="wishlist__info">
-                  <img src="<%= product.item.coverImagePath %>" alt="<%= product.item.name %>" />
+                  <img src="<%= product.coverImagePath %>" alt="<%= product.name %>" />
                   <div>
                     <p class="wishlist__product-name">
-                      <%= product.item.name %>
+                      <%= product.name %>
                     </p>
                   </div>
                 </div>
@@ -33,18 +33,18 @@
 
               <td>
                 <span class="wishlist__product-price"
-                        >$<%= product.item.price %></span
+                        >$<%= product.price %></span
                       >
               </td>
 
               <td>
-                <button class="wishlist__addcart add-to-cart-button" data-id="<%= product.item._id %>">
+                <button class="wishlist__addcart add-to-cart-button" data-id="<%= product._id %>">
                   <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
               </td>
 
               <td>
-                <button class="remove-from-wishlist" data-id="<%= product.item._id %>">
+                <button class="remove-from-wishlist" data-id="<%= product._id %>">
                   <i class="fas fa-trash-alt icon-trash" aria-hidden="true"></i>
                 </button>
               </td>

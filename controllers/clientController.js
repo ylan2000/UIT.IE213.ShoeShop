@@ -141,11 +141,16 @@ exports.getWishlist = async (req, res, next) => {
       );
     }
 
-    var wishlist = new Wishlist(req.session.wishlist);
-
+    var wishlistSession = new Wishlist(req.session.wishlist);
+    var wishlist = wishlistSession.generateArr()
+    let products = []
+    for (i = 0; i < wishlist.length; i++) {
+      const product = await Product.findOne({name: wishlist[i].item.name}).exec();
+      products.push(product)
+    }
     return res.status(200).render("pages/wishlist", {
       title: "Wishlist",
-      products: wishlist.generateArr(),
+      products: products,
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -164,10 +169,16 @@ exports.getCart = async (req, res, next) => {
       );
     }
 
-    var cart = new Cart(req.session.cart);
+    var cartSession = new Cart(req.session.cart);
+    var cart = cartSession.generateArr();
+    let products = []
+    for (i = 0; i < cart.length; i++) {
+      const product = await Product.findOne({name: cart[i].item.name}).exec();
+      products.push(product)
+    }
     return res.status(200).render("pages/cart", {
         title: "Cart",   
-        products: cart.generateArr(),
+        products: products,
         totalPrice: cart.totalPrice,
       }
     );
