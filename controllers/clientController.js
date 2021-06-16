@@ -45,6 +45,19 @@ exports.getProducts = async (req, res, next) => {
   next();
 };
 
+exports.searchProducts = async (req, res, next) =>{
+  try{
+    const q = req.query.q;
+    const matchedProducts = await Product.findOne({name: q.toLowerCase()});
+    res.status(200).render("pages/products", {
+      title: "Products", product: matchedProducts
+    });
+   } catch (err){
+       return res.status(400).json({status: "fail", message: err});
+       }
+  next();
+};
+
 exports.getVans = async (req, res, next) => {
   try {
     const product = await Product.find({"category.0.name" : "Vans"});
@@ -54,8 +67,8 @@ exports.getVans = async (req, res, next) => {
       products: product,
 
     });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
+  } catch (err){
+    return res.status(400).json({ status: "fail", message: err });
   }
 
   next();
@@ -95,8 +108,10 @@ exports.getConverse = async (req, res, next) => {
 exports.getProduct = async (req, res, next) => {
   try {
     // Render template
+    const slug = req.params.slug;
+    const product = await Product.findOne({slug: slug}).exec();
     return res.status(200).render("pages/detail", {
-      title: "Detail", 
+      title: "Detail", product: product
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });

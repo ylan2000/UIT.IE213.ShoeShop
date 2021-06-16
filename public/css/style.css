@@ -1042,7 +1042,7 @@ body {
     margin: 2rem 10rem 2rem 15rem;
     align-items: center;
     display: flex;
-    padding: 1.2rem 7.2rem; }
+    padding: 1.2rem; }
     .brandinfo__filter input[type=text] {
       width: 15rem;
       height: 2.7rem;
@@ -1051,8 +1051,27 @@ body {
       border-radius: 0.4rem;
       outline: none;
       padding: 1.2rem 1.4rem; }
-      .brandinfo__filter input[type=text]:hover {
-        background-color: #FFCED1; }
+  .brandinfo__filter-searchcontainer {
+    display: flex;
+    margin-top: 0.8rem; }
+  .brandinfo__filter-searchcontainer-btn {
+    float: right;
+    margin-right: 1.6rem; }
+    .brandinfo__filter-searchcontainer-btn button {
+      margin-left: 1.2rem;
+      height: 3rem;
+      border-radius: 1.9rem;
+      border-width: 0;
+      padding: 0 1.2rem;
+      outline: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #BDBDBD; }
+      .brandinfo__filter-searchcontainer-btn button:hover {
+        color: #444;
+        transition: 0.3s; }
   .brandinfo__filter-label {
     margin-right: 1.6rem;
     text-transform: uppercase; }
@@ -1076,7 +1095,7 @@ body {
       transition: 0.3s; }
   .brandinfo__filter-selection-container {
     min-width: 15.4rem;
-    padding: 0 2.2rem;
+    padding: 0 .2rem;
     height: 3.4rem;
     border-radius: .9rem;
     display: flex;
