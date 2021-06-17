@@ -728,6 +728,8 @@ body {
     display: block;
     margin-bottom: 1rem; }
   .detail__area {
+    margin-top: 5rem;
+    margin-bottom: 2rem;
     border: 1px solid #e5e5e5;
     padding: 2rem 8rem; }
   .detail__product-name {
@@ -738,7 +740,7 @@ body {
     padding-bottom: 0.6rem;
     color: #FF7D00; }
   .detail__items_container > span {
-    display: block;
+    display: flex;
     line-height: 2.1rem;
     margin-bottom: 0.9rem;
     margin-left: 4rem;
@@ -761,6 +763,72 @@ body {
     padding-left: 2rem; }
   .detail__final {
     padding-top: 5rem; }
+  .detail__feedback {
+    display: flex;
+    justify-content: space-between;
+    width: 50rem;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem; }
+    .detail__feedback i {
+      color: #FF7D00; }
+  .detail__feedback-comment {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem; }
+    .detail__feedback-comment i {
+      color: #FF7D00; }
+  .detail__feedback-container {
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e5e5e5;
+    padding: 2rem 4rem; }
+  .detail__feedback-date {
+    color: #15616D; }
+  .detail__feedback-overall i {
+    color: #FF7D00; }
+  .detail__feedback-column {
+    justify-content: space-around;
+    display: flex;
+    margin: 0;
+    padding: 0; }
+  .detail__feedback-overall-score {
+    text-transform: capitalize;
+    text-align: center;
+    margin: 5rem;
+    font-size: 7rem; }
+  .detail__overall-container {
+    margin: 3rem;
+    padding: 0; }
+  .detail__feedback-bar-container {
+    justify-content: space-between;
+    width: 60%;
+    text-align: right; }
+    .detail__feedback-bar-container .bar-5 {
+      margin: 0.5rem;
+      width: 80%;
+      height: 18px;
+      background-color: #FF7D00; }
+    .detail__feedback-bar-container .bar-4 {
+      margin: 0.5rem;
+      width: 70%;
+      height: 18px;
+      background-color: #FF7D00; }
+    .detail__feedback-bar-container .bar-3 {
+      margin: 0.5rem;
+      width: 60%;
+      height: 18px;
+      background-color: #FF7D00; }
+    .detail__feedback-bar-container .bar-2 {
+      margin: 0.5rem;
+      width: 40%;
+      height: 18px;
+      background-color: #FF7D00; }
+    .detail__feedback-bar-container .bar-1 {
+      margin: 0.5rem;
+      width: 55%;
+      height: 18px;
+      background-color: #FF7D00; }
 
 .btn-add-cart {
   background: #FF7D00;
@@ -1113,7 +1181,9 @@ body {
   .brandinfo__tag-container {
     flex: 0;
     padding-top: 5.3rem;
-    padding-right: 2rem; }
+    padding-right: 2rem;
+    margin-left: 15rem;
+    margin-right: 10rem; }
   .brandinfo__tag-size {
     padding: 1rem;
     font-weight: 600;
