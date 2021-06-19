@@ -1,5 +1,5 @@
 
-//Order
+// //Order
 
 const order = document.getElementById('orderBtn');
 
@@ -12,12 +12,13 @@ for (i=0; i < list.length; i++){
     })
 }
 
-
-async function sendData(type,cart,token) {
+async function sendData(type,cart,token,user) {
+    console.log(user);
     let res = await axios.post("/client/api/payment/", {
         type: type,
         cart: cart,
-        token: token
+        token: token,
+        user: user
     })
     sessionStorage.setItem("message", res.data.message)
     await axios.delete("client/api/payment/")
@@ -28,7 +29,7 @@ var stripeHandler = StripeCheckout.configure({
     key: stripePublicKey,
     locale: 'en',
     token: async function(token){
-        await sendData("card",cart,token.id);
+        await sendData("card",cart,token.id,user);
     }
 });
 
@@ -38,7 +39,7 @@ const purchase = async () => {
     for (index = 2; index < 3 && !(document.getElementsByClassName("payment__input")[index].checked); index++);
     switch (index) {
         case 2:
-            await sendData("direct",cart,"0")
+            await sendData("direct",cart,"0",user)
             break;
         case 3:
             stripeHandler.open({ amount: price })
@@ -46,35 +47,25 @@ const purchase = async () => {
     }
 }
 
-
-order.addEventListener('click',purchase);
-
-
+//User
+let user = {}
 
 
-/*const cart = []
+order.addEventListener('click',async () => {
+    user = {
+        fullname: $("#name").val(),
+        email: $("#email").val(),
+        phone: $("#phone").val(),
+        address: {
+            number: $("#add-num").val(),
+            city: $("#add-city").val(),
+            state: "Saigon",
+            ward: "11"
+        }
+    }
+    purchase();
+});
 
-const bodyCart = document.getElementsByClassName("cart__info");
 
-for (i = 0; i < bodyCart.length; i++) {
-  const cart_info = new Object();
-  cart_info["productName"] = bodyCart[i].getElementsByClassName("cart__product-name")[0].innerText;
-  cart_info["productPrice"] = bodyCart[i].getElementsByClassName("cart__product-price")[0].innerText;
-  cart.push(cart_info)
-}
 
-const total = document.getElementById("cart__totalMoney").innerText;
 
-const sendData = async () => {
-    await axios.post("/api/payment",{
-        cart: cart,
-        total: total,
-    }).then(function(res){
-        window.location = "/payment"
-    })
-}
-
-const submit = document.getElementById("submitBtn")
-
-submit.addEventListener('click',sendData)
-*/

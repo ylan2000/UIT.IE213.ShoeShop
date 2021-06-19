@@ -141,6 +141,7 @@ exports.postPaymentDone = async (req, res) => {
   let total = 0
   let cart = req.body.cart
   let product = []
+  let user = req.body.user;
   for (i = 0; i < cart.length; i++) {
     const item = await Product.findById(cart[i].id)
     total =  total + item.price * 100 * cart[i].qty
@@ -164,6 +165,7 @@ exports.postPaymentDone = async (req, res) => {
       total: total,
       paymentType: type,
       product: product,
+      user: user,
       status: true
     })
     const newTrans = await trans.save()
