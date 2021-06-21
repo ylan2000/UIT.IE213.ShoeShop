@@ -14,27 +14,28 @@
                 <a href="home">Home</a>
               </li>
               <span>&ThickSpace;&#62;&ThickSpace;</span>
-              <li class="breadcrumb-item active">Product Details</li>
+              <li class="breadcrumb-item active"><%= product.name %> </li>
             </ul>
           </nav>
         </div>
         <div class="detail__container">
           <div class="detail__row">
             <div class="detail__product-image">
-              <img src="uploads/" alt="item-image" />
+              <img src="<%= product.coverImagePath %>" alt="item-image" />
             </div>
             <div class="detail__productdetails">
-              <h3 class="detail__product-name"></h3>
-              <span class="detail__price">&dollar;</span>
+              <h3 class="detail__product-name"><%= product.name %></h3>
+              <span class="detail__price"><%= product.price%>&dollar;</span>
               <span class="detail__stock">
-                <b>In stock: </b>
-
-                <b>Out of stock</b>
-
+                <% if (product.quantity > 0) { %>
+                <b>In stock</b>
+                <% } else  { %>
+                <b>Out stock</b> 
+                <% } %>
                 <span> SKU PR_ </span>
               </span>
               <div class="detail__qty-add-cart">
-                <label for="detail__qty">Quantity</label>
+                <label for="detail__qty"><%= product.quantity %></label>
                 <input type="number" placeholder="1" id="detail__qty" />
                 <div class="btn-add-cart" href="cart">Add to cart</div>
               </div>
@@ -51,7 +52,9 @@
               <div class="detail__info">Product Details</div>
               <div class="detail__content">
                 <div class="detail__items">
-                  <div class="detail__items_container"></div>
+                  <div class="detail__items_container">
+                    <%= product.detail %>
+                  </div>
                 </div>
               </div>
             </div>
