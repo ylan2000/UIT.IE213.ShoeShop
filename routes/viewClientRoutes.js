@@ -28,13 +28,13 @@ router.get("/feedback", clientController.getFeedback);
 router.get("/about", clientController.getAbout);
 
 router.get("/orders", (req, res) => {
-  res.status(200).render("pages/orders", {
+  return res.status(200).render("pages/orders", {
     title: "Orders",
   });
 });
 
 router.get("/order-detail", (req, res) => {
-  res.status(200).render("pages/order-detail", {
+  return res.status(200).render("pages/order-detail", {
     title: "Order Detail",
   });
 });
@@ -46,14 +46,6 @@ router.get("/wishlist", clientController.getWishlist);
 
 //Check out
 router.get("/cart", clientController.getCart);
-
-router.post("/api/payment", clientController.postCheckout);
-
-router.get("/payment", clientController.postCheckout);
-
-router.post("/api/paymentDone",clientController.postPaymentDone);
-
-router.post("/api/paymentSuccess", (req,res) => {return res.send(req.body)})
 
 router.get("/checkout", clientController.getPayment);
 

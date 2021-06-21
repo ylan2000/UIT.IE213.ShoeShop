@@ -13,4 +13,8 @@ router
   .post(backendClientController.addToWishlist)
   .delete(backendClientController.removeFromWishlist)
 
+router
+  .route("/payment/")
+  .post(backendClientController.postPaymentDone)
+  .delete(backendClientController.removeCart)
 module.exports = router;
