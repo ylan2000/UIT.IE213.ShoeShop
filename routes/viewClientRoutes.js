@@ -12,6 +12,8 @@ router.get("/products", clientController.getProducts);
 
 router.get("/products/searchProducts", clientController.searchProducts);
 
+router.get("/products/sortProducts", clientController.sortProducts);
+
 router.get("/vans", clientController.getVans);
 
 router.get("/palladium", clientController.getPalladium);
