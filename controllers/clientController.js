@@ -48,12 +48,15 @@ exports.getFeedback = async (req, res, next) => {
   next();
 };
 
+// get products
 exports.getProducts = async (req, res, next) => {
   try {
+    const brand = req.params.brand || null;
+    const products = await Product.find({"category.0.name" : brand});
+
     // Render template
-    const products = await (await Product.find()).slice(0, 8);
     return res.status(200).render("pages/products", {
-      title: "Products", product: products
+      title: brand || "Products", product: products
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -64,7 +67,6 @@ exports.getProducts = async (req, res, next) => {
 
 exports.searchProducts = async (req, res, next) =>{
   try{
-    const q = req.query.q;
     const matchedProducts = await Product.findOne({name: q.toLowerCase()});
     res.status(200).render("pages/products", {
       title: "Products", product: matchedProducts
@@ -72,53 +74,6 @@ exports.searchProducts = async (req, res, next) =>{
    } catch (err){
        return res.status(400).json({status: "fail", message: err});
        }
-  next();
-};
-
-exports.getVans = async (req, res, next) => {
-  try {
-    const product = await Product.find({"category.0.name" : "Vans"});
-    // Render template
-    res.status(200).render("pages/products", {
-      title: "Vans",
-      products: product,
-
-    });
-  } catch (err){
-    return res.status(400).json({ status: "fail", message: err });
-  }
-
-  next();
-};
-
-exports.getPalladium = async (req, res, next) => {
-  try {
-    const product = await Product.find({"category.0.name" : "Palladium"});
-      // Render template
-      res.status(200).render("pages/products", {
-        title: "Palladium",
-        products: product,
-      });
-    } 
-    catch (err) {
-      res.status(404).json({ status: "fail", message: err });}
-
-  next();
-};
-
-exports.getConverse = async (req, res, next) => {
-  try {
-    const product = await Product.find({"category.0.name" : "Converse"});
-         // Render template
-        res.status(200).render("pages/products", {
-        title: "Converse",
-        products: product,
-    });
-    
-  } 
-  catch (err) {
-    res.status(404).json({ status: "fail", message: err });
-  }
   next();
 };
 
