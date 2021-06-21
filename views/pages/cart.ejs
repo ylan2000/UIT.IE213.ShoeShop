@@ -21,21 +21,21 @@
             <tr>
               <td>
                 <div class="cart__info">
-                  <img src="<%= product.item.coverImagePath %>" alt="<%= product.item.name %>" />
+                  <img src="<%= product.coverImagePath %>" alt="<%= product.name %>" />
                   <div>
                     <p class="cart__product-name">
-                      <%= product.item.name %>
+                      <%= product.name %>
                     </p>
                     <small
                       >Price:
-                      <span class="cart__product-price">$<%= product.item.price %></span></small
+                      <span class="cart__product-price">$<%= product.price %></span></small
                     >
                   </div>
                 </div>
               </td>
-              <td><input type="number" value="<%= product.qty; %>" class="product-quantity" data-id="<%= product.item._id %>" min="1" max="999" /></td>
-              <td class="product-full-price" data-id="<%= product.item._id %>">$<%= product.price %></td>
-              <td class="remove-from-cart" data-id="<%= product.item._id %>"><i class="fas fa-trash-alt icon-trash"></i></td>
+              <td><input type="number" value="<%= product.qty; %>" class="product-quantity" data-id="<%= product._id %>" min="1" max="999" /></td>
+              <td class="product-full-price" data-id="<%= product._id %>">$<%= product.price %></td>
+              <td class="remove-from-cart" data-id="<%= product._id %>"><i class="fas fa-trash-alt icon-trash"></i></td>
             </tr>
             <% }); %>
           </table>

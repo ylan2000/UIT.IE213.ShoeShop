@@ -96,6 +96,8 @@
     margin-bottom: 1rem;
   }
   &__area {
+    margin-top: 5rem;
+    margin-bottom: 2rem;
     border: 1px solid #e5e5e5;
     padding: 2rem 8rem;
   }
@@ -111,7 +113,7 @@
 
   &__items_container {
     & > span {
-      display: block;
+      display: flex;
       line-height: 2.1rem;
       margin-bottom: 0.9rem;
       margin-left: 4rem;
@@ -143,6 +145,66 @@
 
   &__final {
     padding-top: 5rem;
+  }
+  &__feedback{
+    display: flex;
+    justify-content: space-between;
+    width: 50rem;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    & i{
+      color: $color-primary-orange;
+    }
+  }
+  &__feedback-comment{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    & i{
+      color: $color-primary-orange;
+    }
+  }
+  &__feedback-container{
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e5e5e5;
+    padding: 2rem 4rem;
+  }
+  &__feedback-date{
+    color: $color-primary-blue;
+  }
+  &__feedback-overall{
+    & i{
+      color: $color-primary-orange;
+    }
+  }
+  &__feedback-column{
+    justify-content: space-around;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  &__feedback-overall-score{
+    text-transform: capitalize;
+    text-align: center;
+    margin: 5rem;
+    font-size: 7rem;
+  }
+  &__overall-container{
+    margin: 3rem;
+    padding: 0;
+
+  }
+  &__feedback-bar-container{
+    justify-content: space-between;
+    width: 60%;
+    text-align: right;
+    .bar-5 {margin: 0.5rem;width: 80%; height: 18px; background-color: $color-primary-orange;}
+    .bar-4 {margin: 0.5rem;width: 70%; height: 18px; background-color: $color-primary-orange;}
+    .bar-3 {margin: 0.5rem;width: 60%; height: 18px; background-color: $color-primary-orange;}
+    .bar-2 {margin: 0.5rem;width: 40%; height: 18px; background-color: $color-primary-orange;}
+    .bar-1 {margin: 0.5rem;width: 55%; height: 18px; background-color: $color-primary-orange;}
   }
 }
 

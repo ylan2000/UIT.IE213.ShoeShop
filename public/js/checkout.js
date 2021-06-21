@@ -1,56 +1,71 @@
-/*const cart = []
 
-const bodyCart = document.getElementsByClassName("cart__info");
+// //Order
 
-for (i = 0; i < bodyCart.length; i++) {
-  const cart_info = new Object();
-  cart_info["productName"] = bodyCart[i].getElementsByClassName("cart__product-name")[0].innerText;
-  cart_info["productPrice"] = bodyCart[i].getElementsByClassName("cart__product-price")[0].innerText;
-  cart.push(cart_info)
-}
+const order = document.getElementById('orderBtn');
 
-const total = document.getElementById("cart__totalMoney").innerText;
-
-const sendData = async () => {
-    await axios.post("/api/payment",{
-        cart: cart,
-        total: total,
-    }).then(function(res){
-        window.location = "/payment"
+const list = document.getElementsByClassName("payment__product-list")
+var cart = []
+for (i=0; i < list.length; i++){
+    cart.push({
+        id: list[i].getElementsByClassName("product_id")[0].getAttribute("data-product-id"),
+        qty: parseInt(list[i].getElementsByClassName("qty")[0].innerText.replace("x ","")),
     })
 }
 
-const submit = document.getElementById("submitBtn")
-
-submit.addEventListener('click',sendData)
-*/
-//Order
-
-const order = document.getElementById('orderBtn')
+async function sendData(type,cart,token,user) {
+    console.log(user);
+    let res = await axios.post("/client/api/payment/", {
+        type: type,
+        cart: cart,
+        token: token,
+        user: user
+    })
+    sessionStorage.setItem("message", res.data.message)
+    await axios.delete("client/api/payment/")
+    window.location="/"
+}
 
 var stripeHandler = StripeCheckout.configure({
     key: stripePublicKey,
     locale: 'en',
-    token: function(token){
-        var priceElement = document.getElementsByClassName("cost")[0];
-        var price = parseFloat(priceElement.innerText.replace('$','')) * 100;
-        axios.post("/api/paymentDone", {
-            stripeTokenId: token.id,
-            total: price
-        }).then(function(res){
-            sessionStorage.setItem("message", res.data.message)
-        }).then(function(res){window.location = "/"}).catch(function(err){
-            console.error(err)
-        })
+    token: async function(token){
+        await sendData("card",cart,token.id,user);
     }
-})
+});
 
-function purchase(){
+const purchase = async () => {
     var priceElement = document.getElementsByClassName("cost")[0];
     var price = parseFloat(priceElement.innerText.replace('$','')) * 100;
-    stripeHandler.open({
-        amount: price
-    })
+    for (index = 2; index < 3 && !(document.getElementsByClassName("payment__input")[index].checked); index++);
+    switch (index) {
+        case 2:
+            await sendData("direct",cart,"0",user)
+            break;
+        case 3:
+            stripeHandler.open({ amount: price })
+            break;
+    }
 }
 
-order.addEventListener('click',purchase)
+//User
+let user = {}
+
+
+order.addEventListener('click',async () => {
+    user = {
+        fullname: $("#name").val(),
+        email: $("#email").val(),
+        phone: $("#phone").val(),
+        address: {
+            number: $("#add-num").val(),
+            city: $("#add-city").val(),
+            state: "Saigon",
+            ward: "11"
+        }
+    }
+    purchase();
+});
+
+
+
+
