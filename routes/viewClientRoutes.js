@@ -9,15 +9,9 @@ router.get("/", clientController.getHome);
 
 router.get("/home", clientController.getHome);
 
-router.get("/products", clientController.getProducts);
+router.get("/products/:brand?", clientController.getProducts);
 
 router.get("/products/searchProducts", clientController.searchProducts);
-
-router.get("/vans", clientController.getVans);
-
-router.get("/palladium", clientController.getPalladium);
-
-router.get("/converse", clientController.getConverse);
 
 router.get("/product/:slug", clientController.getProduct);
 
