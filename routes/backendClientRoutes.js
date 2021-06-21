@@ -12,5 +12,10 @@ router
   .route("/wishlist/:id")
   .post(backendClientController.addToWishlist)
   .delete(backendClientController.removeFromWishlist)
-
+router
+  .route("/register")
+  .post(backendClientController.register)
+router
+  .route("/login")
+  .post(backendClientController.login)
 module.exports = router;

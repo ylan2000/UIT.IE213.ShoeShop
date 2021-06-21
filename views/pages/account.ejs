@@ -15,7 +15,7 @@
           <h3>My account</h3>
         </div>
         <hr />
-
+        <% if (session.user && typeof session.user != 'undefined') {%>
         <form
           method="POST"
           action="/account/updateDB/"
@@ -31,7 +31,7 @@
               id="UsrName"
               name="Username"
               class="text_info_style"
-              value=" "
+              value="<%= session.user.userName %>"
               readonly
             />
 
@@ -40,7 +40,7 @@
               <input
                 type="text"
                 id="FullName"
-                value=" "
+                value="<%= session.user.fullName %>"
                 name="FullName"
                 class="text_info_style"
               />
@@ -51,7 +51,7 @@
               <input
                 type="text"
                 id="PhoneNum"
-                value=" "
+                value="<%= session.user.phone %>"
                 name="PhoneNum"
                 class="text_info_style"
               />
@@ -64,7 +64,7 @@
                 type="text"
                 id="Email"
                 name="Email"
-                value=" "
+                value="<%= session.user.email %>"
                 class="text_info_style"
               />
             </div>
@@ -75,12 +75,13 @@
                 type="text"
                 id="AddrInfo"
                 name="AddrInfo"
-                value=" "
+                value="<%= session.user.address %>"
                 class="address_info_style"
               />
             </div>
           </div>
         </form>
+      <% } %>
       </div>
     </div>
     <%- include('../partials/footer'); -%> <%-

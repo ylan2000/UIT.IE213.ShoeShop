@@ -1,10 +1,12 @@
 const {Product} = require('../models/productModel');
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
-const {Transaction} = require('../models/transactionModel')
+const {Transaction} = require('../models/transactionModel');
+const User = require("../models/userModel");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const axios = require("axios")
+
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
@@ -265,4 +267,53 @@ exports.postPaymentDone = async(req, res) => {
     console.log(err)
     res.status(500).end()
   })
+}
+
+exports.getLoginFirst = async(req, res, next) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/login-first", { title: "Sign In"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+  next();
+}
+
+exports.getPermissionDenied = async(req, res, next) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/permission-denied", { title: "Sign In"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+  next();
+}
+
+exports.getSignIn = async (req, res, next) => {
+  try {
+    
+    // Render template
+    return res.status(200).render("pages/signIn", { title: "Sign In"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+exports.getSignUp = async (req, res, next) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/signUp", { title: "Sign Up"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+exports.logout = (req, res) => {
+  req.logout();
+  req.session.user = null;
+  return res.redirect('back'); // redirect ve trang hien tai
 }
