@@ -1,14 +1,90 @@
 .brandinfo{
-  margin-bottom: 15rem;
-    &__img-palla{
-      margin-left:45rem;
-      margin-top: 10rem; 
-      height: 30rem;
-      width: 30rem; 
-        opacity: 30%;
-        transition: all 0.3s ease-in;
-        &:hover{
-        opacity: 90%;
+    margin-bottom: 15rem;
+      &__img-palladium{
+        margin-left:45rem;
+        margin-top: 10rem; 
+        height: 30rem;
+        width: 30rem; 
+          opacity: 30%;
+          transition: all 0.3s ease-in;
+          &:hover{
+          opacity: 90%;
+          }
+      }
+      &__img-converse{ 
+        width: 50rem;
+        height: auto;
+        margin:10rem auto;
+          opacity: 30%;
+          transition: all 0.3s ease-in;
+          &:hover{
+          opacity: 90%;
+          }
+      }
+      &__img-vans{ 
+        width:40rem;
+        height:auto;
+        margin:10rem auto;
+          opacity: 30%;
+          transition: all 0.3s ease-in;
+          &:hover{
+          opacity: 90%;
+          }
+      }
+      &__brandtitle{
+        margin: 5rem 30rem 5rem 30rem;
+        border-width: 5rem;
+        align-items: center;
+        
+      }
+      &__paginationcontainer{
+        display:flex;
+        float:right;
+        margin-top: 1rem;
+        padding-top:5rem;
+        margin-bottom:10rem;
+      }
+      &__filter{
+        margin: 2rem 10rem 2rem 15rem;
+        align-items: center;
+        display:flex;
+        padding: 1.2rem;
+        input[type=text] {
+          width: 15rem;
+          height: 2.7rem;
+          margin-left: 2rem;
+          border: 0.1rem solid ;
+          border-radius: 0.4rem;
+          outline:none;
+          padding: 1.2rem 1.4rem;
+      }
+      }
+      &__filter-searchcontainer{
+        display: flex;
+        margin-top:0.8rem;
+        
+        
+        
+      }
+      &__filter-searchcontainer-btn{
+        float: right;
+        margin-right: 1.6rem;
+        button{ 
+          margin-left:1.2rem;
+          height: 3rem;
+          border-radius: 1.9rem;
+          border-width: 0;
+          padding: 0 1.2rem;
+          outline: none;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content:center;
+          background-color: $color-dark-4;
+          &:hover{
+            color:$color-dark-1;
+            transition:0.3s;
+          }
         }
     }
     &__img-cv{ 
@@ -125,6 +201,32 @@
 
       &:hover &__option{
         display: block;
+        padding: 0.4rem 0;
+        &:hover{
+          color:$color-dark-2;
+        }
+      }
+      &__tag-container{
+        flex: 0;
+        padding-top:5.3rem;
+        padding-right: 2rem;
+        margin-left: 10rem;
+        margin-right: 10rem;
+      }
+      &__tag-size{
+        padding: 1rem;
+        font-weight: 600;
+        color: $color-primary-orange;
+      }
+      &__tag{
+        border-bottom: 0.1rem solid $color-dark-4;
+        padding: 1rem;
+        margin: 0.2rem;
+        & p{
+        &:hover{
+          color:$color-primary-orange;
+        }
+      }
       }
       
       &__option{

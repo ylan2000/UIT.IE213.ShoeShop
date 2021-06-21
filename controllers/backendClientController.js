@@ -2,6 +2,9 @@ const {Product} = require("../models/productModel");
 const {Transaction} = require('../models/transactionModel')
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
+const User = require("../models/userModel");
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 
@@ -131,6 +134,118 @@ exports.removeFromWishlist = async (req, res, next) => {
   next();
 };
 
+exports.register = async (req,res) => {
+  const { fullname, username, email, phone, password, pwdrepeat} = req.body;
+  let errors = [];
+
+  //Check required fields
+  if(!fullname || !username || !email || !phone || !password || !pwdrepeat){
+    errors.push({msg: 'Please fill in all fields'});
+  }
+
+  // Check password match
+  if(password != pwdrepeat){
+    errors.push({msg: 'Passwords do not match'});
+  }
+
+  // Check pass length (should be at least 8 characters long)
+  if(password.length < 8 && password.length > 0){
+    errors.push({msg: 'Passwords should be at least 8 characters'});
+  }
+  // Check phone length
+  if(phone.length > 10){
+    errors.push({msg: 'Phone number allows maximumu 10 numbers in length'});
+  }
+  if(errors.length > 0){
+    //Validation pass
+    return res.render('pages/signUp', {
+      title: "Sign Up",
+      errors,
+      fullname,
+      username,
+      email,
+      phone,
+      password,
+      pwdrepeat
+    });
+    // console.log(errors);
+  }else{
+    // Validation pass
+    User.findOne({
+      $or: [
+        { email:email },
+        { userName: username }
+      ]
+    })
+    .then(user=>{
+      if(user){
+        // Users exists
+        errors.push({msg: 'Duplicate email or username, please try again'});
+        return res.render('pages/signUp', {
+          title: "Sign Up",
+          errors,
+          fullname,
+          username,
+          email,
+          phone,
+          password,
+          pwdrepeat
+        });
+        //console.log(errors);
+      }else{
+        var newUser = new User({
+          fullName: fullname,
+          userName: username,
+          email: email,
+          phone: phone,
+          password: password
+        });
+
+        // Hash password
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(User => {
+                req.flash('success_msg', 'Registered successfully, you can log in now');
+                return res.redirect('/signIn');
+              })
+              .catch(err => console.log(err));
+          });
+        });
+      }
+    });
+  }
+};
+
+
+exports.login = (req, res, next) => {
+  passport.authenticate('local', function(err, user, info) {
+    // successRedirect: '/', 
+    // failureRedirect: '/signIn',
+    // failureFlash: true
+    req.session.user = user;
+    req.session.save();
+    // console.log(req.session.user);
+    if (err) { 
+      return next(err); 
+    }
+    if (!user) { 
+      return res.redirect('/signIn'); 
+    } else {
+      if(req.session.user.role == 1)
+        return res.redirect('/admin');
+      else
+        return res.redirect('/');
+    }
+    // req.logIn(user, function(err) {
+    //   if (err) { return next(err); }
+    //     return res.redirect('/users/' + user.username);
+    // });
+  }) (req, res, next);
+};
 exports.removeCart = async(req,res,next) => {
   req.session.cart = undefined;
   return res.send(req.session.cart)

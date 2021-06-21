@@ -1,31 +1,31 @@
 const express = require("express");
 const adminController = require("../controllers/adminController");
-
+const {authRole} = require('../public/js/authentication');
 const router = express.Router();
 
-router.get("/", adminController.getDashboard);
+router.get("/", authRole, adminController.getDashboard);
 
-router.get("/dashboard", adminController.getDashboard);
+router.get("/dashboard", authRole, adminController.getDashboard);
 
 // categories
-router.get("/categories", adminController.getCategories);
+router.get("/categories", authRole, adminController.getCategories);
 
 // orders
-router.get("/orders", adminController.getOrders);
+router.get("/orders", authRole, adminController.getOrders);
 
 // products
-router.use("/products", adminController.getProducts);
-router.use("/add-product", adminController.getAddProduct);
-router.use("/edit-product/:id", adminController.getEditProduct);
+router.use("/products", authRole, adminController.getProducts);
+router.use("/add-product", authRole, adminController.getAddProduct);
+router.use("/edit-product/:id", authRole, adminController.getEditProduct);
 
 // users
-router.use("/users", adminController.getUsers);
-router.use("/add-user", adminController.getAddUser);
+router.use("/users", authRole, adminController.getUsers);
+router.use("/add-user", authRole, adminController.getAddUser);
 
 // feedbacks
-router.use("/feedbacks", adminController.getFeedbacks);
+router.use("/feedbacks", authRole, adminController.getFeedbacks);
 
 //delete
-router.delete("/product/delete/:id", adminController.delete); 
+router.delete("/product/delete/:id", authRole, adminController.delete); 
 
 module.exports = router;

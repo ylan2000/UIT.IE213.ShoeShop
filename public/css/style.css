@@ -1071,15 +1071,75 @@ body {
 
 .brandinfo {
   margin-bottom: 15rem; }
-  .brandinfo__img-palla {
+  .brandinfo__img-palladium {
     margin-left: 45rem;
     margin-top: 10rem;
     height: 30rem;
     width: 30rem;
     opacity: 30%;
     transition: all 0.3s ease-in; }
-    .brandinfo__img-palla:hover {
+    .brandinfo__img-palladium:hover {
       opacity: 90%; }
+  .brandinfo__img-converse {
+    width: 50rem;
+    height: auto;
+    margin: 10rem auto;
+    opacity: 30%;
+    transition: all 0.3s ease-in; }
+    .brandinfo__img-converse:hover {
+      opacity: 90%; }
+  .brandinfo__img-vans {
+    width: 40rem;
+    height: auto;
+    margin: 10rem auto;
+    opacity: 30%;
+    transition: all 0.3s ease-in; }
+    .brandinfo__img-vans:hover {
+      opacity: 90%; }
+  .brandinfo__brandtitle {
+    margin: 5rem 30rem 5rem 30rem;
+    border-width: 5rem;
+    align-items: center; }
+  .brandinfo__paginationcontainer {
+    display: flex;
+    float: right;
+    margin-top: 1rem;
+    padding-top: 5rem;
+    margin-bottom: 10rem; }
+  .brandinfo__filter {
+    margin: 2rem 10rem 2rem 15rem;
+    align-items: center;
+    display: flex;
+    padding: 1.2rem; }
+    .brandinfo__filter input[type=text] {
+      width: 15rem;
+      height: 2.7rem;
+      margin-left: 2rem;
+      border: 0.1rem solid;
+      border-radius: 0.4rem;
+      outline: none;
+      padding: 1.2rem 1.4rem; }
+  .brandinfo__filter-searchcontainer {
+    display: flex;
+    margin-top: 0.8rem; }
+  .brandinfo__filter-searchcontainer-btn {
+    float: right;
+    margin-right: 1.6rem; }
+    .brandinfo__filter-searchcontainer-btn button {
+      margin-left: 1.2rem;
+      height: 3rem;
+      border-radius: 1.9rem;
+      border-width: 0;
+      padding: 0 1.2rem;
+      outline: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #BDBDBD; }
+      .brandinfo__filter-searchcontainer-btn button:hover {
+        color: #444;
+        transition: 0.3s; }
   .brandinfo__img-cv {
     width: 50rem;
     height: auto;
@@ -1173,7 +1233,26 @@ body {
     padding-left: 2rem;
     position: relative; }
     .brandinfo__filter-selection-container:hover .brandinfo__filter-selection-container__option {
-      display: block; }
+      display: block;
+      padding: 0.4rem 0; }
+      .brandinfo__filter-selection-container:hover .brandinfo__filter-selection-container__option:hover {
+        color: #757575; }
+    .brandinfo__filter-selection-container__tag-container {
+      flex: 0;
+      padding-top: 5.3rem;
+      padding-right: 2rem;
+      margin-left: 10rem;
+      margin-right: 10rem; }
+    .brandinfo__filter-selection-container__tag-size {
+      padding: 1rem;
+      font-weight: 600;
+      color: #FF7D00; }
+    .brandinfo__filter-selection-container__tag {
+      border-bottom: 0.1rem solid #BDBDBD;
+      padding: 1rem;
+      margin: 0.2rem; }
+      .brandinfo__filter-selection-container__tag p:hover {
+        color: #FF7D00; }
     .brandinfo__filter-selection-container__option {
       display: none;
       position: absolute;

@@ -9,21 +9,21 @@
 
       <ul class="nav__sub-menu">
         <li>
-          <a href="/palladium">
+          <a href="/products/palladium">
             <div class="nav__img"><img src="/images/nav-palladium.jpg" alt="Palladium"></div>
             <p>palladium</p>
           </a>
         </li>
 
         <li>
-          <a href="/converse">
+          <a href="/products/converse">
            <div class="nav__img"><img src="/images/nav-converse.jpg" alt="Converse"></div> 
             <p>converse</p>
           </a>
         </li>
 
         <li>
-          <a href="/vans">
+          <a href="/products/vans">
             <div class="nav__img"><img src="/images/nav-vans.jpg" alt="Vans"></div>
             <p>VANS</p>
           </a>
@@ -44,7 +44,7 @@
         <a href="wishlist" class="flex-center"
           ><img src="/icon/like.svg" alt="Wish list" class="icon" /><span
             class="nav__notification" id="wishlist-number"
-            ><% if (typeof session.wishlist != 'undefined') {%>
+            ><% if (session.wishilist && typeof session.whilist != 'underfined') {%>
               <%= session.wishlist.totalQty %>
             <%} else {%>
               <%= 0%>
@@ -69,11 +69,14 @@
 
       <li>
         <a href="/account/show/" class="nav__button nav__account"></a>
-        <a href="/login/logout" class="nav__log-out">Log out</a>
-      </li>
-
-      <li>
-        <p data-modal-target="#login" class="nav__button">Sign in</p>
+        <% if (session.user && typeof session.user != 'undefined') {%>
+          <a href="/account" class="nav__button"><%= session.user.userName %></a>
+          <a href="/logout" class="nav__button">Log out</a>
+        <% } else { %>
+          <a href="/signIn" class="nav__button" style = "border: 1px solid #FF7D00;border-radius: 5px; padding: 5px">Sign In</a>
+          <a href="/signUp" class="nav__button">Sign up</a>
+        <% } %>
+        
       </li>
     </ul>
   </div>

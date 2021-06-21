@@ -19,48 +19,11 @@
           </nav>
         </div>
         <div class="brandinfo_container">
-          <% if(title == "Palladium") {%>
-            <div class="brandinfo__img-palla">
-              <img src="images/palladium-logo.jpg" />
+          <% if(title !== "Products") {%>
+            <div class='brandinfo__img-<%= title %>'>
+              <img src='/images/<%= title %>-logo.png' />
             </div>
           <% }  %> 
-          
-            <% if(title == "Converse"){ %>
-            <div class="brandinfo__img-cv">
-              <img src="images/converse-logo.png" />
-            </div>
-          <% } %> 
-
-          <% if(title == "Vans") {%>
-            <div class="brandinfo__img-vans">
-              <img src="images/vans-logo.png" />
-            </div>
-          <% } %> 
-          
-          <% if(title == "Converse") {%>
-          <div class="brandinfo__brandtitle">
-            Palladium is one of most favorite brand for teenagers and kids. Not
-            only favourable price, but also high quality, Palladium promises
-            bring out long term journey too.
-          </div>
-
-          <% } %> 
-
-          <% if(title == "Vans") {%>
-            <div class="brandinfo__brandtitle">
-              Palladium is one of most favorite brand for teenagers and kids. Not
-              only favourable price, but also high quality, Palladium promises
-              bring out long term journey too.
-            </div>
-            <% } %> 
-
-          <% if(title == "Palladium") {%>
-            <div class="brandinfo__brandtitle">
-              Palladium is one of most favorite brand for teenagers and kids. Not
-              only favourable price, but also high quality, Palladium promises
-              bring out long term journey too.
-            </div>
-          <% } %> 
 
           <form method="GET" action="/products/sortProducts" >
             <div class="brandinfo__filter">

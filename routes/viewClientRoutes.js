@@ -1,24 +1,19 @@
 const express = require("express");
 const clientController = require("../controllers/clientController");
-
 const router = express.Router();
+const {user} = require("../models/userModel");
+const {ensureAuthenicated} = require('../public/js/authentication');
 
 // --- public routes
 router.get("/", clientController.getHome);
 
 router.get("/home", clientController.getHome);
 
-router.get("/products", clientController.getProducts);
+router.get("/products/:brand?", clientController.getProducts);
 
 router.get("/products/searchProducts", clientController.searchProducts);
 
 router.get("/products/sortProducts", clientController.sortProducts);
-
-router.get("/vans", clientController.getVans);
-
-router.get("/palladium", clientController.getPalladium);
-
-router.get("/converse", clientController.getConverse);
 
 router.get("/product/:slug", clientController.getProduct);
 
@@ -42,15 +37,25 @@ router.get("/order-detail", (req, res) => {
 });
 
 //users
-router.get("/account", clientController.getAccount);
+router.get("/account" ,ensureAuthenicated , clientController.getAccount); // dung authenicate
 
-router.get("/wishlist", clientController.getWishlist);
+router.get("/wishlist", clientController.getWishlist); 
 
 //Check out
 router.get("/cart", clientController.getCart);
 
 router.get("/checkout", clientController.getPayment);
 
+// Sign in
+router.get("/signInFirst", clientController.getLoginFirst);
+
+router.get("/permissiondenied", clientController.getPermissionDenied);
+
+router.get("/signIn", clientController.getSignIn);
+
+router.get("/signUp", clientController.getSignUp);
+
+router.get("/logout", clientController.logout);
 //Error Pages
 router.get("*", clientController.get404);
 
