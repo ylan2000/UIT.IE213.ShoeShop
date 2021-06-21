@@ -158,7 +158,7 @@ exports.register = async (req,res) => {
   }
   if(errors.length > 0){
     //Validation pass
-    res.render('pages/signUp', {
+    return res.render('pages/signUp', {
       title: "Sign Up",
       errors,
       fullname,
@@ -168,7 +168,7 @@ exports.register = async (req,res) => {
       password,
       pwdrepeat
     });
-    console.log(errors);
+    // console.log(errors);
   }else{
     // Validation pass
     User.findOne({
@@ -181,7 +181,7 @@ exports.register = async (req,res) => {
       if(user){
         // Users exists
         errors.push({msg: 'Duplicate email or username, please try again'});
-        res.render('pages/signUp', {
+        return res.render('pages/signUp', {
           title: "Sign Up",
           errors,
           fullname,
@@ -191,7 +191,7 @@ exports.register = async (req,res) => {
           password,
           pwdrepeat
         });
-        console.log(errors);
+        //console.log(errors);
       }else{
         var newUser = new User({
           fullName: fullname,
@@ -210,7 +210,7 @@ exports.register = async (req,res) => {
               .save()
               .then(User => {
                 req.flash('success_msg', 'Registered successfully, you can log in now');
-                res.redirect('/signIn');
+                return res.redirect('/signIn');
               })
               .catch(err => console.log(err));
           });
