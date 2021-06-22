@@ -308,3 +308,14 @@ exports.logout = (req, res) => {
   req.session.user = null;
   return res.redirect('back'); // redirect ve trang hien tai
 }
+
+exports.getOrder = (req, res, next) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/clientOrder", { title: "Order"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+}
