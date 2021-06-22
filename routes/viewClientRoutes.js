@@ -9,11 +9,11 @@ router.get("/", clientController.getHome);
 
 router.get("/home", clientController.getHome);
 
-router.get("/products/:brand?", clientController.getProducts);
-
 router.get("/products/searchProducts", clientController.searchProducts);
 
 router.get("/products/sortProducts", clientController.sortProducts);
+
+router.get("/products/:brand?", clientController.getProducts);
 
 router.get("/product/:slug", clientController.getProduct);
 
