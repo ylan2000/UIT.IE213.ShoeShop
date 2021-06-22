@@ -51,12 +51,32 @@ exports.getFeedback = async (req, res, next) => {
 // get products
 exports.getProducts = async (req, res, next) => {
   try {
+    // get brand name
     const brand = req.params.brand || null;
-    const products = await Product.find({"category.0.name" : brand});
+    
+    // --- pagination ---
+    // get page query:
+    const page = req.query.page * 1 || 1; // convert string to number, default query page is 1
+    const limit = 12; // 12 products perpage
+    const skip = (page - 1) * limit; // number of products is skipped on each page
+    
+    const numProducts = await Product.countDocuments({ "category.0.name": brand });
+
+    if (req.query.page) {
+      // if skip products is greater than total products
+      if (skip >= numProducts) 
+        return res.status(404).json({ status: "fail", message: err });
+    }
+
+    const products = await Product.find({ "category.0.name": brand }).skip(skip).limit(limit);
 
     // Render template
     return res.status(200).render("pages/products", {
-      title: brand || "Products", product: products
+      title: brand || "Products", 
+      product: products,
+      current: page,
+      pages: Math.ceil(numProducts / limit),
+      searchQuery: null
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
