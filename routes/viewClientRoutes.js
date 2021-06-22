@@ -13,13 +13,17 @@ router.get("/products/searchProducts", clientController.searchProducts);
 
 router.get("/products/sortProducts", clientController.sortProducts);
 
+//lấy cái brand cho thanh navbar
 router.get("/products/:brand?", clientController.getProducts);
 
+//là để lấy detail theo slug
 router.get("/product/:slug", clientController.getProduct);
 
 router.get("/return-policy", clientController.getPolicy);
 
 router.get("/feedback", clientController.getFeedback);
+
+router.get("/clientOrder", clientController.getOrder);
 
 // --- protected routes
 router.get("/about", clientController.getAbout);
