@@ -35,7 +35,8 @@ img {
   display: flex; }
 
 .disabled-link {
-  cursor: pointer; }
+  cursor: pointer;
+  color: inherit; }
   .disabled-link a {
     pointer-events: none; }
 
@@ -310,7 +311,7 @@ body {
   background-color: #e6410f; }
 
 .pagination {
-  width: 40rem;
+  display: flex;
   margin-left: 5rem; }
 
 .pagination a {
@@ -321,12 +322,16 @@ body {
   text-decoration: none;
   transition: background-color .3s; }
 
-.pagination a.active {
+.pagination .active a {
   background-color: #FF7D00;
-  color: #fff; }
+  color: #fff;
+  cursor: pointer; }
 
-.pagination a:hover:not(.active) {
-  background-color: #fff; }
+.pagination li a:hover:not(.active a) {
+  color: #FF7D00; }
+
+.pagination .disabled-link {
+  cursor: auto; }
 
 .breadcrumb {
   padding: 1.4rem 0;

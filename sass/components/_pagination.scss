@@ -1,5 +1,6 @@
 .pagination {
-    width: 40rem;
+    // width: 40rem;
+    display: flex;
     margin-left: 5rem;
   }
   .pagination a {
@@ -11,11 +12,16 @@
     transition: background-color .3s;
   }
    
-.pagination a.active {
+.pagination .active a {
     background-color: $color-primary-orange;
     color: $color-white;
+    cursor: pointer;
   }
    
-.pagination a:hover:not(.active) {
-    background-color: $color-white;
+.pagination li a:hover:not(.active a) {
+    color: $color-primary-orange;
+  }
+
+.pagination .disabled-link {
+    cursor: auto;
   }

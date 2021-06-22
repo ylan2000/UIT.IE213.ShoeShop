@@ -45,6 +45,7 @@ img {
 
 .disabled-link {
   cursor: pointer;
+  color: inherit;
 
   & a {
     pointer-events: none;
