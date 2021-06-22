@@ -1450,6 +1450,16 @@ body {
 
 .right_flex_container {
   flex: 5; }
+  .right_flex_container button {
+    border: solid 0.1rem;
+    border-radius: 2.9rem;
+    font-size: large;
+    height: 3.5rem;
+    width: 15rem;
+    background-color: #15616D;
+    color: #f1f1f1; }
+    .right_flex_container button:hover {
+      background-color: #78290F; }
 
 .account__SaveBtn {
   background-color: #ffb166;
@@ -1466,6 +1476,15 @@ body {
 
 .info_container_style {
   margin-top: 3rem; }
+  .info_container_style label {
+    color: #15616D;
+    font-size: 3rem;
+    text-emphasis: bold; }
+  .info_container_style input {
+    border: none;
+    font-size: 2rem;
+    text-emphasis: bold;
+    text-align: right; }
 
 .text_info_style {
   width: 50rem;
