@@ -25,12 +25,12 @@
             </div>
           <% }  %> 
 
-          <form method="GET" action="/products/sortProducts">
+          <form method="GET" action="/products">
             <div class="brandinfo__filter">
               <div class="brandinfo__filter-label">Sort by</div>
-              <input type="submit" id="popular" value="popular" name="q" class="brandinfo__filter-btn">
-              <input type="submit"  value="newest" name="q" class="brandinfo__filter-btn">
-              <input type="submit" id="favorite" name="q" value="Favorite" class="brandinfo__filter-btn">
+              <input type="submit" id="popular" value="popular" name="sort" class="brandinfo__filter-btn">
+              <input type="submit"  value="newest" name="sort" class="brandinfo__filter-btn">
+              <input type="submit" id="favorite" name="sort" value="favorite" class="brandinfo__filter-btn">
               <div class="brandinfo__filter-selection-container">
                 <div class="brandinfo__filter-selection">Price</div>
                 <i
@@ -38,17 +38,17 @@
                 ></i>
                 <ul class="brandinfo__filter-selection-container__option">
                   <li class="brandinfo__filter__option__item">
-                    <input type="submit"  id="lowest" name="q" value="Lowest" class="brandinfo__select-input">
+                    <input type="submit"  id="lowest" name="sort" value="lowest" class="brandinfo__select-input">
                   </li>
                   <li class="brandinfo__filter__option__item">
-                    <input type="submit" id="highest" name="q" value="Highest" class="brandinfo__select-input">
+                    <input type="submit" id="highest" name="sort" value="highest" class="brandinfo__select-input">
                   </li>
                 </ul>
               </div>
             </form>
             <div class="brandinfo__filter-searchcontainer">
-             <form action="/products/searchProducts" method="GET">
-               <input name="q" type="text" placeholder="Search">
+             <form action="/products" method="GET">
+               <input name="search" type="text" placeholder="Search">
                <div class="brandinfo__filter-searchcontainer-btn">
                  <button>Search</button>
           </div>
@@ -109,11 +109,7 @@
                       <% if (current == 1) { %>
                           <li class="disabled-link"><a>First</a></li>
                       <% } else { %>
-                        <% if (searchQuery) { %>
-                          <li><a href="/products?search=<%= searchQuery %>&page=1">First</a></li>
-                        <% } else { %>
-                          <li><a href="/products?page=1">First</a></li>
-                        <% } %>
+                          <li><a href="/products?search=<%= searchQuery %>&sort=<%= sortQuery %>&page=1">First</a></li>
                       <% } %>
 
                       <!-- determine the start of pagination -->
@@ -136,11 +132,7 @@
                           
                           <!-- otherwise display links -->
                           <% } else { %>
-                            <% if (searchQuery) { %>
-                              <li><a href="/products?search=<%= searchQuery %>&page=<%= i %>"><%= i %></a></li>
-                            <% } else { %>
-                              <li><a href="/products?page=<%= i %>"><%= i %></a></li>
-                            <% } %>
+                              <li><a href="/products?search=<%= searchQuery %>&sort=<%= sortQuery %>&page=<%= i %>"><%= i %></a></li>
                           <% } %>
                       <% } %>
                     
@@ -148,11 +140,7 @@
                       <% if (current == pages) { %>
                           <li class="disabled-link"><a>Last</a></li>
                       <% } else { %>
-                        <% if (searchQuery) { %>
-                          <li><a href="/products?search=<%= searchQuery %>&page=<%= pages %>">Last</a></li>
-                        <% } else { %>
-                          <li><a href="/products?page=<%= pages %>">Last</a></li>
-                        <% } %>
+                          <li><a href="/products?search=<%= searchQuery %>&sort=<%= sortQuery %>&page=<%= pages %>">Last</a></li>
                       <% } %>
                   </ul>
               <% } %>

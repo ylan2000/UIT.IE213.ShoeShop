@@ -68,7 +68,29 @@ exports.getProducts = async (req, res, next) => {
         return res.status(404).json({ status: "fail", message: err });
     }
 
-    const products = await Product.find({ "category.0.name": brand }).skip(skip).limit(limit);
+    // --- search ---
+    // get search info, if null, match all
+    const searchQuery = req.query.search || null;
+    const searchField = searchQuery ? searchQuery : ".+";
+
+    // --- sort ---
+    const sortQuery = req.query.sort || null;
+
+    // default sort field is createdDate with criteria is asc
+    let sortField = "createdDate", criteria = -1;
+    
+    if (sortQuery) {
+      if (sortQuery == "lowest") {
+        sortField = "price";
+        criteria = 1;
+      } else if (sortQuery == "highest") {
+        sortField = "price";
+        criteria = -1;
+      } 
+    } 
+
+    // find products that match all query
+    const products = await Product.find({ "category.0.name": brand, "name": new RegExp(searchField, "i") }).sort([[sortField, criteria]]).skip(skip).limit(limit);
 
     // Render template
     return res.status(200).render("pages/products", {
@@ -76,54 +98,13 @@ exports.getProducts = async (req, res, next) => {
       product: products,
       current: page,
       pages: Math.ceil(numProducts / limit),
-      searchQuery: null
+      searchQuery: searchQuery,
+      sortQuery: sortQuery
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
 
-  next();
-};
-
-exports.sortProducts = async (req, res, next) => {
-  try{
-    const q = req.query.q;
-    var sort = [];
-    if(q == "newest"){
-      sort = await (Product.find().sort({createdDate: -1}));
-    }
-    if(q == "Lowest"){
-      sort = await (Product.find().sort({price: 1}));
-    }
-    if(q == "Highest"){
-      sort= await (Product.find().sort({price: -1}));
-    }
-    res.status(200).render("pages/products", {
-      title: "Products", product: sort
-    });
-  } catch(err){
-    return res.status(404).json({status: "fail", message: err});
-  }
-}
-
-exports.searchProducts = async (req, res, next) =>{
-  try{
-    const q = req.query.q;
-    const matchedProducts = await Product.find();
-    var product =[];
-    console.log(matchedProducts);
-    console.log(q);
-    for(i =0; i < matchedProducts.length; i++){
-      if(matchedProducts[i].name.toUpperCase().includes(q.toUpperCase())){
-        product.push(matchedProducts[i]);
-      }
-    }
-    res.status(200).render("pages/products", {
-      title: "Products", product: product
-    });
-   } catch (err){
-       return res.status(400).json({status: "fail", message: err});
-       }
   next();
 };
 

@@ -9,11 +9,7 @@ router.get("/", clientController.getHome);
 
 router.get("/home", clientController.getHome);
 
-router.get("/products/searchProducts", clientController.searchProducts);
-
-router.get("/products/sortProducts", clientController.sortProducts);
-
-//lấy cái brand cho thanh navbar
+// get products
 router.get("/products/:brand?", clientController.getProducts);
 
 //là để lấy detail theo slug
