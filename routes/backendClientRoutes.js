@@ -25,4 +25,9 @@ router
   .route("/payment/")
   .post(backendClientController.postPaymentDone)
   .delete(backendClientController.removeCart)
+
+// router
+//   .route("/feedback")
+//   .post(backendClientController.loadfeedback)
+
 module.exports = router;
