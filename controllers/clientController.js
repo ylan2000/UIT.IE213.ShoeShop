@@ -57,7 +57,7 @@ exports.getProducts = async (req, res, next) => {
     // --- pagination ---
     // get page query:
     const page = req.query.page * 1 || 1; // convert string to number, default query page is 1
-    const limit = 1; // 20 products perpage
+    const limit = 12; // 12 products perpage
     const skip = (page - 1) * limit; // number of products is skipped on each page
     
     const numProducts = await Product.countDocuments({ "category.0.name": brand });
