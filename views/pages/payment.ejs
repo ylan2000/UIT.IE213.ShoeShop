@@ -138,8 +138,6 @@
                     </div>-->
                 </form> 
             </section>
-            
-            
             <section class="payment__main-sidebar col-1"> 
                 <ul class="listgroup">
                     <li class="listgroup__item title">ORDER SUMMARY</li>
@@ -165,7 +163,7 @@
                     <li class="listgroup__item">
                         <span class="text-left">Subtotal</span>
                         <span class="text-right"> 
-                            $<span><%= total%></span>
+                            $<span><%#= total%></span>
                         </span>
                     </li>
                     
@@ -215,4 +213,16 @@
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>  
 </body>
+<script> //script fill user 
+    if (typeof '<%- session.user%>' != "undefined") {
+        $("#name").val('<%- session.user.fullName%>');
+        $("#email").val('<%- session.user.email%>')
+        $("#phone").val('<%- session.user.phone%>')
+        if (typeof '<%- session.user.address%>' != "undefined") {
+            const cityValue = $('option:contains("<%- session.user.address.city %>")').val();
+            $("#add-num").val('<%- session.user.address.number%>')
+            $("#add-city").val(cityValue).change();
+        }
+    }
+</script>
 </html>

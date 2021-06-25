@@ -9,4 +9,7 @@ router.post("/product/add",adminController.postAddProduct);
 router.put("/product/edit/:id",adminController.putUpdateProduct);
 
 //~~~~~~~~USER~~~~~~~~~~~~
+
+//~~~~~~~~ORDER~~~~~~~~~~~
+router.delete("/order/:id",adminController.deleteOrder);
 module.exports = router;

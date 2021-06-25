@@ -1,5 +1,6 @@
 const {Product} = require("../models/productModel")
 const {Category} = require("../models/categoryModel")
+const {Transaction} = require("../models/transactionModel")
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
 
 const { Router } = require('express');
@@ -34,9 +35,10 @@ exports.getCategories = async (req, res, next) => {
 // orders
 exports.getOrders = async (req, res, next) => {
   try {
+    const orders = await Transaction.find();
     // Render template
     return res.status(200).render("admin/pages/order/order", {
-      title: "Orders",
+      title: "Orders", orders: orders
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -205,4 +207,14 @@ exports.delete = async (req, res) => {
   }
 };
 
+exports.deleteOrder = async (req,res) => {
+  let order
+  try {
+    order = await Transaction.findById(req.params.id);
+    await order.remove();
+    return res.send("success");
+  } catch (error) {
+    return res.send(error);
+  }
+}
 

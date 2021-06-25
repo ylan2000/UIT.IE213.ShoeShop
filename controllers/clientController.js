@@ -1,8 +1,7 @@
 const {Product} = require('../models/productModel');
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
-const {Transaction} = require('../models/transactionModel');
-const User = require("../models/userModel");
+const {User} = require("../models/userModel");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 
@@ -181,12 +180,15 @@ exports.getCart = async (req, res, next) => {
     let products = []
     for (i = 0; i < cart.length; i++) {
       const product = await Product.findOne({name: cart[i].item.name}).exec();
-      products.push(product)
+      products.push({
+        info: product,
+        qty: cart[i].qty
+      })
     }
     return res.status(200).render("pages/cart", {
         title: "Cart",   
         products: products,
-        totalPrice: cart.totalPrice,
+        totalPrice: cartSession.totalPrice,
       }
     );
   } catch (err) {
@@ -203,11 +205,13 @@ exports.getPayment = async (req, res, next) => {
     }
 
     var cart = new Cart(req.session.cart);
+    //const user = await User.findOne({userName: req.session.user.userName}).exec()
 
     return res.status(200).render("pages/payment", {
       title: "Checkout",
       total:  cart.totalPrice,
       products: cart.generateArr(),
+      //user: user,
       stripePublicKey: stripePublicKey
     });
   } catch (err) {
@@ -229,26 +233,6 @@ exports.get404 = async (req, res, next) => {
 
   next();
 };
-
-exports.postPaymentDone = async(req, res) => {
-  //console.log(req.body.stripeTokenId)
-  stripe.charges.create({
-    amount: req.body.total,
-    source: req.body.stripeTokenId,
-    currency: 'usd',
-  }).then(async function(){
-    const trans = new Transaction({
-      total: req.body.total,
-      status: true
-    })
-    const newTrans = await trans.save()
-    console.log('Charge Successful')
-    res.json({ message: 'Successfully purchased items' })
-  }).catch(function(err){
-    console.log(err)
-    res.status(500).end()
-  })
-}
 
 exports.getLoginFirst = async(req, res, next) => {
   try {

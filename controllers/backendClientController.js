@@ -2,7 +2,7 @@ const {Product} = require("../models/productModel");
 const {Transaction} = require('../models/transactionModel')
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
-const User = require("../models/userModel");
+const {User} = require("../models/userModel");
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const dotenv = require("dotenv");
@@ -256,12 +256,16 @@ exports.postPaymentDone = async (req, res) => {
   let total = 0
   let cart = req.body.cart
   let product = []
-  let user = req.body.user;
+  const user = await User.findOne({email: req.body.user.email});
+  if (user.address == null || user.address.number==null || user.address.city==null) 
+    user.address = req.body.user.address;
+  req.session.user = user;
+  req.session.save();
   for (i = 0; i < cart.length; i++) {
     const item = await Product.findById(cart[i].id)
     total =  total + item.price * 100 * cart[i].qty
     product.push({
-      info: cart[i].id,
+      info: item._id,
       qty: cart[i].qty
     })
   }
@@ -280,10 +284,12 @@ exports.postPaymentDone = async (req, res) => {
       total: total,
       paymentType: type,
       product: product,
-      user: user,
+      user: user._id,
       status: true
     })
     const newTrans = await trans.save()
+    user.transaction.push(newTrans._id);
+    await user.save();
     console.log('Charge Successful')
     res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
   } catch (err) {
