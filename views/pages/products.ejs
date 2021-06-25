@@ -25,28 +25,30 @@
             </div>
           <% }  %> 
 
-          <div class="brandinfo__filter">
-            <div class="brandinfo__filter-label">Sort by</div>
-            <button class="brandinfo__filter-btn">Popular</button>
-            <button class="brandinfo__filter-btn">Newest</button>
-            <button class="brandinfo__filter-btn">Most favorite</button>
-            <div class="brandinfo__filter-selection-container">
-              <div class="brandinfo__filter-selection">Price</div>
-              <i
-                class="brandinfo__filter-selection__icon fas fa-angle-down"
-              ></i>
-              <ul class="brandinfo__filter-selection-container__option">
-                <li class="brandinfo__filter__option__item">
-                  <a class="brandinfo__select-input" href="#">Lowest</a>
-                </li>
-                <li class="brandinfo__filter__option__item">
-                  <a class="brandinfo__select-input" href="#">Highest</a>
-                </li>
-              </ul>
-            </div>
+          <form method="GET" action="/products">
+            <div class="brandinfo__filter">
+              <div class="brandinfo__filter-label">Sort by</div>
+              <input type="submit" id="popular" value="popular" name="sort" class="brandinfo__filter-btn">
+              <input type="submit"  value="newest" name="sort" class="brandinfo__filter-btn">
+              <input type="submit" id="favorite" name="sort" value="favorite" class="brandinfo__filter-btn">
+              <div class="brandinfo__filter-selection-container">
+                <div class="brandinfo__filter-selection">Price</div>
+                <i
+                  class="brandinfo__filter-selection__icon fas fa-angle-down"
+                ></i>
+                <ul class="brandinfo__filter-selection-container__option">
+                  <li class="brandinfo__filter__option__item">
+                    <input type="submit"  id="lowest" name="sort" value="lowest" class="brandinfo__select-input">
+                  </li>
+                  <li class="brandinfo__filter__option__item">
+                    <input type="submit" id="highest" name="sort" value="highest" class="brandinfo__select-input">
+                  </li>
+                </ul>
+              </div>
+            </form>
             <div class="brandinfo__filter-searchcontainer">
-             <form action="/products/searchProducts" method="GET">
-               <input name="q" type="text" placeholder="Search">
+             <form action="/products" method="GET">
+               <input name="search" type="text" placeholder="Search">
                <div class="brandinfo__filter-searchcontainer-btn">
                  <button>Search</button>
           </div>
@@ -56,27 +58,6 @@
           </div>
         </div>
         <div class="brandinfo__float">
-          <div class="brandinfo__tag-container">
-            <div class="brandinfo__tag-size">SIZE:</div>
-            <div class="brandinfo__tag">
-              <p>39</p>
-              <p>40</p>
-              <p>41</p>
-            </div>
-            <div class="brandinfo__tag-size">COLOR:</div>
-            <div class="brandinfo__tag">
-              <p><i class="fa fa-star" aria-hidden="true"></i></p>
-              <p>WHITE</p>
-              <p>YELLOW</p>
-            </div>
-            <div class="brandinfo__tag-size">STYLES:</div>
-            <div class="brandinfo__tag">
-              <p>OLD SKOOL</p>
-              <p>SLIP ON</p>
-              <p>ORIGINAL CLASSIC</p>
-            </div>
-          </div>
-
           <div class="brandinfo__product">
             <div class="brandinfo__product-container">
               <div class="product">
@@ -105,7 +86,7 @@
                       <div class="product__action">
                         <span class="product__add">ADD TO CART</span>
                         <div class="product__action--right">
-                          <a href="product/<%= product.slug %>" class="product__view"
+                          <a href="/product/<%= product.slug %>" class="product__view"
                             ><i class="far fa-eye product__icon"></i
                           ></a>
                           <span class="product__love"
@@ -128,11 +109,7 @@
                       <% if (current == 1) { %>
                           <li class="disabled-link"><a>First</a></li>
                       <% } else { %>
-                        <% if (searchQuery) { %>
-                          <li><a href="/products?search=<%= searchQuery %>&page=1">First</a></li>
-                        <% } else { %>
-                          <li><a href="/products?page=1">First</a></li>
-                        <% } %>
+                          <li><a href="/products?search=<%= searchQuery %>&sort=<%= sortQuery %>&page=1">First</a></li>
                       <% } %>
 
                       <!-- determine the start of pagination -->
@@ -155,11 +132,7 @@
                           
                           <!-- otherwise display links -->
                           <% } else { %>
-                            <% if (searchQuery) { %>
-                              <li><a href="/products?search=<%= searchQuery %>&page=<%= i %>"><%= i %></a></li>
-                            <% } else { %>
-                              <li><a href="/products?page=<%= i %>"><%= i %></a></li>
-                            <% } %>
+                              <li><a href="/products?search=<%= searchQuery %>&sort=<%= sortQuery %>&page=<%= i %>"><%= i %></a></li>
                           <% } %>
                       <% } %>
                     
@@ -167,11 +140,7 @@
                       <% if (current == pages) { %>
                           <li class="disabled-link"><a>Last</a></li>
                       <% } else { %>
-                        <% if (searchQuery) { %>
-                          <li><a href="/products?search=<%= searchQuery %>&page=<%= pages %>">Last</a></li>
-                        <% } else { %>
-                          <li><a href="/products?page=<%= pages %>">Last</a></li>
-                        <% } %>
+                          <li><a href="/products?search=<%= searchQuery %>&sort=<%= sortQuery %>&page=<%= pages %>">Last</a></li>
                       <% } %>
                   </ul>
               <% } %>
@@ -181,7 +150,6 @@
         </div>
       </div>
     </div>
-
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>
   </body>

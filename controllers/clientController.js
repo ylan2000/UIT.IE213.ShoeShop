@@ -67,7 +67,29 @@ exports.getProducts = async (req, res, next) => {
         return res.status(404).json({ status: "fail", message: err });
     }
 
-    const products = await Product.find({ "category.0.name": brand }).skip(skip).limit(limit);
+    // --- search ---
+    // get search info, if null, match all
+    const searchQuery = req.query.search || null;
+    const searchField = searchQuery ? searchQuery : ".+";
+
+    // --- sort ---
+    const sortQuery = req.query.sort || null;
+
+    // default sort field is createdDate with criteria is asc
+    let sortField = "createdDate", criteria = -1;
+    
+    if (sortQuery) {
+      if (sortQuery == "lowest") {
+        sortField = "price";
+        criteria = 1;
+      } else if (sortQuery == "highest") {
+        sortField = "price";
+        criteria = -1;
+      } 
+    } 
+
+    // find products that match all query
+    const products = await Product.find({ "category.0.name": brand, "name": new RegExp(searchField, "i") }).sort([[sortField, criteria]]).skip(skip).limit(limit);
 
     // Render template
     return res.status(200).render("pages/products", {
@@ -75,24 +97,13 @@ exports.getProducts = async (req, res, next) => {
       product: products,
       current: page,
       pages: Math.ceil(numProducts / limit),
-      searchQuery: null
+      searchQuery: searchQuery,
+      sortQuery: sortQuery
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
 
-  next();
-};
-
-exports.searchProducts = async (req, res, next) =>{
-  try{
-    const matchedProducts = await Product.findOne({name: q.toLowerCase()});
-    res.status(200).render("pages/products", {
-      title: "Products", product: matchedProducts
-    });
-   } catch (err){
-       return res.status(400).json({status: "fail", message: err});
-       }
   next();
 };
 
@@ -281,4 +292,15 @@ exports.logout = (req, res) => {
   req.logout();
   req.session.user = null;
   return res.redirect('back'); // redirect ve trang hien tai
+}
+
+exports.getOrder = (req, res, next) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/clientOrder", { title: "Order"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
 }
