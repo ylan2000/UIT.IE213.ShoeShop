@@ -18,7 +18,12 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     //validate: [validator.isEmail, 'Please a provide a valid email'],
   },
-  address: { type: String, required: false },
+  address: { 
+    number: {type: String, required: false},
+    city: {type: String, required: false},
+    state: {type: String, required: false},
+    ward: {type: String, required: false},
+  },
   phone: { type: String, maxlength: 10 },
   password: {
     type: String,
@@ -46,6 +51,10 @@ const userSchema = new mongoose.Schema({
       type: { type: String },
     },
   },
+  transaction: {
+    type: Array,
+    default: [{type: schema.ObjectId, ref: 'Transaction', required: false}]
+  }
 });
 
 userSchema.virtual("avatarImagePath").get(function () {
@@ -55,9 +64,13 @@ userSchema.virtual("avatarImagePath").get(function () {
     )}`;
 });
 
-// const User = mongoose.model("User", userSchema);
-// module.exports = User;
-module.exports = User = mongoose.model('User', userSchema)
+userSchema.virtual("fullAddress").get(function() {
+    return this.address.number + ", ward " + this.address.ward + ", " + this.address.city; 
+})
+
+const User = mongoose.model("User", userSchema);
+module.exports = {User};
+//module.exports = User = mongoose.model('User', userSchema)
 
 // module.exports.insertUser = function(newClient, callback){
 //   bcrypt.genSalt(10, function(err, salt){
