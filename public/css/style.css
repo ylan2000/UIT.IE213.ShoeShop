@@ -1362,13 +1362,73 @@ body {
       .brandinfo__filter-searchcontainer-btn button:hover {
         color: #444;
         transition: 0.3s; }
+  .brandinfo__img-cv {
+    width: 50rem;
+    height: auto;
+    margin: 10rem auto;
+    opacity: 30%;
+    transition: all 0.3s ease-in; }
+    .brandinfo__img-cv:hover {
+      opacity: 90%; }
+  .brandinfo__img-vans {
+    width: 40rem;
+    height: auto;
+    margin: 10rem auto;
+    opacity: 30%;
+    transition: all 0.3s ease-in; }
+    .brandinfo__img-vans:hover {
+      opacity: 90%; }
+  .brandinfo__brandtitle {
+    margin: 5rem 30rem 5rem 30rem;
+    border-width: 5rem;
+    align-items: center; }
+  .brandinfo__paginationcontainer {
+    display: flex;
+    float: right;
+    margin-top: 1rem;
+    padding-top: 5rem;
+    margin-bottom: 10rem; }
+  .brandinfo__filter {
+    margin: 2rem 10rem 2rem 15rem;
+    align-items: center;
+    display: flex;
+    padding: 1.2rem; }
+    .brandinfo__filter input[type=text] {
+      width: 15rem;
+      height: 2.7rem;
+      margin-left: 2rem;
+      border: 0.1rem solid;
+      border-radius: 0.4rem;
+      outline: none;
+      padding: 1.2rem 1.4rem; }
+  .brandinfo__filter-searchcontainer {
+    display: flex;
+    margin-top: 0.8rem; }
+  .brandinfo__filter-searchcontainer-btn {
+    float: right;
+    margin-right: 1.6rem; }
+    .brandinfo__filter-searchcontainer-btn button {
+      margin-left: 1.2rem;
+      height: 3rem;
+      border-radius: 1.9rem;
+      border-width: 0;
+      padding: 0 1.2rem;
+      outline: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #BDBDBD; }
+      .brandinfo__filter-searchcontainer-btn button:hover {
+        color: #444;
+        transition: 0.3s; }
   .brandinfo__filter-label {
     margin-right: 1.6rem;
     text-transform: uppercase; }
   .brandinfo__filter-btn {
     margin-right: 1.2rem;
     min-width: 12.4rem;
-    height: 3rem;
+    height: 3.5rem;
     border-radius: .9rem;
     border-width: 0;
     padding: 0 1.2rem;
@@ -1395,7 +1455,26 @@ body {
     padding-left: 2rem;
     position: relative; }
     .brandinfo__filter-selection-container:hover .brandinfo__filter-selection-container__option {
-      display: block; }
+      display: block;
+      padding: 0.4rem 0; }
+      .brandinfo__filter-selection-container:hover .brandinfo__filter-selection-container__option:hover {
+        color: #757575; }
+    .brandinfo__filter-selection-container__tag-container {
+      flex: 0;
+      padding-top: 5.3rem;
+      padding-right: 2rem;
+      margin-left: 10rem;
+      margin-right: 10rem; }
+    .brandinfo__filter-selection-container__tag-size {
+      padding: 1rem;
+      font-weight: 600;
+      color: #FF7D00; }
+    .brandinfo__filter-selection-container__tag {
+      border-bottom: 0.1rem solid #BDBDBD;
+      padding: 1rem;
+      margin: 0.2rem; }
+      .brandinfo__filter-selection-container__tag p:hover {
+        color: #FF7D00; }
     .brandinfo__filter-selection-container__option {
       display: none;
       position: absolute;
@@ -1416,29 +1495,17 @@ body {
       top: 0.1rem; }
   .brandinfo__select-input {
     display: block;
-    padding: 0.4rem 0; }
+    padding: 0.4rem 0;
+    background-color: #BDBDBD;
+    border-width: 0; }
     .brandinfo__select-input:hover {
       color: #757575; }
-  .brandinfo__tag-container {
-    flex: 0;
-    padding-top: 5.3rem;
-    padding-right: 2rem;
-    margin-left: 10rem;
-    margin-right: 10rem; }
-  .brandinfo__tag-size {
-    padding: 1rem;
-    font-weight: 600;
-    color: #FF7D00; }
-  .brandinfo__tag {
-    border-bottom: 0.1rem solid #BDBDBD;
-    padding: 1rem;
-    margin: 0.2rem; }
-    .brandinfo__tag p:hover {
-      color: #FF7D00; }
   .brandinfo__float {
     display: flex; }
   .brandinfo__product {
-    flex: auto; }
+    flex: auto;
+    height: auto;
+    margin-bottom: 100rem; }
     .brandinfo__product img {
       display: flex;
       justify-content: flex-end;
@@ -1446,7 +1513,7 @@ body {
       width: 85%;
       height: auto; }
   .brandinfo__product-container {
-    margin: 0.1rem; }
+    margin-left: 5rem; }
   .brandinfo__product {
     padding-right: 2rem; }
 
@@ -1778,3 +1845,23 @@ body {
 
 .payment__product-name, .payment__product-price, .cost {
   font-weight: bold; }
+
+.clientorder {
+  margin: 10rem; }
+  .clientorder__container table {
+    margin: 5rem 0;
+    width: 100%;
+    border: 0.1rem solid #BDBDBD;
+    border-bottom: none; }
+  .clientorder__container td {
+    border-bottom: 0.1rem solid #BDBDBD;
+    text-align: center;
+    height: 10rem; }
+  .clientorder__container th {
+    padding-top: 1rem;
+    border-bottom: 0.1rem solid #BDBDBD;
+    text-align: center;
+    height: 1rem; }
+  .clientorder__name {
+    color: #FF7D00;
+    text-emphasis: bold; }

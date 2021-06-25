@@ -9,15 +9,17 @@ router.get("/", clientController.getHome);
 
 router.get("/home", clientController.getHome);
 
+// get products
 router.get("/products/:brand?", clientController.getProducts);
 
-router.get("/products/searchProducts", clientController.searchProducts);
-
+//là để lấy detail theo slug
 router.get("/product/:slug", clientController.getProduct);
 
 router.get("/return-policy", clientController.getPolicy);
 
 router.get("/feedback", clientController.getFeedback);
+
+router.get("/clientOrder", clientController.getOrder);
 
 // --- protected routes
 router.get("/about", clientController.getAbout);
