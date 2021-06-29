@@ -1,4 +1,3 @@
-const session = require('express-session');
 const mail = require('nodemailer');
 
 exports.confirmationMail = function(userMail,title,content) {

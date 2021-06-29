@@ -6,6 +6,7 @@ const {User} = require("../models/userModel");
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const dotenv = require("dotenv");
+const mail = require("../models/mailModel");
 dotenv.config({ path: "./config.env" });
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
@@ -290,11 +291,13 @@ exports.postPaymentDone = async (req, res) => {
     const newTrans = await trans.save()
     user.transaction.push(newTrans._id);
     await user.save();
-    console.log('Charge Successful')
-    res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
+    console.log('Charge Successful');
+    const html = "<p>here's your order</p>";
+    mail.confirmationMail("boong630@gmail.com", "Your order", html);
+    return res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
   } catch (err) {
     console.log(err)
-    res.status(500).end()
+    return res.status(500).end()
   }
   
 }
