@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const categorySchema = new schema({
-    name: { type: String, maxlength: 50, required: true },
+    name: { type: String, required: [true, 'Category must have a name'] },
     categoryImage:{ type: Object, default:
     {
       data: {type: Buffer},

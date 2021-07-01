@@ -4,7 +4,11 @@ const {Category}  = require("./categoryModel");
 const schema = mongoose.Schema;
 
 const productSchema = schema({
-  name: { type: String, required: true, unique: true },
+  name: { 
+    type: String, 
+    required: [true, 'Product must have a name'], 
+    unique: true 
+  },
   slug: String,
   coverImage: { type: Object, default:
     {
@@ -12,12 +16,21 @@ const productSchema = schema({
       type: {type: String}
     } },
   images: String,
-  description: { type: String, required: true },
-  detail: { type: String, required: true },
-  price: { type: Number, default: 0, required: true },
-  sale: { type: Number, default: 0 },
+  description: { type: String, required: [true, 'Product must have a description'] },
+  detail: { type: String, required: [true, 'Product must have detail info'] },
+  price: { type: Number, default: 0, required: [true, 'Product must have a price'] },
+  sale: { 
+    type: Number, 
+    default: 0,
+    min: [0, 'The sale off percentage is greater than 0'],
+    min: [100, 'The sale off percentage is equal or less than 100'] 
+  },
   condition: { type: Boolean, default: true },
-  quantity: { type: Number, default: 0 },
+  quantity: { 
+    type: Number, 
+    default: 1,
+    min: [1, 'The quantity must be greater than 1']
+  },
   createdDate: { type: Date, default: Date.now() },
   //transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
   category: Array
