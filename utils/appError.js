@@ -2,7 +2,6 @@
 class AppError extends Error {
   constructor(message, statusCode) {
     super(message); 
-
     this.statusCode = statusCode;
 
     // convert statusCode to string for checking with String method
