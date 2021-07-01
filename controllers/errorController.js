@@ -1,6 +1,12 @@
 const AppError = require('../utils/appError');
 
-// transform the weird error from Mongoose into operational error with nice message 
+const handleDuplicateFieldsDB = err => {
+  const value = err.errmsg.match(/(["'])(?:(?=(\\?))\2.)*?\1/);
+  const message = `Duplicate field value: ${value}. Please use another value!`;
+  
+  return new AppError(message, 400);
+}
+
 const handleCastErrorDB = err => {
   const message = `Invalid ${err.path}: ${err.value}`;
 
@@ -14,7 +20,7 @@ const sendErrorProd = (err, res) => {
   } else {
     err.statusCode = 500; // default: internal server error
     err.status = 'error';
-    err.message = 'Something went wrong!!'
+    err.message = 'Something went wrong!!' 
   }
 
   return res.status(err.statusCode).render("pages/error", {
@@ -26,7 +32,8 @@ const sendErrorProd = (err, res) => {
 module.exports = (err, req, res, next) => {
   console.log(err.stack); // stack trace -> holds where error occur
 
-  if (err.name === 'CastError') err = handleCastErrorDB(err);
+  if (err.name === 'CastError') err = handleCastErrorDB(err); // invalid data error
+  if (err.code === 11000) err = handleDuplicateFieldsDB(err); // duplicate data
 
   sendErrorProd(err, res);
 }
