@@ -6,6 +6,8 @@ const User = require("../models/userModel");
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const dotenv = require("dotenv");
+const catchAsync = require('../utils/catchAsync');
+
 dotenv.config({ path: "./config.env" });
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
@@ -13,128 +15,96 @@ const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripe = require('stripe')(stripeSecretKey)
 
 
-exports.addToCart = async (req, res, next) => {
-  try {
-    
-    var productId = req.params.id;
-    var cart = new Cart(req.session.cart ? req.session.cart: {items: {}});
-   
-    await Product.findById(productId, function (err, p) {
-      if (err) {
-        return res.status(404).json({ status: "fail", message: err });    
-      }
-     
-      cart.add(p, productId);
-      req.session.cart = cart;
-      req.session.save();
-    });
-    return res.send(cart);
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
+exports.addToCart = catchAsync(async (req, res, next) => {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : { items: {} });
 
-  next();
-};
+  await Product.findById(productId, function (err, p) {
+    if (err) {
+      return res.status(404).json({ status: "fail", message: err });
+    }
+
+    cart.add(p, productId);
+    req.session.cart = cart;
+    req.session.save();
+  });
+  return res.send(cart);
+});
 
 
-exports.removeFromCart = async (req, res, next) => {
-  try {
-    var productId = req.params.id;
-    var cart = new Cart(req.session.cart);
-   
-    await Product.findById(productId, function (err, p) {
-      if (err) {
-        return res.status(404).json({ status: "fail", message: err });    
-      }
-     
-      cart.remove(p, productId);
-      req.session.cart = cart;
+exports.removeFromCart = catchAsync(async (req, res, next) => {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart);
 
-      if (req.session.cart.totalQty == 0) {
-        req.session.cart = undefined;
-      }
+  await Product.findById(productId, function (err, p) {
+    if (err) {
+      return res.status(404).json({ status: "fail", message: err });
+    }
 
-      req.session.save();
-    });
-    return res.send(req.session.cart);
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
+    cart.remove(p, productId);
+    req.session.cart = cart;
 
-  next();
-};
+    if (req.session.cart.totalQty == 0) {
+      req.session.cart = undefined;
+    }
 
-exports.updateCart = async (req, res, next) => {
-  try {
-    var productId = req.params.id;
-    var newQty = req.body.newQty;
-    
-    var cart = new Cart(req.session.cart);
-   
-    await Product.findById(productId, function (err, p) {
-      if (err) {
-        return res.status(404).json({ status: "fail", message: err });    
-      }
-     
-      cart.updateQty(p, productId, newQty);
-      req.session.cart = cart;
-      req.session.save();
-    });
-    return res.send(req.session.cart);
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
+    req.session.save();
+  });
+  return res.send(req.session.cart);
+});
 
-  next();
-};
+exports.updateCart = catchAsync(async (req, res, next) => {
+  var productId = req.params.id;
+  var newQty = req.body.newQty;
 
-exports.addToWishlist = async (req, res, next) => {
-  try {
-    
-    var productId = req.params.id;
-    var wishlist = new Wishlist(req.session.wishlist ? req.session.wishlist: {items: {}});
-   
-    await Product.findById(productId, function (err, p) {
-      if (err) {
-        return res.status(404).json({ status: "fail", message: err });    
-      }
-     
-      wishlist.add(p, productId);
-      req.session.wishlist = wishlist;
-      req.session.save();
-    });
-    return res.send(req.session.wishlist);
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
+  var cart = new Cart(req.session.cart);
 
-  next();
-};
+  await Product.findById(productId, function (err, p) {
+    if (err) {
+      return res.status(404).json({ status: "fail", message: err });
+    }
+
+    cart.updateQty(p, productId, newQty);
+    req.session.cart = cart;
+    req.session.save();
+  });
+  return res.send(req.session.cart);
+});
+
+exports.addToWishlist = catchAsync(async (req, res, next) => {
+  var productId = req.params.id;
+  var wishlist = new Wishlist(req.session.wishlist ? req.session.wishlist : { items: {} });
+
+  await Product.findById(productId, function (err, p) {
+    if (err) {
+      return res.status(404).json({ status: "fail", message: err });
+    }
+
+    wishlist.add(p, productId);
+    req.session.wishlist = wishlist;
+    req.session.save();
+  });
+  return res.send(req.session.wishlist);
+});
 
 
-exports.removeFromWishlist = async (req, res, next) => {
-  try {
-    var productId = req.params.id;
-    var wishlist = new Wishlist(req.session.wishlist);
-   
-    await Product.findById(productId, function (err, p) {
-      if (err) {
-        return res.status(404).json({ status: "fail", message: err });    
-      }
-     
-      wishlist.remove(productId);
-      req.session.wishlist = wishlist;
-      req.session.save();
-    });
-    return res.send(req.session.wishlist);
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
+exports.removeFromWishlist = catchAsync(async (req, res, next) => {
+  var productId = req.params.id;
+  var wishlist = new Wishlist(req.session.wishlist);
 
-  next();
-};
+  await Product.findById(productId, function (err, p) {
+    if (err) {
+      return res.status(404).json({ status: "fail", message: err });
+    }
 
-exports.register = async (req,res) => {
+    wishlist.remove(productId);
+    req.session.wishlist = wishlist;
+    req.session.save();
+  });
+  return res.send(req.session.wishlist);
+});
+
+exports.register = catchAsync(async (req,res) => {
   const { fullname, username, email, phone, password, pwdrepeat} = req.body;
   let errors = [];
 
@@ -218,10 +188,10 @@ exports.register = async (req,res) => {
       }
     });
   }
-};
+});
 
 
-exports.login = (req, res, next) => {
+exports.login = catchAsync(async (req, res, next) => {
   passport.authenticate('local', function(err, user, info) {
     // successRedirect: '/', 
     // failureRedirect: '/signIn',
@@ -245,13 +215,14 @@ exports.login = (req, res, next) => {
     //     return res.redirect('/users/' + user.username);
     // });
   }) (req, res, next);
-};
-exports.removeCart = async(req,res,next) => {
+});
+
+exports.removeCart = catchAsync(async(req,res,next) => {
   req.session.cart = undefined;
   return res.send(req.session.cart)
-}
+});
 
-exports.postPaymentDone = async (req, res) => {
+exports.postPaymentDone = catchAsync(async (req, res) => {
   var type = req.body.type
   let total = 0
   let cart = req.body.cart
@@ -275,20 +246,16 @@ exports.postPaymentDone = async (req, res) => {
       res.status(500).end()
     })
   }
-  try {
-    const trans = new Transaction({
-      total: total,
-      paymentType: type,
-      product: product,
-      user: user,
-      status: true
-    })
-    const newTrans = await trans.save()
-    console.log('Charge Successful')
-    res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
-  } catch (err) {
-    console.log(err)
-    res.status(500).end()
-  }
   
-}
+  const trans = new Transaction({
+    total: total,
+    paymentType: type,
+    product: product,
+    user: user,
+    status: true
+  })
+  const newTrans = await trans.save()
+  console.log('Charge Successful')
+  res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id });
+  
+})

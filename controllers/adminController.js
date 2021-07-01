@@ -1,144 +1,82 @@
 const {Product} = require("../models/productModel")
 const {Category} = require("../models/categoryModel")
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
+const catchAsync = require('../utils/catchAsync');
 
-const { Router } = require('express');
-const { mongo } = require('mongoose');
-exports.getDashboard = async (req, res, next) => {
-  try {
-    // Render template
-    return res.status(200).render("admin/pages/dashboard", {
-      title: "Dashboard",
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
-
-  next();
-};
+exports.getDashboard = catchAsync(async (req, res, next) => {
+  return res.status(200).render("admin/pages/dashboard", {
+    title: "Dashboard",
+  });
+});
 
 // categories
-exports.getCategories = async (req, res, next) => {
-  try {
-    // Render template
-    return res.status(200).render("admin/pages/category/category", {
-      title: "Categories",
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
-
-  next();
-};
+exports.getCategories = catchAsync(async (req, res, next) => {
+  return res.status(200).render("admin/pages/category/category", {
+    title: "Categories",
+  });
+});
 
 // orders
-exports.getOrders = async (req, res, next) => {
-  try {
-    // Render template
-    return res.status(200).render("admin/pages/order/order", {
-      title: "Orders",
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
-
-  next();
-};
+exports.getOrders = catchAsync(async (req, res, next) => {
+  return res.status(200).render("admin/pages/order/order", {
+    title: "Orders",
+  });
+});
 
 // products
-exports.getProducts = async (req, res, next) => {
-  try {
-    // Render template
-    const status = req.query.status
-    const products =  await Product.find();
-    return res.status(200).render("admin/pages/product/product", {
-      title: "Products", product: products, status: status
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
+exports.getProducts = catchAsync(async (req, res, next) => {
+  const status = req.query.status
+  const products =  await Product.find();
+  
+  return res.status(200).render("admin/pages/product/product", {
+    title: "Products", product: products, status: status
+  });
+});
 
-  next();
-};
+exports.getAddProduct = catchAsync(async (req, res, next) => {
+  const category = await Category.find();
 
-exports.getAddProduct = async (req, res, next) => {
-  try {
-    const category = await Category.find();
-    // Render template
-    return res.status(200).render("admin/pages/product/product-add", {
-      title: "Add Product",
-      category: category,
-      searchOptions: req.query,
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
+  return res.status(200).render("admin/pages/product/product-add", {
+    title: "Add Product",
+    category: category,
+    searchOptions: req.query,
+  });
+});
 
-  next();
-};
+exports.getEditProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+  const category = await Category.find();
 
-exports.getEditProduct = async (req, res, next) => {
-  try {
-    //get product for edit
-    const product = await Product.findById(req.params.id);
-    const category = await Category.find();
-    // Render template
-    return res.status(200).render("admin/pages/product/product-edit", {
-      title: "Edit Product",
-      product: product,
-      category: category
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
-
-  next();
-};
+  return res.status(200).render("admin/pages/product/product-edit", {
+    title: "Edit Product",
+    product: product,
+    category: category
+  });
+});
 
 // users
-exports.getUsers = async (req, res, next) => {
-  try {
-    // Render template
-    return res.status(200).render("admin/pages/user/user", {
-      title: "Users",
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
+exports.getUsers = catchAsync(async (req, res, next) => {
+  return res.status(200).render("admin/pages/user/user", {
+    title: "Users",
+  });
+});
 
-  next();
-};
-
-exports.getAddUser = async (req, res, next) => {
-  try {
-    // Render template
-    return res.status(200).render("admin/pages/user/user-add", {
-      title: "Add User",
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
-
-  next();
-};
+exports.getAddUser = catchAsync(async (req, res, next) => {
+  return res.status(200).render("admin/pages/user/user-add", {
+    title: "Add User",
+  });
+});
 
 // Feedbacks
-exports.getFeedbacks = async (req, res, next) => {
-  try {
-    // Render template
-    return res.status(200).render("admin/pages/feedback", {
-      title: "Add User",
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
-
-  next();
-};
+exports.getFeedbacks = catchAsync(async (req, res, next) => {
+  return res.status(200).render("admin/pages/feedback", {
+    title: "Add User",
+  });
+});
 
 //Product POST
 //add
-exports.postAddProduct = async (req,res,next) => {
+exports.postAddProduct = catchAsync(async (req,res,next) => {
   const product = new Product({
     name: req.body.productName,
     description: req.body.productShortDesc,
@@ -150,39 +88,33 @@ exports.postAddProduct = async (req,res,next) => {
     quantity: req.body.quantity,
   });
   saveImage(product, req.body.productImg);
-  try {
-    const newProduct = await product.save();
-    return res.redirect("/admin/products?status=Success");
-  } catch (err) {
-    return res.redirect("/admin/products?status=Fail")
-  }
 
-  next();
-}
+  const newProduct = await product.save();
+  return res.redirect("/admin/products?status=Success");
+});
 
 //Update
-exports.putUpdateProduct = async(req,res,next) => {
-  let product
-
-  try {
-    product = await Product.findById(req.params.id);
-    product.name = req.body.productName,
-    product.description = req.body.productShortDesc;
-    product.detail = req.body.productDesc;
-    product.category = [req.body.productCate];
-    product.sale = req.body.pSaleOff;
-    product.condition = req.body.pIsNew;
-    product.quantity = req.body.quantity;
-    product.price = req.body.productPrice;
-    const image = new Product()
-    saveImage(image,req.body.productImg)
-    product.image = image.image;
-    await product.save()
-    return res.redirect("/admin/products?status=Success");
-  } catch (err) {
-    return res.redirect("/admin/products?status=Fail")
-  }
-}
+exports.putUpdateProduct = catchAsync(async(req,res,next) => {
+  let product;
+  product = await Product.findById(req.params.id);
+  product.name = req.body.productName;
+  product.description = req.body.productShortDesc;
+  product.detail = req.body.productDesc;
+  product.category = [req.body.productCate];
+  product.sale = req.body.pSaleOff;
+  product.condition = req.body.pIsNew;
+  product.quantity = req.body.quantity;
+  product.price = req.body.productPrice;
+  
+  const image = new Product()
+  saveImage(image, req.body.productImg)
+  
+  product.image = image.image;
+  
+  await product.save();
+  
+  return res.redirect("/admin/products?status=Success");
+});
 
 function saveImage(product, coverEncoded) {
   if (coverEncoded == null) return;
@@ -194,15 +126,12 @@ function saveImage(product, coverEncoded) {
 }
 //Admin delete
 
-exports.delete = async (req, res) => {
-  let product
-  try {
-    product = await Product.findById(req.params.id);
-    await product.remove();
-    return res.redirect("/admin/products?status=Success");
-  } catch {
-    return res.redirect("/admin/products?status=Fail");
-  }
-};
+exports.delete = catchAsync(async (req, res) => {
+  let product;
+  
+  product = await Product.findById(req.params.id);
+  await product.remove();
+  return res.redirect("/admin/products?status=Success");
+});
 
 
