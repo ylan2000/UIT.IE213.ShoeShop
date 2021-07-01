@@ -5,6 +5,7 @@ const {Transaction} = require('../models/transactionModel');
 const dotenv = require("dotenv");
 const APIFeatures = require("../utils/apiFeatures");
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 dotenv.config({ path: "./config.env" });
 
@@ -69,6 +70,11 @@ exports.getProducts = catchAsync(async (req, res, next) => {
 exports.getProduct = catchAsync(async (req, res, next) => {
   const slug = req.params.slug;
   const product = await Product.findOne({ slug: slug }).exec();
+
+  if (!product) {
+    return next(new AppError('No product found with that slug name!', 404));
+  }
+
   return res.status(200).render("pages/detail", {
     title: "Detail", product: product
   });

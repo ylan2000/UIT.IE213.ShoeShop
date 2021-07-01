@@ -2,6 +2,7 @@ const {Product} = require("../models/productModel")
 const {Category} = require("../models/categoryModel")
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getDashboard = catchAsync(async (req, res, next) => {
   return res.status(200).render("admin/pages/dashboard", {
@@ -97,6 +98,11 @@ exports.postAddProduct = catchAsync(async (req,res,next) => {
 exports.putUpdateProduct = catchAsync(async(req,res,next) => {
   let product;
   product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(new AppError('No product found with that name!', 404));
+  }
+
   product.name = req.body.productName;
   product.description = req.body.productShortDesc;
   product.detail = req.body.productDesc;
@@ -130,6 +136,11 @@ exports.delete = catchAsync(async (req, res) => {
   let product;
   
   product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(new AppError('No product found with that id!', 404));
+  }
+
   await product.remove();
   return res.redirect("/admin/products?status=Success");
 });
