@@ -1,5 +1,13 @@
 const AppError = require('../utils/appError');
 
+const handleValidationErrorDB = err => {
+  const errors = Object.values(err.errors).map(el => el.message);
+
+  const message = `Invalid input data. ${errors.join('. ')}`;
+
+  return new AppError(message, 400);
+}
+
 const handleDuplicateFieldsDB = err => {
   const value = err.errmsg.match(/(["'])(?:(?=(\\?))\2.)*?\1/);
   const message = `Duplicate field value: ${value}. Please use another value!`;
@@ -34,6 +42,8 @@ module.exports = (err, req, res, next) => {
 
   if (err.name === 'CastError') err = handleCastErrorDB(err); // invalid data error
   if (err.code === 11000) err = handleDuplicateFieldsDB(err); // duplicate data
+
+  if (err.name === 'ValidationError') handleValidationErrorDB(err); // validation error
 
   sendErrorProd(err, res);
 }
