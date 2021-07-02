@@ -10,7 +10,7 @@ const transactionSchema = new schema({
     product:{
         type: Array,
         default: [{
-            info: {type: schema.ObjectId, ref: 'Product', required: true},
+            info: {type: schema.ObjectId, ref: 'Product', required: [true, 'Transaction must have product']},
             qty: {type: Number}
         }]
     },
