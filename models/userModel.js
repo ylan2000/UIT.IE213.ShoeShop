@@ -67,7 +67,7 @@ userSchema.virtual("avatarImagePath").get(function () {
 userSchema.virtual("fullAddress").get(function() {
     return this.address.number + ", ward " + this.address.ward + ", " + this.address.city; 
 })
-Ư
+
 const User = mongoose.model("User", userSchema);
 module.exports = {User};
 //module.exports = User = mongoose.model('User', userSchema)
