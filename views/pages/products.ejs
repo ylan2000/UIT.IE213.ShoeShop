@@ -60,46 +60,7 @@
         <div class="brandinfo__float">
           <div class="brandinfo__product">
             <div class="brandinfo__product-container">
-              <div class="product">
-                <div class="row d-flex"> 
-                  <% if (product == null) {%>
-                      <div> not found</div>
-                       <% } else {%>
-                  <% product.forEach(product => { %>
-                  <div  class="product__item">
-                    <% if (product.condition) { %>
-                      <span class="product__new">NEW</span>
-                    <% } %>
-    
-                    <% if (product.sale > 0) { %>
-                      <span class="product__sale"><%= product.sale%>%</span>
-                    <% } %>
-    
-                    <a class="product__image">
-                      <img src="<%= product.coverImagePath %>" alt="productImage" class="img-fluid" />
-                    </a>
-                    <div class="product__summary">
-                      <div class="product__info">
-                        <p class="brandinfo__product"><%= product.name %></p>
-                        <p class="product__price"></p>
-                      </div>
-                      <div class="product__action">
-                        <span class="product__add">ADD TO CART</span>
-                        <div class="product__action--right">
-                          <a href="/product/<%= product.slug %>" class="product__view"
-                            ><i class="far fa-eye product__icon"></i
-                          ></a>
-                          <span class="product__love"
-                            ><i class="far fa-heart product__icon"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <% }) %>
-                  <% } %>
-                </div>
-              </div>
+              <%- include('../partials/card-product'); -%>
             </div>
             <div class="brandinfo__paginationcontainer">
               <div class="pagination">

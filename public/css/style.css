@@ -310,6 +310,29 @@ body {
 .product__sale {
   background-color: #e6410f; }
 
+.product__price {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  height: 10rem;
+  color: yellow;
+  font-weight: 700;
+  width: 6.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 1.2rem;
+  border-left: 3.2rem solid #2e8b57;
+  border-right: 3.2rem solid #2e8b57;
+  border-bottom: 2rem solid transparent;
+  box-shadow: 1px -1rem 0.7rem 0.2rem rgba(0, 0, 0, 0.3); }
+  .product__price--discount {
+    font-weight: 400;
+    text-decoration: line-through;
+    color: #fff; }
+
 .pagination {
   display: flex;
   margin-left: 5rem; }

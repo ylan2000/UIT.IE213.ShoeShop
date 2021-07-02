@@ -30,6 +30,10 @@ productSchema.virtual("coverImagePath").get(function () {
     )}`;
 });
 
+productSchema.virtual("priceDiscount").get(function () {
+  return this.price*(100 - this.sale)/100;
+});
+
 // pre hook save: add product's slug -> runs before the .save() command or .create() command
 productSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
