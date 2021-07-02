@@ -3,6 +3,7 @@ const {Category} = require("../models/categoryModel")
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const factory = require('./handlerFactory');
 
 exports.getDashboard = catchAsync(async (req, res, next) => {
   return res.status(200).render("admin/pages/dashboard", {
@@ -132,17 +133,4 @@ function saveImage(product, coverEncoded) {
 }
 //Admin delete
 
-exports.delete = catchAsync(async (req, res) => {
-  let product;
-  
-  product = await Product.findById(req.params.id);
-
-  if (!product) {
-    return next(new AppError('No product found with that id!', 404));
-  }
-
-  await product.remove();
-  return res.redirect("/admin/products?status=Success");
-});
-
-
+exports.delete = factory.deleteOne(Product);
