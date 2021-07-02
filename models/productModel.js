@@ -23,6 +23,11 @@ const productSchema = schema({
   category: Array
 });
 
+productSchema.virtual('collectionsName').get(function() {
+  return mongoose.model("products", productSchema).collection.collectionName;
+  console.log()
+});
+
 productSchema.virtual("coverImagePath").get(function () {
   if (this.coverImage.data != null && this.coverImage.type != null)
     return `data:${this.coverImage.type};charset:utf-8;base64,${this.coverImage.data.toString(
