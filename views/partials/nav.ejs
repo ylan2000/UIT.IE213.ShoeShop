@@ -70,8 +70,16 @@
       <li>
         <a href="/account/show/" class="nav__button nav__account"></a>
         <% if (session.user && typeof session.user != 'undefined') {%>
-          <a href="/account" class="nav__button"><%= session.user.userName %></a>
-          <a href="/logout" class="nav__button">Log out</a>
+          <div class="nav__dropdown">
+            <a id="account_dropdown" class="nav__button" style = "border: 1px solid #FF7D00;border-radius: 5px; padding: 5px">
+              <%= session.user.userName %>
+            </a>
+            <div id="dropdown-menu" class="nav__dropdown-content">
+              <a href="/account">My account</a>
+              <a href="#">My orders</a>
+              <a href="/logout" style="color: red">Log out</a>
+            </div>
+          </div>
         <% } else { %>
           <a href="/signIn" class="nav__button" style = "border: 1px solid #FF7D00;border-radius: 5px; padding: 5px">Sign In</a>
           <a href="/signUp" class="nav__button">Sign up</a>

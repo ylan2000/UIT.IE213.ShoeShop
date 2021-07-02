@@ -3,6 +3,7 @@ const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
 const {User} = require("../models/userModel");
 const dotenv = require("dotenv");
+const APIFeatures = require("../utils/apiFeatures");
 dotenv.config({ path: "./config.env" });
 
 
@@ -50,46 +51,31 @@ exports.getFeedback = async (req, res, next) => {
 // get products
 exports.getProducts = async (req, res, next) => {
   try {
-    // get brand name
-    const brand = req.params.brand || null;
-    
-    // --- pagination ---
-    // get page query:
-    const page = req.query.page * 1 || 1; // convert string to number, default query page is 1
-    const limit = 12; // 12 products perpage
-    const skip = (page - 1) * limit; // number of products is skipped on each page
-    
-    const numProducts = await Product.countDocuments({ "category.0.name": brand });
+    let filter = {}
 
-    if (req.query.page) {
-      // if skip products is greater than total products
-      if (skip >= numProducts) 
-        return res.status(404).json({ status: "fail", message: err });
+    // get info for sending data to view
+    brand = req.params.brand || null; 
+
+    // get brand name
+    if (brand) {
+      filter = { "category.0.name": brand }
     }
 
-    // --- search ---
-    // get search info, if null, match all
-    const searchQuery = req.query.search || null;
-    const searchField = searchQuery ? searchQuery : ".+";
+    const limit = 12; // limit products on each page
+  
+    const page = req.query.page * 1 || 1; // convert string to number
+    const searchQuery = req.query.search || null; // get search info
+    const sortQuery = req.query.sort || null; // get search query
 
-    // --- sort ---
-    const sortQuery = req.query.sort || null;
+    const numProducts = await Product.countDocuments(filter); // total number of products
 
-    // default sort field is createdDate with criteria is asc
-    let sortField = "createdDate", criteria = -1;
+    // execute query
+    const features = new APIFeatures(Product.find(filter), req.query)
+    .search()
+    .sort()
+    .paginate(limit);
     
-    if (sortQuery) {
-      if (sortQuery == "lowest") {
-        sortField = "price";
-        criteria = 1;
-      } else if (sortQuery == "highest") {
-        sortField = "price";
-        criteria = -1;
-      } 
-    } 
-
-    // find products that match all query
-    const products = await Product.find({ "category.0.name": brand, "name": new RegExp(searchField, "i") }).sort([[sortField, criteria]]).skip(skip).limit(limit);
+    const products = await features.query;
 
     // Render template
     return res.status(200).render("pages/products", {

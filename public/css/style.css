@@ -310,6 +310,29 @@ body {
 .product__sale {
   background-color: #e6410f; }
 
+.product__price {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  height: 10rem;
+  color: yellow;
+  font-weight: 700;
+  width: 6.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 1.2rem;
+  border-left: 3.2rem solid #2e8b57;
+  border-right: 3.2rem solid #2e8b57;
+  border-bottom: 2rem solid transparent;
+  box-shadow: 1px -1rem 0.7rem 0.2rem rgba(0, 0, 0, 0.3); }
+  .product__price--discount {
+    font-weight: 400;
+    text-decoration: line-through;
+    color: #fff; }
+
 .pagination {
   display: flex;
   margin-left: 5rem; }
@@ -465,6 +488,26 @@ body {
     line-height: 2rem;
     margin-left: 5px;
     font-size: 80%; }
+  .nav__dropdown {
+    position: relative;
+    display: inline-block; }
+  .nav__dropdown-content {
+    display: none;
+    right: 0;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1; }
+    .nav__dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block; }
+      .nav__dropdown-content a:hover {
+        background-color: #ddd; }
+  .nav__show {
+    display: block; }
   .nav:hover {
     transform-origin: bottom; }
   .nav.hide {

@@ -36,4 +36,14 @@ function closeAllActiveModal() {
   });
 }
 
+//for account modal
+$("#account_dropdown").on("click",function (){
+  $("#dropdown-menu").toggleClass("nav__show");
+})
 
+$(window).click(function(e) {
+  var target = $(e.target);
+  if(!target.is("#account_dropdown")) {
+    $("#dropdown-menu").removeClass("nav__show");
+  }
+})
