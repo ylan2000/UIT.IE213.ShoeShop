@@ -25,12 +25,15 @@ Array.from({ length: numberStar }, (_, i) => {
 setDefautRating();
 calcRating();
 // show, hide feedback form
+
+
 writeBtn.addEventListener('click', () => {
     feedbackBox.classList.add('show');
 });
 closeFeedback.addEventListener('click', setDefautRating);
 //submit feedback
-submitBtn.addEventListener('click', () =>{
+submitBtn.addEventListener('click', function(){
+    var slug = this.getAttribute("slug");
     if(username.value !== '' && feedback.value !== ''){
         const options = {
             timeZone: 'Asia/Ho_Chi_Minh',
@@ -43,26 +46,40 @@ submitBtn.addEventListener('click', () =>{
             day: 'numeric',
         };
         let time = new Date().toLocaleDateString('en-US', options);
-        console.log(time);
+       
 
-        reviewContent.insertAdjacentHTML(
-            'afterbegin',
-            `
-            <div class="user-review">
-                        <div class="user-rating">
-                            <div class="username">${username.value}</div>
-                            <div class="stars">
-                                ${setStars(userRatingStar)}
+        $.ajax({
+            url: "/client/api/feedback",
+            type: "post",
+            data: { username: username.value, feedback: feedback.value, slug: slug, starNumber: userRatingStar},
+            success: function (response) {
+                console.log(response);
+                reviewContent.insertAdjacentHTML(
+                    'afterbegin',
+                    `
+                    <div class="user-review">
+                                <div class="user-rating">
+                                    <div class="username">${response.username}</div>
+                                    <div class="stars">
+                                        ${setStars(response.starNumber)}
+                                    </div>
+                                </div>
+                                <!-- end user rating -->
+                                <div class="comment-content">
+                                ${response.feedback}
+                                </div>
+                                <time datetime = "${time}"  title = "${time}">${time}</time>
                             </div>
-                        </div>
-                        <!-- end user rating -->
-                        <div class="comment-content">
-                        ${feedback.value}
-                        </div>
-                        <time datetime = "${time}"  title = "${time}">${time}</time>
-                    </div>
-            `
-        );
+                    `
+                );
+            },
+            error: function (err) {
+            alert(err);
+        },
+        });
+
+       
+        
         //When success
         ratingStars[`${userRatingStar}stars`]++;
         ratingStars.numRating++;
@@ -72,6 +89,10 @@ submitBtn.addEventListener('click', () =>{
         setDefautRating();
     }
 })
+
+{
+};
+    
 function setDefautRating() {
     feedbackBox.classList.remove('show');
     username.value = '',

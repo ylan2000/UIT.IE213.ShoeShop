@@ -140,7 +140,23 @@
                         </div>
                         <div class="txt btn-write">Write a review</div>
                     </div>
-                    <div class="review-content"></div>
+                    <div class="review-content">
+                      <% feedbacks.forEach((feedback)=>{ %>
+                        <div class="user-review">
+                          <div class="user-rating">
+                              <div class="username"><%= feedback.username %></div>
+                              <div class="stars"> 
+                                
+                              </div>
+                          </div>
+                          <!-- end user rating -->
+                          <div class="comment-content">
+                            <%= feedback.feedback %>
+                          </div>
+                          <!-- <time datetime = "${time}"  title = "${time}">${time}</time> -->
+                      </div>
+                    <% }) %>
+                    </div>
                     
                 </div>
                 <!-- end review box -->
@@ -170,7 +186,7 @@
                         </div>
                     </div>
                     <!-- end rating -->
-                    <form >
+                    
                       <div class="form">
                         <div class="form-input">
                             <label for="name">Your name</label>
@@ -183,8 +199,8 @@
                         </div>
                     </div>
                     <!-- end form -->
-                    <button class="submit" type="submit">Send feedback</button>
-                    </form>
+                    <button class="submit" type="submit" slug =<%=slug%> >Send feedback</button>
+                    
                     
                 </div>
                 

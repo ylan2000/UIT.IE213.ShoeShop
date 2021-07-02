@@ -4,6 +4,7 @@ const Wishlist = require("../models/wishlistModel");
 const {Transaction} = require('../models/transactionModel');
 const User = require("../models/userModel");
 const dotenv = require("dotenv");
+const {Feedback} = require("../models/feedbackModel");
 dotenv.config({ path: "./config.env" });
 
 
@@ -112,9 +113,10 @@ exports.getProduct = async (req, res, next) => {
   try {
     // Render template
     const slug = req.params.slug;
+    const feedbacks = await Feedback.find({slug: slug}).exec();
     const product = await Product.findOne({slug: slug}).exec();
     return res.status(200).render("pages/detail", {
-      title: "Detail", product: product
+      title: "Detail", product: product, slug, feedbacks
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
