@@ -19,22 +19,12 @@ router.get("/return-policy", clientController.getPolicy);
 
 router.get("/feedback", clientController.getFeedback);
 
-router.get("/clientOrder", clientController.getOrder);
-
 // --- protected routes
 router.get("/about", clientController.getAbout);
 
-router.get("/orders", (req, res) => {
-  return res.status(200).render("pages/orders", {
-    title: "Orders",
-  });
-});
+router.get("/orders", ensureAuthenicated, clientController.getOrder);
 
-router.get("/order-detail", (req, res) => {
-  return res.status(200).render("pages/order-detail", {
-    title: "Order Detail",
-  });
-});
+router.get("/orders/view/:id", ensureAuthenicated, clientController.getOrderDetail);
 
 //users
 router.get("/account" ,ensureAuthenicated , clientController.getAccount); // dung authenicate
@@ -44,7 +34,7 @@ router.get("/wishlist", clientController.getWishlist);
 //Check out
 router.get("/cart", clientController.getCart);
 
-router.get("/checkout", clientController.getPayment);
+router.get("/checkout", ensureAuthenicated, clientController.getPayment);
 
 // Sign in
 router.get("/signInFirst", clientController.getLoginFirst);
