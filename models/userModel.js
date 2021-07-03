@@ -4,39 +4,39 @@ const schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
   image: { type: Array, default: [] },
-  fullName: { type: String, required: true,},
+  fullName: String,
   userName: {
     type: String,
-    required: true,
+    required: [true, 'User must have username'],
     unique: true,
     lowercase: true,
   },
   email: {
     type: String,
-    required: true,
+    required: [true, 'User must have email'],
     unique: true,
     lowercase: true,
-    //validate: [validator.isEmail, 'Please a provide a valid email'],
+    validate: [validator.isEmail, 'Please a provide a valid email'],
   },
-  address: { type: String, required: false },
-  phone: { type: String, maxlength: 10 },
+  address: String,
+  phone: { type: String, maxlength: [10, 'Phone number must have equal or less than 8 characters'] },
   password: {
     type: String,
     required: true,
-    minlength: 8,
+    minlength: [8, 'The password must have greater than 8 characters'],
     select: true,
   },
-  // passwordConfirm: {
-  //   type: String,
-  //   required: [true, "Please confirm your password"],
-  //   validate: {
-  //     // this only works on CREATE and SAVE
-  //     validator: function (el) {
-  //       return el === this.password;
-  //     },
-  //     message: "Passwords are not the same!",
-  //   },
-  // },
+  passwordConfirm: {
+    type: String,
+    required: [true, "Please confirm your password"],
+    validate: {
+      // this only works on CREATE and SAVE, this is point to new document => not for update
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: "Passwords are not the same!",
+    },
+  },
   role: { type: Number, default: 0 }, // 0: client, 1: admin
   createdDate: { type: Date, default: Date.now() },
   avatarImage: {
@@ -55,9 +55,7 @@ userSchema.virtual("avatarImagePath").get(function () {
     )}`;
 });
 
-// const User = mongoose.model("User", userSchema);
-// module.exports = User;
-module.exports = User = mongoose.model('User', userSchema)
+module.exports = User = mongoose.model('User', userSchema);
 
 // module.exports.insertUser = function(newClient, callback){
 //   bcrypt.genSalt(10, function(err, salt){

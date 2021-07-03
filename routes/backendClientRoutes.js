@@ -26,3 +26,8 @@ router
   .post(backendClientController.postPaymentDone)
   .delete(backendClientController.removeCart)
 module.exports = router;
+
+router
+  .route("/searchComplete")
+  .get(backendClientController.autoSearchComplete)
+module.exports = router;

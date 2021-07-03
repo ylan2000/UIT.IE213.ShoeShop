@@ -4,6 +4,7 @@ const Wishlist = require("../models/wishlistModel");
 const {Transaction} = require('../models/transactionModel');
 const User = require("../models/userModel");
 const dotenv = require("dotenv");
+const APIFeatures = require("../utils/apiFeatures");
 dotenv.config({ path: "./config.env" });
 
 
@@ -51,24 +52,31 @@ exports.getFeedback = async (req, res, next) => {
 // get products
 exports.getProducts = async (req, res, next) => {
   try {
-    // get brand name
-    const brand = req.params.brand || null;
-    
-    // --- pagination ---
-    // get page query:
-    const page = req.query.page * 1 || 1; // convert string to number, default query page is 1
-    const limit = 12; // 12 products perpage
-    const skip = (page - 1) * limit; // number of products is skipped on each page
-    
-    const numProducts = await Product.countDocuments({ "category.0.name": brand });
+    let filter = {}
 
-    if (req.query.page) {
-      // if skip products is greater than total products
-      if (skip >= numProducts) 
-        return res.status(404).json({ status: "fail", message: err });
+    // get info for sending data to view
+    brand = req.params.brand || null; 
+
+    // get brand name
+    if (brand) {
+      filter = { "category.0.name": brand }
     }
 
-    const products = await Product.find({ "category.0.name": brand }).skip(skip).limit(limit);
+    const limit = 12; // limit products on each page
+  
+    const page = req.query.page * 1 || 1; // convert string to number
+    const searchQuery = req.query.search || null; // get search info
+    const sortQuery = req.query.sort || null; // get search query
+
+    const numProducts = await Product.countDocuments(filter); // total number of products
+
+    // execute query
+    const features = new APIFeatures(Product.find(filter), req.query)
+    .search()
+    .sort()
+    .paginate(limit);
+    
+    const products = await features.query;
 
     // Render template
     return res.status(200).render("pages/products", {
@@ -76,54 +84,13 @@ exports.getProducts = async (req, res, next) => {
       product: products,
       current: page,
       pages: Math.ceil(numProducts / limit),
-      searchQuery: null
+      searchQuery: searchQuery,
+      sortQuery: sortQuery
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
 
-  next();
-};
-
-exports.sortProducts = async (req, res, next) => {
-  try{
-    const q = req.query.q;
-    var sort = [];
-    if(q == "newest"){
-      sort = await (Product.find().sort({createdDate: -1}));
-    }
-    if(q == "Lowest"){
-      sort = await (Product.find().sort({price: 1}));
-    }
-    if(q == "Highest"){
-      sort= await (Product.find().sort({price: -1}));
-    }
-    res.status(200).render("pages/products", {
-      title: "Products", product: sort
-    });
-  } catch(err){
-    return res.status(404).json({status: "fail", message: err});
-  }
-}
-
-exports.searchProducts = async (req, res, next) =>{
-  try{
-    const q = req.query.q;
-    const matchedProducts = await Product.find();
-    var product =[];
-    console.log(matchedProducts);
-    console.log(q);
-    for(i =0; i < matchedProducts.length; i++){
-      if(matchedProducts[i].name.toUpperCase().includes(q.toUpperCase())){
-        product.push(matchedProducts[i]);
-      }
-    }
-    res.status(200).render("pages/products", {
-      title: "Products", product: product
-    });
-   } catch (err){
-       return res.status(400).json({status: "fail", message: err});
-       }
   next();
 };
 
