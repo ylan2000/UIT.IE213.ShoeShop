@@ -460,7 +460,9 @@ body {
   background-color: #fff;
   box-shadow: 0 1px 25px rgba(34, 34, 34, 0.1); }
   .nav__logo {
-    position: relative; }
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); }
     .nav__logo .logo {
       top: 0; }
   .nav--hover {
