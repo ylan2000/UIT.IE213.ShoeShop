@@ -68,6 +68,15 @@ userSchema.virtual("fullAddress").get(function() {
     return this.address.number + ", ward " + this.address.ward + ", " + this.address.city; 
 })
 
+userSchema.pre("find", function() {
+  try {
+    this.populate("transaction");
+  } catch (err) {
+    console.log(err);
+  }
+})
+
+
 const User = mongoose.model("User", userSchema);
 module.exports = {User};
 //module.exports = User = mongoose.model('User', userSchema)

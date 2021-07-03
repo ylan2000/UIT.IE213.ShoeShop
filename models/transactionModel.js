@@ -28,6 +28,12 @@ transactionSchema.pre('find', function() {
     } catch (err) {console.log(err)}
 })
 
+transactionSchema.pre('findOne', function() {
+    try {
+        this.populate('product.info');
+    } catch (err) {console.log(err)}
+})
+
 transactionSchema.pre('remove', async function(next) {
     try {
         const user = await User.findById(this.user).exec();
