@@ -62,6 +62,12 @@ img {
 input[name="location"] {
   display: none; }
 
+.flex-center-column {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column; }
+
 .icon {
   width: 2rem; }
 
@@ -198,6 +204,9 @@ body {
 
 .scale0 {
   transform: scale(0); }
+
+.mr-5 {
+  margin-right: 5rem; }
 
 .btn {
   padding: 1.5rem 3rem;
@@ -1533,17 +1542,8 @@ body {
   padding: 2rem 3rem;
   margin: 10rem 0rem; }
 
-.left_flex_container {
-  flex: 5; }
-  .left_flex_container img {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 85%;
-    height: auto; }
-
 .right_flex_container {
-  flex: 5; }
+  margin: 10rem 0; }
   .right_flex_container button {
     border: solid 0.1rem;
     border-radius: 2.9rem;
@@ -1551,7 +1551,8 @@ body {
     height: 3.5rem;
     width: 15rem;
     background-color: #15616D;
-    color: #f1f1f1; }
+    color: #f1f1f1;
+    margin-top: 3rem; }
     .right_flex_container button:hover {
       background-color: #78290F; }
 
@@ -1575,10 +1576,8 @@ body {
     font-size: 3rem;
     text-emphasis: bold; }
   .info_container_style input {
-    border: none;
     font-size: 2rem;
-    text-emphasis: bold;
-    text-align: right; }
+    text-emphasis: bold; }
 
 .text_info_style {
   width: 50rem;

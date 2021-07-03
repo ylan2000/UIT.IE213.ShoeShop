@@ -9,19 +9,8 @@
     margin: 10rem 0rem;
 }
 
-.left_flex_container{
-    flex: 5;
-    img{
-        display: flex;
-	    justify-content: flex-end;
-        align-items: center;
-        width: 85%;
-        height: auto;
-    }
-}
-
 .right_flex_container{
-    flex: 5;
+    margin: 10rem 0;
     & button{
         border: solid 0.1rem;
         border-radius: 2.9rem;
@@ -30,6 +19,8 @@
         width: 15rem;
         background-color: $color-primary-blue;
         color: $color-dark-3;
+        margin-top: 3rem;
+        
         &:hover{
             background-color: $color-primary-brown;
         }
@@ -59,10 +50,8 @@
         text-emphasis: bold;
     }
     & input{
-        border: none;
         font-size: 2rem;
         text-emphasis: bold;
-        text-align: right;
     }
 }
 
