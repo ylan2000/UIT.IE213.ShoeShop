@@ -36,56 +36,59 @@
     </div>
 
     <ul class="flex-center">
-      <li>
-        <a href=""><img src="/icon/loupe.svg" alt="Search" class="icon" /></a>
+      <li class="nav__search">
+        <input class="nav__search--input scale0" id="nav-text-search" type="text" placeholder="Search Product">
+        <img src="/icon/loupe.svg" alt="Search" id="nav-logo-search" class="icon nav__search--icon" />
       </li>
 
-      <li>
-        <a href="wishlist" class="flex-center"
-          ><img src="/icon/like.svg" alt="Wish list" class="icon" /><span
-            class="nav__notification" id="wishlist-number"
-            ><% if (session.wishilist && typeof session.whilist != 'underfined') {%>
-              <%= session.wishlist.totalQty %>
-            <%} else {%>
-              <%= 0%>
-            <%}%></span
-          ></a
-        >
-      </li>
-
-      <li>
-        <a href="cart" class="flex-center"
-          ><img src="/icon/shopping-bags.svg" alt="Cart" class="icon" /><span
-            class="nav__notification" id="cart-number"
-            >
-            <% if (typeof session.cart != 'undefined') {%>
-              <%= session.cart.totalQty %>
-            <%} else {%>
-              <%= 0%>
-            <%}%></span
-          ></a
-        >
-      </li>
-
-      <li>
-        <a href="/account/show/" class="nav__button nav__account"></a>
-        <% if (session.user && typeof session.user != 'undefined') {%>
-          <div class="nav__dropdown">
-            <a id="account_dropdown" class="nav__button" style = "border: 1px solid #FF7D00;border-radius: 5px; padding: 5px">
-              <%= session.user.userName %>
-            </a>
-            <div id="dropdown-menu" class="nav__dropdown-content">
-              <a href="/account">My account</a>
-              <a href="/orders">My orders</a>
-              <a href="/logout" style="color: red">Log out</a>
+      <div class="flex-center nav__collapse">
+        <li>
+          <a href="wishlist" class="flex-center"
+            ><img src="/icon/like.svg" alt="Wish list" class="icon" /><span
+              class="nav__notification" id="wishlist-number"
+              ><% if (session.wishilist && typeof session.whilist != 'underfined') {%>
+                <%= session.wishlist.totalQty %>
+              <%} else {%>
+                <%= 0%>
+              <%}%></span
+            ></a
+          >
+        </li>
+  
+        <li>
+          <a href="cart" class="flex-center"
+            ><img src="/icon/shopping-bags.svg" alt="Cart" class="icon" /><span
+              class="nav__notification" id="cart-number"
+              >
+              <% if (typeof session.cart != 'undefined') {%>
+                <%= session.cart.totalQty %>
+              <%} else {%>
+                <%= 0%>
+              <%}%></span
+            ></a
+          >
+        </li>
+  
+        <li>
+          <a href="/account/show/" class="nav__button nav__account"></a>
+          <% if (session.user && typeof session.user != 'undefined') {%>
+            <div class="nav__dropdown">
+              <a id="account_dropdown" class="nav__button" style = "border: 1px solid #FF7D00;border-radius: 5px; padding: 5px">
+                <%= session.user.userName %>
+              </a>
+              <div id="dropdown-menu" class="nav__dropdown-content">
+                <a href="/account">My account</a>
+                <a href="#">My orders</a>
+                <a href="/logout" style="color: red">Log out</a>
+              </div>
             </div>
-          </div>
-        <% } else { %>
-          <a href="/signIn" class="nav__button" style = "border: 1px solid #FF7D00;border-radius: 5px; padding: 5px">Sign In</a>
-          <a href="/signUp" class="nav__button">Sign up</a>
-        <% } %>
-        
-      </li>
+          <% } else { %>
+            <a href="/signIn" class="nav__button" style = "border: 1px solid #FF7D00;border-radius: 5px; padding: 5px">Sign In</a>
+            <a href="/signUp" class="nav__button">Sign up</a>
+          <% } %>
+          
+        </li>
+      </div>
     </ul>
   </div>
 </nav>

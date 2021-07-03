@@ -190,6 +190,15 @@ body {
 .text-center {
   text-align: center !important; }
 
+.d-none {
+  display: none; }
+
+.scale1 {
+  transform: scale(1); }
+
+.scale0 {
+  transform: scale(0); }
+
 .btn {
   padding: 1.5rem 3rem;
   border: 0.2rem solid #222;
@@ -451,7 +460,9 @@ body {
   background-color: #fff;
   box-shadow: 0 1px 25px rgba(34, 34, 34, 0.1); }
   .nav__logo {
-    position: relative; }
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); }
     .nav__logo .logo {
       top: 0; }
   .nav--hover {
@@ -528,6 +539,46 @@ body {
     .nav .list-pages > li:hover::after {
       transform: scaleX(1);
       transform-origin: right; }
+  .nav__collapse {
+    transition: all 0.2s ease-in; }
+  .nav__search {
+    position: relative;
+    width: 30rem;
+    margin-right: 0;
+    font-size: 1.6rem; }
+    .nav__search--icon {
+      position: absolute;
+      right: 1rem;
+      height: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #757575;
+      cursor: pointer; }
+    .nav__search--input {
+      width: 100%;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10000px;
+      outline: none;
+      transition: all 0.2s ease-in-out;
+      background: #F0F2F5;
+      transition: all 0.2s ease-in;
+      transform-origin: 100% 50%;
+      box-shadow: 4px 7px 18px 4px rgba(0, 0, 0, 0.3); }
+
+.ui-autocomplete {
+  width: 30rem;
+  background: #fff;
+  z-index: 9000;
+  padding: 2rem 2rem;
+  box-shadow: 4px 7px 18px 4px rgba(0, 0, 0, 0.3); }
+
+.ui-menu-item {
+  cursor: pointer;
+  padding: 1rem;
+  border-bottom: 1px solid #BDBDBD; }
+  .ui-menu-item:hover {
+    background: #F0F2F5; }
 
 .brand {
   margin-top: 10rem; }
@@ -1493,6 +1544,16 @@ body {
 
 .right_flex_container {
   flex: 5; }
+  .right_flex_container button {
+    border: solid 0.1rem;
+    border-radius: 2.9rem;
+    font-size: large;
+    height: 3.5rem;
+    width: 15rem;
+    background-color: #15616D;
+    color: #f1f1f1; }
+    .right_flex_container button:hover {
+      background-color: #78290F; }
 
 .account__SaveBtn {
   background-color: #ffb166;
@@ -1509,6 +1570,15 @@ body {
 
 .info_container_style {
   margin-top: 3rem; }
+  .info_container_style label {
+    color: #15616D;
+    font-size: 3rem;
+    text-emphasis: bold; }
+  .info_container_style input {
+    border: none;
+    font-size: 2rem;
+    text-emphasis: bold;
+    text-align: right; }
 
 .text_info_style {
   width: 50rem;

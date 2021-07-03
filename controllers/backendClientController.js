@@ -301,3 +301,23 @@ exports.postPaymentDone = async (req, res) => {
   }
   
 }
+
+exports.autoSearchComplete = async (req, res) => {
+  try {
+    var regex = new RegExp(req.query["term"], "i");
+
+    var productFilter = await Product.find({ name: regex }, { 'name': 1 }).limit(5);
+
+    var result = [];
+
+    if (productFilter && productFilter.length && productFilter.length > 0) {
+      productFilter.forEach(product => {
+        result.push(product.name);
+      })
+    }
+
+    res.json(result);
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}

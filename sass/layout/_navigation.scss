@@ -11,7 +11,9 @@
   box-shadow: 0 1px 25px rgba($color-black, 0.1);
 
   &__logo {
-    position: relative;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 
     & .logo {
       top: 0;
@@ -122,5 +124,57 @@
       transform: scaleX(1);
       transform-origin: right;
     }
+  }
+
+  &__collapse {
+    transition: all 0.2s ease-in;
+  }
+
+  &__search {
+    position: relative;
+    width: 30rem;
+    margin-right: 0;
+    font-size: 1.6rem;
+
+    &--icon {
+      position: absolute;
+      right: 1rem;
+      height: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $color-dark-2;
+      cursor: pointer;
+    }
+
+    &--input {
+      width: 100%;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10000px;
+      outline: none;
+      transition: all 0.2s ease-in-out;
+      background: #F0F2F5;
+      transition: all 0.2s ease-in;
+      transform-origin: 100% 50%;
+      box-shadow: 4px 7px 18px 4px rgba(#000, 0.3);
+    }
+  }
+}
+
+.ui-autocomplete {
+  width: 30rem;
+  background: $color-white;
+  z-index: 9000;
+  padding: 2rem 2rem;
+  box-shadow: 4px 7px 18px 4px rgba(#000, 0.3);
+}
+
+.ui-menu-item {
+  cursor: pointer;
+  padding: 1rem;
+  border-bottom: 1px solid $color-dark-4;
+
+  &:hover {
+    background: #F0F2F5;
   }
 }
