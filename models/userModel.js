@@ -31,17 +31,17 @@ const userSchema = new mongoose.Schema({
     minlength: [8, 'The password must have greater than 8 characters'],
     select: true,
   },
-  passwordConfirm: {
-    type: String,
-    required: [true, "Please confirm your password"],
-    validate: {
-      // this only works on CREATE and SAVE, this is point to new document => not for update
-      validator: function (el) {
-        return el === this.password;
-      },
-      message: "Passwords are not the same!",
-    },
-  },
+  // passwordConfirm: {
+  //   type: String,
+  //   required: [true, "Please confirm your password"],
+  //   validate: {
+  //     // this only works on CREATE and SAVE, this is point to new document => not for update
+  //     validator: function (el) {
+  //       return el === this.password;
+  //     },
+  //     message: "Passwords are not the same!",
+  //   },
+  // },
   role: { type: Number, default: 0 }, // 0: client, 1: admin
   createdDate: { type: Date, default: Date.now() },
   avatarImage: {
