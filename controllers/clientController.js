@@ -1,7 +1,9 @@
+var mongoose = require('mongoose');
 const {Product} = require('../models/productModel');
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
 const {User} = require("../models/userModel");
+const {Transaction} = require("../models/transactionModel");
 const dotenv = require("dotenv");
 const APIFeatures = require("../utils/apiFeatures");
 dotenv.config({ path: "./config.env" });
@@ -280,13 +282,28 @@ exports.logout = (req, res) => {
   return res.redirect('back'); // redirect ve trang hien tai
 }
 
-exports.getOrder = (req, res, next) => {
+exports.getOrder = async (req, res, next) => {
   try {
     // Render template
-    return res.status(200).render("pages/clientOrder", { title: "Order"});
+    const user = req.session.user;
+    const transactions = user.transaction;
+    var orders = [];
+    for (i = 0; i < transactions.length; i++) {
+      orders.push(await Transaction.findOne({_id: transactions[i]}).exec());
+    }
+    return res.status(200).render("pages/clientOrder", { title: "Order", orders: orders});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
+}
+
+exports.getOrderDetail = async (req,res,next) => {
+  try {
+    const order = await Transaction.findOne({_id: req.params.id}).exec();
+    return res.status(200).render("pages/order-detail", {title: "Order | Detail", order: order});
+  } catch (error) {
+    return res.status(404).json({  status:"fail", message: err });
+  }
 }
