@@ -7,6 +7,7 @@ const {Transaction} = require("../models/transactionModel");
 const dotenv = require("dotenv");
 const APIFeatures = require("../utils/apiFeatures");
 dotenv.config({ path: "./config.env" });
+const countryStateCity = require('country-state-city');
 
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
@@ -206,12 +207,21 @@ exports.getPayment = async (req, res, next) => {
     var cart = new Cart(req.session.cart);
     //const user = await User.findOne({userName: req.session.user.userName}).exec()
 
+    const countries = 
+    countryStateCity.Country.getAllCountries()
+    .map(country => 
+      new Object({
+      "isoCode": country["isoCode"], 
+      "name": country["name"]
+    }));
+
     return res.status(200).render("pages/payment", {
       title: "Checkout",
       total:  cart.totalPrice,
       products: cart.generateArr(),
       //user: user,
-      stripePublicKey: stripePublicKey
+      stripePublicKey: stripePublicKey,
+      countries: countries
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });

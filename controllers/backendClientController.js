@@ -8,6 +8,7 @@ const passport = require('passport');
 const dotenv = require("dotenv");
 const mail = require("../models/mailModel");
 dotenv.config({ path: "./config.env" });
+const countryStateCity = require('country-state-city');
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 
@@ -321,3 +322,43 @@ exports.autoSearchComplete = async (req, res) => {
     return res.status(404).json({ status: "fail", message: err });
   }
 }
+
+exports.getStatesOfCountry = async (req, res) => {
+  try {
+    const countryCode = req.body.countryCode;
+
+    const states = 
+    countryStateCity.State.getAllStates()
+    .filter(state => state["countryCode"] == countryCode)
+    .map(state =>
+      new Object({
+        "isoCode": state["isoCode"],
+        "name": state["name"]
+      }));
+
+    return res.send(states);
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+exports.getCitiesOfState = async (req, res) => {
+  try {
+    const countryCode = req.body.countryCode;
+    const stateCode = req.body.stateCode;
+
+    const cities = countryStateCity.City.getAllCities()
+    .filter(
+      city => city["countryCode"] == countryCode 
+      && city["stateCode"] == stateCode
+      )
+    .map(city => 
+      new Object({
+        "name": city["name"]
+    }));
+
+    return res.send(cities);
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+} 
