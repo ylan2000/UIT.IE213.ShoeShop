@@ -10,7 +10,6 @@
 </head>
 <body>
     <%- include('../partials/nav'); -%>
-    <!--<form class="payment" id="payment_form" action="/payment/checkout" method="POST">-->
     <div class="container">
     <div class="payment">
         <div class="payment__main d-flex">
@@ -28,7 +27,7 @@
                         <input class="payment__form-control" id="phone" placeholder="PHONE NUMBER " type="tel" size="30" autocapitalize="off" spellcheck="false" maxlength="15">
                     </div>
                     <div class="payment__form-fomat col-1">
-                        <select class="payment__form-control" id="country-field">	
+                        <select class="payment__form-control" id="address-country-field">	
                             <option value="default" selected disabled>Country</option>
                             <% countries.forEach(country => { %>
                                 <option value="<%= country['isoCode'] %>"><%= country['name'] %></option>
@@ -37,17 +36,17 @@
                     </div>
 
                     <div class="payment__form-fomat col-1">
-                        <select class="payment__form-control" id="state-field" >
+                        <select class="payment__form-control" id="address-state-field" >
                             <option value="default" data-code="null" value="null" selected disabled>State</option>
                         </select>
                     </div>
                     <div class="payment__form-fomat col-1">
-                        <select class="payment__form-control " id="city-field" >
+                        <select class="payment__form-control " id="address-city-field" >
                             <option value="default" data-code="null" value="null" selected disabled>City</option>         
                         </select>
                     </div>
                     <div class="payment__form-fomat col-1"> 
-                        <input class="payment__form-control" id="add-num" placeholder="ADDRESS" type="text" size="30" autocapitalize="off" spellcheck="false">
+                        <input class="payment__form-control" id="address-detail-field" placeholder="ADDRESS" type="text" size="30" autocapitalize="off" spellcheck="false">
                     </div>
                     <div class="payment__form-fomat">
                         <input class="payment__input" type="checkbox" name="update" >
@@ -141,31 +140,28 @@
             </section>
         </div>
     </div>
-</div><!--</form>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <script>
-        $("#payment_form").submit(function(){
-            var link = "/direct";
-            if($("input[name='type'][value='momo']").prop("checked")) link = "/momo";
-            if($("input[name='type'][value='onepay']").prop("checked")) link = "/card";
-            $("#payment_form").attr("action",link)
-        })
-    </script>-->
+</div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>  
 </body>
 <script> //script fill user 
-    if (typeof '<%- session.user%>' != "undefined") {
-        $("#name").val('<%- session.user.fullName%>');
-        $("#email").val('<%- session.user.email%>')
-        $("#phone").val('<%- session.user.phone%>')
-        if (typeof '<%- session.user.address%>' != "undefined") {
-            const cityValue = $('option:contains("<%- session.user.address.city %>")').val();
-            $("#add-num").val('<%- session.user.address.number%>')
-            $("#add-city").val(cityValue).change();
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    async function fillUserDetail() {
+        if (typeof '<%- session.user%>' != "undefined") {
+            $("#name").val('<%- session.user.fullName%>');
+            $("#email").val('<%- session.user.email%>')
+            $("#phone").val('<%- session.user.phone%>')
+            if (typeof '<%- session.user.address%>' != "undefined" && !('<%-session.user.address%>'==="")) {
+                $("#address-detail-field").val('<%- session.user.address.detail%>')
+                $("#address-country-field").val("<%- session.user.address.country %>").change();
+                await delay(200);
+                $("#address-state-field").val("<%- session.user.address.state %>").change();
+                await delay(200);
+                $("#address-city-field").val("<%- session.user.address.city %>").change();
+            } else return;
         }
     }
+    $(document).ready(fillUserDetail)
 </script>
-
 <script src="/js/autoLoadLocation.js"></script>
 </html>

@@ -19,10 +19,10 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, 'Please a provide a valid email'],
   },
   address: { 
-    number: {type: String, required: false},
-    city: {type: String, required: false},
-    state: {type: String, required: false},
-    ward: {type: String, required: false},
+    detail: {type: String, required: false, default: ""},
+    city: {type: String, required: false, default: ""},
+    state: {type: String, required: false, default: ""},
+    country: {type: String, required: false, default: ""},
   },
   phone: { type: String, maxlength: [10, 'Phone number must have equal or less than 8 characters'] },
   password: {
@@ -65,16 +65,16 @@ userSchema.virtual("avatarImagePath").get(function () {
 });
 
 userSchema.virtual("fullAddress").get(function() {
-    return this.address.number + ", ward " + this.address.ward + ", " + this.address.city; 
+  return this.address.detail + ", " + this.address.city + ", " + this.address.state + ", " + this.address.country; 
 })
 
-userSchema.pre("find", function() {
-  try {
-    this.populate("transaction");
-  } catch (err) {
-    console.log(err);
-  }
-})
+// userSchema.pre("find", function() {
+//   try {
+//     this.populate("transaction");
+//   } catch (err) {
+//     console.log(err);
+//   }
+// })
 
 
 const User = mongoose.model("User", userSchema);
