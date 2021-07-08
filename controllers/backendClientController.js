@@ -2,11 +2,13 @@ const {Product} = require("../models/productModel");
 const {Transaction} = require('../models/transactionModel')
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
-const User = require("../models/userModel");
+const {User} = require("../models/userModel");
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const dotenv = require("dotenv");
+const mail = require("../models/mailModel");
 dotenv.config({ path: "./config.env" });
+const countryStateCity = require('country-state-city');
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 
@@ -256,12 +258,15 @@ exports.postPaymentDone = async (req, res) => {
   let total = 0
   let cart = req.body.cart
   let product = []
-  let user = req.body.user;
+  const user = await User.findOne({email: req.body.user.email}); 
+  user.address = req.body.user.address;
+  req.session.user = user;
+  req.session.save();
   for (i = 0; i < cart.length; i++) {
     const item = await Product.findById(cart[i].id)
     total =  total + item.price * 100 * cart[i].qty
     product.push({
-      info: cart[i].id,
+      info: item._id,
       qty: cart[i].qty
     })
   }
@@ -280,15 +285,79 @@ exports.postPaymentDone = async (req, res) => {
       total: total,
       paymentType: type,
       product: product,
-      user: user,
+      user: user._id,
       status: true
     })
     const newTrans = await trans.save()
-    console.log('Charge Successful')
-    res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
+    user.transaction.push(newTrans._id);
+    await user.save();
+    console.log('Charge Successful');
+    const html = "<p>here's your order</p>";
+    mail.confirmationMail("boong630@gmail.com", "Your order", html);
+    return res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
   } catch (err) {
     console.log(err)
-    res.status(500).end()
+    return res.status(500).end()
   }
   
 }
+
+exports.autoSearchComplete = async (req, res) => {
+  try {
+    var regex = new RegExp(req.query["term"], "i");
+
+    var productFilter = await Product.find({ name: regex }, { 'name': 1 }).limit(5);
+
+    var result = [];
+
+    if (productFilter && productFilter.length && productFilter.length > 0) {
+      productFilter.forEach(product => {
+        result.push(product.name);
+      })
+    }
+
+    res.json(result);
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+exports.getStatesOfCountry = async (req, res) => {
+  try {
+    const countryCode = req.body.countryCode;
+
+    const states = 
+    countryStateCity.State.getAllStates()
+    .filter(state => state["countryCode"] == countryCode)
+    .map(state =>
+      new Object({
+        "isoCode": state["isoCode"],
+        "name": state["name"]
+      }));
+
+    return res.send(states);
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+exports.getCitiesOfState = async (req, res) => {
+  try {
+    const countryCode = req.body.countryCode;
+    const stateCode = req.body.stateCode;
+
+    const cities = countryStateCity.City.getAllCities()
+    .filter(
+      city => city["countryCode"] == countryCode 
+      && city["stateCode"] == stateCode
+      )
+    .map(city => 
+      new Object({
+        "name": city["name"]
+    }));
+
+    return res.send(cities);
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+} 

@@ -13,19 +13,22 @@
     }
 }
 
-.left_flex_container{
-    flex: 5;
-    img{
-        display: flex;
-	    justify-content: flex-end;
-        align-items: center;
-        width: 85%;
-        height: auto;
-    }
-}
-
 .right_flex_container{
-    flex: 5;
+    margin: 10rem 0;
+    & button{
+        border: solid 0.1rem;
+        border-radius: 2.9rem;
+        font-size: large;
+        height: 3.5rem;
+        width: 15rem;
+        background-color: $color-primary-blue;
+        color: $color-dark-3;
+        margin-top: 3rem;
+        
+        &:hover{
+            background-color: $color-primary-brown;
+        }
+    }
 }
 
 .account__SaveBtn{
@@ -46,6 +49,7 @@
 .info_container_style{
     margin-top: 3rem;
     & label{
+<<<<<<< HEAD
         text-emphasis: bold;
         font-size: 3rem;
     }
@@ -55,6 +59,16 @@
     text-emphasis: bold;
     font-size: 2rem ;
      }
+=======
+        color: $color-primary-blue;
+        font-size: 3rem;
+        text-emphasis: bold;
+    }
+    & input{
+        font-size: 2rem;
+        text-emphasis: bold;
+    }
+>>>>>>> 4d8b701da3b07190cff80da51885fb0d57f442be
 }
 
 .text_info_style{

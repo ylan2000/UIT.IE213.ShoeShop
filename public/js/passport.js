@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 // Lấy user schema
-const User = require('../../models/userModel');
+const {User} = require('../../models/userModel');
 
 module.exports = function(passport){
     passport.use(

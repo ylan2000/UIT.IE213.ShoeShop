@@ -25,4 +25,17 @@ router
   .route("/payment/")
   .post(backendClientController.postPaymentDone)
   .delete(backendClientController.removeCart)
+
+router
+  .route("/searchComplete")
+  .get(backendClientController.autoSearchComplete)
+
+router
+  .route("/getStatesOfCountry")
+  .post(backendClientController.getStatesOfCountry);
+
+router
+  .route("/getCitiesOfState")
+  .post(backendClientController.getCitiesOfState);
+
 module.exports = router;

@@ -65,42 +65,7 @@
             <p class="heading-h3--main">FEATURED PRODUCTS</p>
           </h3>
 
-          <div class="product">
-            <div class="row d-flex">
-              <% product.forEach(product => { %>
-              <div href="detail" class="product__item">
-                <% if (product.condition) { %>
-                  <span class="product__new">NEW</span>
-                <% } %>
-
-                <% if (product.sale > 0) { %>
-                  <span class="product__sale"><%= product.sale%>%</span>
-                <% } %>
-
-                <a class="product__image">
-                  <img src="<%= product.coverImagePath %>" alt="productImage" class="img-fluid" />
-                </a>
-                <div class="product__summary">
-                  <div class="product__info">
-                    <p class="product__name"><%= product.name %></p>
-                    <p class="product__price"></p>
-                  </div>
-                  <div class="product__action d-flex">
-                    <span style="cursor:pointer" class="product__add add-to-cart-button" data-id="<%= product._id %>">ADD TO CART</span>
-                    <div class="product__action--right">
-                      <a href="product/<%= product.slug %>" class="product__view"
-                        ><i class="far fa-eye product__icon"></i
-                      ></a>
-                      <span class="product__love add-to-wishlist" data-id="<%= product._id %>" style="cursor: pointer;"
-                        ><i class="far fa-heart product__icon"></i
-                      ></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <% }) %>
-            </div>
-          </div>
+          <%- include('../partials/card-product'); -%>
         </div>
       </div>
 

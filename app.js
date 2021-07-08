@@ -28,6 +28,8 @@ app.use(bodyParser.json())
 
 app.use(methodOverride('_method'));
 
+app.use('/scripts', express.static(__dirname + '/node_modules/jquery-zoom/'));
+
 app.use(session({
   secret: 'gBpwmwE0PmyDKPuLhhmY8CONJQW3TnCujQuoE8nVao',
   resave: false,
