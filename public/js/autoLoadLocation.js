@@ -1,9 +1,9 @@
 (function() {
-  $("#country-field").on("change", function () {
-      $("#state-field option").remove();
-      $("#city-field option").remove();
+  $("#address-country-field").on("change", function () {
+      $("#address-state-field option").remove();
+      $("#address-city-field option").remove();
 
-      $('#city-field').append($('<option>', { 
+      $('#address-city-field').append($('<option>', { 
           value: "default",
           text : "city",
           selected: "true", 
@@ -13,10 +13,10 @@
       $.ajax({
           url: "/client/api/getStatesOfCountry",
           type: "post",
-          data: { countryCode: $("#country-field").val() },
+          data: { countryCode: $("#address-country-field").val() },
           success: function (data) {
               if (data.length == "0") {
-                      $('#state-field').append($('<option>', { 
+                      $('#address-state-field').append($('<option>', { 
                       value: "default",
                       text : "No State Was Found!",
                       selected: "true", 
@@ -25,7 +25,7 @@
               }
 
               $.each(data, function (i, item) {
-                  $('#state-field').append($('<option>', { 
+                  $('#address-state-field').append($('<option>', { 
                       value: item["isoCode"],
                       text : item["name"] 
                   }));
@@ -37,19 +37,19 @@
       });
   });
 
-  $("#state-field").on("change", function () {
-      $("#city-field option").remove();
+  $("#address-state-field").on("change", function () {
+      $("#address-city-field option").remove();
 
       $.ajax({
           url: "/client/api/getCitiesOfState",
           type: "post",
           data: { 
-              countryCode: $("#country-field").val(),
-              stateCode: $("#state-field").val()
+              countryCode: $("#address-country-field").val(),
+              stateCode: $("#address-state-field").val()
           },
           success: function (data) {
               if (data.length == "0") {
-                      $('#city-field').append($('<option>', { 
+                      $('#address-city-field').append($('<option>', { 
                       value: "default",
                       text : "No City Was Found!",
                       selected: "true", 
@@ -58,7 +58,7 @@
               }
 
               $.each(data, function (i, item) {
-                  $('#city-field').append($('<option>', { 
+                  $('#address-city-field').append($('<option>', { 
                       value: item["isoCode"],
                       text : item["name"] 
                   }));

@@ -258,9 +258,8 @@ exports.postPaymentDone = async (req, res) => {
   let total = 0
   let cart = req.body.cart
   let product = []
-  const user = await User.findOne({email: req.body.user.email});
-  if (user.address == null || user.address.number==null || user.address.city==null) 
-    user.address = req.body.user.address;
+  const user = await User.findOne({email: req.body.user.email}); 
+  user.address = req.body.user.address;
   req.session.user = user;
   req.session.save();
   for (i = 0; i < cart.length; i++) {
