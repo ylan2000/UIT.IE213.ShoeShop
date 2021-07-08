@@ -7,6 +7,10 @@
     display: flex;
     padding: 2rem 3rem;
     margin: 10rem 0rem;
+    & h3{
+            text-emphasis: bold;
+            font-size: 5rem;
+    }
 }
 
 .left_flex_container{
@@ -41,6 +45,16 @@
 
 .info_container_style{
     margin-top: 3rem;
+    & label{
+        text-emphasis: bold;
+        font-size: 3rem;
+    }
+    & input{
+    border-style:none;
+    color: $color-primary-orange;
+    text-emphasis: bold;
+    font-size: 2rem ;
+     }
 }
 
 .text_info_style{
