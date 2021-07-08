@@ -21,7 +21,7 @@
         <div class="detail__container">
           <div class="detail__row">
             <div class="detail__product-image">
-              <img src="<%= product.coverImagePath %>" alt="item-image" />
+              <img id="zoomImg" src="<%= product.coverImagePath %>" alt="item-image" data-zoom="scale: 3" />
             </div>
             <div class="detail__productdetails">
               <h3 class="detail__product-name"><%= product.name %></h3>
@@ -137,5 +137,14 @@
     </div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>
+    <script type="text/javascript" src='/scripts/jquery.zoom.min.js'></script>
+    <script>
+      $(document).ready(function(){
+      $('#zoomImg')
+      .css('display', 'block')
+      .parent()
+      .zoom();
+    });
+    </script>
   </body>
 </html>

@@ -770,9 +770,8 @@ body {
   .detail__product-image {
     width: 80rem;
     margin-left: 8rem;
-    transition: all 0.3s linear; }
-    .detail__product-image:hover {
-      box-shadow: 0px 5px 5px 5px #FF7D00; }
+    transition: all 0.3s linear;
+    cursor: crosshair; }
   .detail__product-name {
     font-size: 3rem; }
   .detail__row {

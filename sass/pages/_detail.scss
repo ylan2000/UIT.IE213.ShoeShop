@@ -5,9 +5,7 @@
     width: 80rem;
     margin-left: 8rem;
     transition: all 0.3s linear;
-    &:hover {
-      box-shadow: 0px 5px 5px 5px $color-primary-orange;
-    }
+    cursor: crosshair;
   }
 
   &__product-name {
