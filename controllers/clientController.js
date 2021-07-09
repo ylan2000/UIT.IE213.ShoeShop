@@ -143,33 +143,25 @@ exports.getAccount = async (req, res, next) => {
 };
 
 exports.getWishlist = async (req, res, next) => {
+  //create products array
+  var exportSession = async (sessionReq) => {
+    var products = [];
+    if (!sessionReq) return null;
+    var session = new Wishlist(sessionReq);
+    var sessionArr = session.generateArr();
+    if (sessionArr.length <= 0) return null;
+    for (i = 0; i < sessionArr.length; i++) {
+      const product = await Product.findOne({name: sessionArr[i].item.name}).exec();
+      products.push(product);
+    }
+    return products;
+  }
+  //render
   try {
-    let wishlistProducts;
-    let recentProducts;
-    var wishlistSession;
-    var recentSession;
-    if (req.session.wishlist) {
-      wishlistSession = new Wishlist(req.session.wishlist);
-      var wishlist = wishlistSession.generateArr()
-      if (wishlist.length > 0) {
-        wishlistProducts = [];
-        for (i = 0; i < wishlist.length; i++) {
-          const product = await Product.findOne({name: wishlist[i].item.name}).exec();
-          wishlistProducts.push(product);
-        }
-      } else { wishlistProducts = null}
-    } else { wishlistProducts = null }
-    if (req.session.recent) {
-      recentSession = new Wishlist(req.session.recent);
-      var recent = recentSession.generateArr();
-      if (recent.length > 0) {
-        recentProducts = [];
-        for (i = 0; i < recent.length; i++) {
-          const product = await Product.findOne({name: recent[i].item.name}).exec();
-          recentProducts.push(product);
-        }
-      } else { recentProducts = null }
-    } else { recentProducts = null }
+    let wishlistProducts = [];
+    let recentProducts = [];
+    wishlistProducts  = await exportSession(req.session.wishlist);
+    recentProducts = await exportSession(req.session.recent);
     return res.status(200).render("pages/wishlist", {
       title: "Wishlist",
       wishlistProducts: wishlistProducts,
