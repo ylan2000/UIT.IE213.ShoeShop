@@ -13,6 +13,7 @@ const adminRouter = require("./routes/viewAdminRoutes");
 const clientRouter = require("./routes/viewClientRoutes");
 const backendAdminRouter = require("./routes/backendAdminRoutes");
 const backendClientRouter = require("./routes/backendClientRoutes");
+const clientController = require("./controllers/clientController");
 
 var app = express();
 
@@ -68,5 +69,6 @@ app.use("/client/api", backendClientRouter);
 app.use("/admin", adminRouter);
 app.use("/" ,clientRouter);
 
+app.all("*", clientController.get404);
 
 module.exports = app;

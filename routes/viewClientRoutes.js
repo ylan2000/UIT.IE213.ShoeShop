@@ -46,8 +46,6 @@ router.get("/signIn", clientController.getSignIn);
 router.get("/signUp", clientController.getSignUp);
 
 router.get("/logout", clientController.logout);
-//Error Pages
-router.get("*", clientController.get404);
 
 
 
