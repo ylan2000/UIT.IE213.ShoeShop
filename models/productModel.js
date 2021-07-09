@@ -23,7 +23,7 @@ const productSchema = schema({
     type: Number, 
     default: 0,
     min: [0, 'The sale off percentage is greater than 0'],
-    min: [100, 'The sale off percentage is equal or less than 100'] 
+    max: [100, 'The sale off percentage is equal or less than 100'] 
   },
   condition: { type: Boolean, default: true },
   quantity: { 
