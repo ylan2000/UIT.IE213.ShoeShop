@@ -101,6 +101,11 @@ exports.getProduct = async (req, res, next) => {
     // Render template
     const slug = req.params.slug;
     const product = await Product.findOne({slug: slug}).exec();
+    //Add to recently viewed session
+    var recent = new Wishlist(req.session.recent ? req.session.recent: {items: {}});
+    recent.add(p, product._id);
+    req.session.recent = recent;
+    req.session.save();
     return res.status(200).render("pages/detail", {
       title: "Detail", product: product
     });
@@ -139,24 +144,35 @@ exports.getAccount = async (req, res, next) => {
 
 exports.getWishlist = async (req, res, next) => {
   try {
-    if (!req.session.wishlist) {
-      return res.status(200).render("pages/wishlist", {
-          title: "Wishlist",   
-          products: null
+    let wishlistProducts;
+    let recentProducts;
+    var wishlistSession;
+    var recentSession;
+    if (req.session.wishlist) {
+      wishlistSession = new Wishlist(req.session.wishlist);
+      var wishlist = wishlistSession.generateArr()
+      if (wishlist.length > 0) {
+        wishlistProducts = [];
+        for (i = 0; i < wishlist.length; i++) {
+          const product = await Product.findOne({name: wishlist[i].item.name}).exec();
+          wishlistProducts.push(product);
         }
-      );
-    }
-
-    var wishlistSession = new Wishlist(req.session.wishlist);
-    var wishlist = wishlistSession.generateArr()
-    let products = []
-    for (i = 0; i < wishlist.length; i++) {
-      const product = await Product.findOne({name: wishlist[i].item.name}).exec();
-      products.push(product)
-    }
+      } else { wishlistProducts = null}
+    } else { wishlistProducts = null }
+    if (req.session.recent) {
+      var recent = recentSession.generateArr();
+      if (recent.length > 0) {
+        recentProducts = [];
+        for (i = 0; i < recent.length; i++) {
+          const product = await Product.findOne({name: recent[i].item.name}).exec();
+          recentProducts.push(product);
+        }
+      } else { recentProducts = null }
+    } else { recentProducts = null }
     return res.status(200).render("pages/wishlist", {
       title: "Wishlist",
-      products: products,
+      wishlistProducts: wishlistProducts,
+      recentProducts: recentProducts,
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });

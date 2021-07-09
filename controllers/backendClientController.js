@@ -136,6 +136,48 @@ exports.removeFromWishlist = async (req, res, next) => {
   next();
 };
 
+// exports.addToRecent = async (req, res, next) => {
+//   try {
+//     var productId = req.params.id;
+//     var recent = new Wishlist(req.session.recent ? req.session.recent: {items: {}});
+   
+//     await Product.findById(productId, function (err, p) {
+//       if (err) {
+//         return res.status(404).json({ status: "fail", message: err });    
+//       }
+     
+//       recent.add(p, productId);
+//       req.session.recent = recent;
+//       req.session.save();
+//     });
+//     return res.send(req.session.recent);
+//   } catch (error) {
+//     return res.status(404).json({status: "fail", message:error});
+//   }
+// }
+
+exports.removeFromRecent = async (req, res, next) => {
+  try {
+    var productId = req.params.id;
+    var recent = new Wishlist(req.session.recent);
+   
+    await Product.findById(productId, function (err, p) {
+      if (err) {
+        return res.status(404).json({ status: "fail", message: err });    
+      }
+     
+      recent.remove(productId);
+      req.session.recent = recent;
+      req.session.save();
+    });
+    return res.send(req.session.wishlist);
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
 exports.register = async (req,res) => {
   const { fullname, username, email, phone, password, pwdrepeat} = req.body;
   let errors = [];
