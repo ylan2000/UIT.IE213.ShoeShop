@@ -230,12 +230,6 @@ exports.getPayment = async (req, res, next) => {
   next();
 };
 
-exports.get404 = async (req, res, next) => {
-  return res.status(404).render("pages/404", {
-    title: "404",
-  });
-};
-
 exports.getLoginFirst = async(req, res, next) => {
   try {
     // Render template
