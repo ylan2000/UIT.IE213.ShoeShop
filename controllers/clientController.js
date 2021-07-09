@@ -103,7 +103,7 @@ exports.getProduct = async (req, res, next) => {
     const product = await Product.findOne({slug: slug}).exec();
     //Add to recently viewed session
     var recent = new Wishlist(req.session.recent ? req.session.recent: {items: {}});
-    recent.add(p, product._id);
+    recent.add(product, product._id);
     req.session.recent = recent;
     req.session.save();
     return res.status(200).render("pages/detail", {
@@ -160,6 +160,7 @@ exports.getWishlist = async (req, res, next) => {
       } else { wishlistProducts = null}
     } else { wishlistProducts = null }
     if (req.session.recent) {
+      recentSession = new Wishlist(req.session.recent);
       var recent = recentSession.generateArr();
       if (recent.length > 0) {
         recentProducts = [];
