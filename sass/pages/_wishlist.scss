@@ -1,36 +1,83 @@
 .wishlist{
     min-height: calc(100vh - 26.6rem - 10rem - 5rem); // minus footer height, nav height,.. 
 
+    overflow: hidden;
+
     &__noti {
         text-align: center;
         font-size: 4rem;
         font-weight: 700;
+        width: 50%;
+        overflow: hidden;
     }
 
     &__title{
-        font-size: 4rem;
-        text-align: center;
-        color: $color-primary-orange;
-        font-weight: 700;
-        margin-top: 5rem;
-        margin-bottom: 2rem; 
+        overflow: hidden;
+        display: flex;
+        width: 200%;
+        &__text {
+            width: 50%;
+            font-size: 4rem;
+            text-align: center;
+            color: $color-primary-orange;
+            font-weight: 700;
+            margin-top: 5rem;
+            margin-bottom: 2rem; 
+        }
     }
+
+    &__slide {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        overflow: hidden;
+        &__control {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            &.wish {
+                color: black;
+            }
+        }
+        &__tab {
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            left: 0;
+            z-index: 0;
+            border-radius: 5px;
+            background: -webkit-linear-gradient(left, $color-primary-orange, $color-primary-blue);
+            transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+        } 
+    }
+
     &__page{
         margin: 0  auto 10rem;
+        display: flex;
+        overflow: hidden;
+        width: 200%;
     }
-    &__header{
-        text-align: left;
-        color: $color-primary-blue;
-        border-bottom: 2px solid $color-primary-orange;
-        // background: $color-primary-orange;
-        font-weight: 700;
-        padding: 0.75rem;
-    }
+
     &__table{
         max-width: 120rem;
-        width: 100%;
+        width: 50%;
         border-collapse: collapse;
         font-size: 2rem;
+        &__header{
+            text-align: left;
+            color: $color-primary-blue;
+            border-bottom: 2px solid $color-primary-orange;
+            // background: $color-primary-orange;
+            font-weight: 700;
+            padding: 0.75rem;
+        }
         tr:not(:last-child){
             border-bottom: 2px solid #FF7D00;
         }
@@ -84,5 +131,23 @@
     .fa, .fas {
         font-weight: 900;
         font-size: large;
+    }
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+#wishlist:checked ~ .wishlist__slide {
+    &__tab{
+        left: 50%;
+    }
+    &__control{
+        &.wish{
+            color: white;
+        }
+        &.recent{
+            color: black;
+        }
     }
 }
