@@ -783,47 +783,48 @@ body {
     margin-right: 8rem; }
   .detail__price {
     display: block;
-    margin-bottom: 3rem;
-    margin-top: 3rem;
-    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
     font-weight: 700;
-    color: #15616D; }
+    color: #15616D;
+    word-spacing: 2rem; }
+    .detail__price .sale-price {
+      font-size: 4rem; }
+    .detail__price .original-price {
+      font-size: 3rem;
+      color: #BDBDBD;
+      text-decoration: line-through; }
   .detail__stock {
-    display: -webkit-box;
-    display: -ms-flexbox;
+    margin: 2rem 1rem 2rem 0;
+    word-spacing: normal;
+    font-size: 2rem;
     display: flex;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-right: 1rem;
-    margin-top: 2rem; }
-  .detail__stock > span span {
-    font-weight: 700;
-    margin-right: 0.8rem; }
-  .detail__stock > span {
+    justify-content: space-between;
+    letter-spacing: 1.5px; }
+    .detail__stock .status-label {
+      font-weight: 700; }
+  .detail__stock > span div {
     display: block;
-    font-weight: 400;
+    font-weight: none;
     margin-left: 2.3rem; }
   .detail__qty-add-cart {
-    -ms-flex-line-pack: center;
-    align-content: center;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
+    justify-content: space-between;
     height: 4rem;
-    margin: 2.1rem 0 2rem; }
-    .detail__qty-add-cart > label {
-      -ms-flex-item-align: center;
-      align-self: center;
+    margin: 2rem 0; }
+    .detail__qty-add-cart div label {
       font-weight: 700;
       margin: 0 1.3rem 0 0;
       text-transform: capitalize;
-      display: inline-block;
-      margin-bottom: 0.5rem; }
-    .detail__qty-add-cart > input {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1.5px; }
+    .detail__qty-add-cart div input {
       border-radius: 2rem;
       padding: 0 1rem;
       text-align: center;
       width: 7rem;
+      height: 3.5rem;
       border: 1px solid #e5e5e5; }
   .detail__info {
     border-bottom: 1px solid #e5e5e5;
@@ -841,7 +842,8 @@ body {
     padding: 2rem 8rem; }
   .detail__product-name {
     font-weight: 600;
-    line-height: 2.5rem;
+    line-height: 4rem;
+    word-spacing: 1px;
     margin-right: 2.5rem;
     text-transform: uppercase;
     padding-bottom: 0.6rem;
@@ -951,16 +953,52 @@ body {
     color: #fff;
     transition: 0.5s; }
 
-.btn-add-wishlist {
-  background: #15616D;
-  color: #fff;
+.share-btn-container {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%); }
+  .share-btn-container a {
+    margin: 12px 0px;
+    transition: 500ms; }
+  .share-btn-container a:hover {
+    transform: scale(1.2); }
+  .share-btn-container a i {
+    font-size: 30px; }
+  .share-btn-container .fa-facebook {
+    color: #1877f2; }
+  .share-btn-container .fa-twitter {
+    color: #1da1f2; }
+  .share-btn-container .fa-linkedin {
+    color: #0077b5; }
+  .share-btn-container .fa-pinterest {
+    color: #e60023; }
+
+.fa-heart {
+  color: #ff0000;
   display: inline-block;
-  padding: 1rem 3rem;
-  margin-top: 3rem;
+  margin-top: 1rem;
+  font-size: 2.5rem;
   cursor: pointer; }
-  .btn-add-wishlist:hover {
-    background-color: #78290F;
-    transition: 0.5s; }
+
+.shoe-size-container {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: space-between; }
+  .shoe-size-container .shoe-size-label {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 1.5px; }
+  .shoe-size-container .shoeSize-Dropdown {
+    width: 50%;
+    height: 35px;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 5px; }
 
 .cart {
   min-height: calc(100vh - 26.6rem - 10rem - 5rem); }
