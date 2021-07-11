@@ -83,11 +83,13 @@ exports.getEditProduct = async (req, res, next) => {
   try {
     //get product for edit
     const product = await Product.findById(req.params.id);
+    const desc = product.detail.split('\r\n')
     const category = await Category.find();
     // Render template
     return res.status(200).render("admin/pages/product/product-edit", {
       title: "Edit Product",
       product: product,
+      desc: desc,
       category: category
     });
   } catch (err) {
