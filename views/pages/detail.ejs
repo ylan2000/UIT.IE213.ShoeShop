@@ -39,7 +39,9 @@
         <div class="detail__container">
           <div class="detail__row">
             <div class="detail__product-image">
-              <img id="zoomImg" src="<%= product.coverImagePath %>" alt="item-image" data-zoom="scale: 3" />
+              <div class="detail__image-cover">
+                <img src="<%= product.coverImagePath %>" alt="<%= product.name %>"/>
+              </div>
             </div>
             <div class="detail__productdetails">
               <h3 class="detail__product-name"><%= product.name %></h3>
@@ -108,9 +110,27 @@
                   </a>
                 </div>
               </div>
-              <p class="detail__final"></p>
             </div>
           </div>
+          <% if (product.imagesPath && product.imagesPath.length > 0) { %>
+          <input type="hidden" value="<%= product.imagesPath.length + 1; %>" id="numSmallImg">
+          <div class="small-slider">
+            <div class="small-slider--inner">
+              <i class="fa fa-chevron-left" id="small-slider__left-icon"></i>
+              <div class="small-slider--full-width">
+                <div class="small-slider__item">
+                  <img src="<%= product.coverImagePath %>" alt="item-image" />
+                </div>
+                <% product.imagesPath.forEach(smallImgPath => { %>
+                  <div class="small-slider__item">
+                    <img src="<%= smallImgPath %>" alt="item-image" />
+                  </div>
+                <% }); %>
+              </div>
+              <i class="fa fa-chevron-right" id="small-slider__right-icon"></i>
+            </div>
+          </div>
+          <% } %>
           <div class="detail__area">
             <div class="detail__container">
               <div class="detail__info">Product Details</div>
@@ -201,15 +221,6 @@
     </div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>
-    <script type="text/javascript" src='/scripts/jquery.zoom.min.js'></script>
-    <script>
-      $(document).ready(function(){
-      $('#zoomImg')
-      .css('display', 'block')
-      .parent()
-      .zoom();
-    });
-    </script>
     <script>
       function change (iconID){
       if(document.getElementById(iconID).className=="far fa-heart"){

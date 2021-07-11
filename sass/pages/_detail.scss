@@ -2,10 +2,14 @@
   margin-bottom: 15rem;
 
   &__product-image {
-    width: 80rem;
     margin-left: 8rem;
-    transition: all 0.3s linear;
+  }
+
+  &__image-cover {
     cursor: crosshair;
+    width: 50rem;
+    height: 30rem;
+    transition: all 0.3s linear;
   }
 
   &__product-name {
@@ -14,8 +18,7 @@
 
   &__row {
     display: flex;
-    height: 47rem;
-    margin: 3rem 0 8rem;
+    margin: 3rem 0 0;
   }
 
   &__productdetails {
@@ -59,23 +62,16 @@
   }
 
   &__qty-add-cart {
-    // -ms-flex-line-pack: center;
-    // align-content: center;
-    // display: -webkit-box;
-    // display: -ms-flexbox;
     display: flex;
     justify-content: space-between;
     height: 4rem;
-    margin: 2rem 0;
+    margin: 2rem 0 0;
 
     div label {
-      // -ms-flex-item-align: center;
-      // align-self: center;
       font-weight: 700;
       margin: 0 1.3rem 0 0;
       text-transform: capitalize;
       font-size: 2rem;
-      // display: inline-block;
       margin-bottom: 0.5rem;
       letter-spacing: 1.5px;
     }
@@ -150,9 +146,6 @@
     padding-left: 2rem;
   }
 
-  &__final {
-    padding-top: 5rem;
-  }
   &__feedback{
     display: flex;
     justify-content: space-between;
