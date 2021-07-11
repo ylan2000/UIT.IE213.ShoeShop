@@ -102,7 +102,7 @@
                   <input type="number" placeholder="1" id="detail__qty" min = "1" max = "<%= product.quantity %>"/>
                 </div>
                 <div>
-                  <div class="btn-add-cart" href="cart">Add to cart</div>
+                  <div style="cursor:pointer" class="product__add add-to-cart-button btn-add-cart" data-id="<%= product._id %>">Add to cart</div>
                 </div>
                 <div>
                   <span class="product__love add-to-wishlist" data-id="<%= product._id %>" style="cursor: pointer;"
