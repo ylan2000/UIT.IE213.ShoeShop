@@ -1574,22 +1574,12 @@ body {
 .info_container_style {
   margin-top: 3rem; }
   .info_container_style label {
-<<<<<<< HEAD
-    text-emphasis: bold;
-    font-size: 3rem; }
-  .info_container_style input {
-    border-style: none;
-    color: #FF7D00;
-    text-emphasis: bold;
-    font-size: 2rem; }
-=======
     color: #15616D;
     font-size: 3rem;
     text-emphasis: bold; }
   .info_container_style input {
     font-size: 2rem;
     text-emphasis: bold; }
->>>>>>> 4d8b701da3b07190cff80da51885fb0d57f442be
 
 .text_info_style {
   width: 50rem;

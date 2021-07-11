@@ -57,11 +57,16 @@ exports.getProducts = async (req, res, next) => {
     let filter = {}
 
     // get info for sending data to view
-    brand = req.params.brand || null; 
+    brand = req.params.brand || null;
+    condition = req.params.condition || null;
 
     // get brand name
     if (brand) {
       filter = { "category.0.name": brand }
+    }
+
+    if (condition) {
+      filter = {"products.condition": true}
     }
 
     const limit = 12; // limit products on each page
@@ -95,6 +100,7 @@ exports.getProducts = async (req, res, next) => {
 
   next();
 };
+
 
 exports.getProduct = async (req, res, next) => {
   try {

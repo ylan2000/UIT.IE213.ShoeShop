@@ -36,9 +36,22 @@ exports.getCategories = async (req, res, next) => {
 exports.getOrders = async (req, res, next) => {
   try {
     const orders = await Transaction.find();
+    const shipped = [];
+    const shipping = [];
+    for(i =0; i < orders.length; i++){
+      if(orders[i].status == true ){
+        shipped.push(orders[i])
+      }
+      if(orders[i].status == false){
+        shipping.push(orders[i])
+      }
+    }
     // Render template
     return res.status(200).render("admin/pages/order/order", {
-      title: "Orders", orders: orders
+      title: "Orders", 
+      orders: orders,
+      shipped: shipped,
+      shipping: shipping
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -51,10 +64,24 @@ exports.getOrders = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   try {
     // Render template
-    const status = req.query.status
+    const status = req.query.status;
     const products =  await Product.find();
+    const sales = [];
+    const isNew = [];
+    for(i =0; i < products.length; i++){
+      if(products[i].sale > 0){
+        sales.push(products[i])
+      }
+      if(products[i].condition == true){
+        isNew.push(products[i])
+      }
+    }
     return res.status(200).render("admin/pages/product/product", {
-      title: "Products", product: products, status: status
+      title: "Products", 
+      product: products, 
+      status: status,
+      sales: sales,
+      isNew: isNew
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });

@@ -49,17 +49,7 @@
 .info_container_style{
     margin-top: 3rem;
     & label{
-<<<<<<< HEAD
-        text-emphasis: bold;
-        font-size: 3rem;
-    }
-    & input{
-    border-style:none;
-    color: $color-primary-orange;
-    text-emphasis: bold;
-    font-size: 2rem ;
-     }
-=======
+
         color: $color-primary-blue;
         font-size: 3rem;
         text-emphasis: bold;
@@ -68,7 +58,6 @@
         font-size: 2rem;
         text-emphasis: bold;
     }
->>>>>>> 4d8b701da3b07190cff80da51885fb0d57f442be
 }
 
 .text_info_style{
