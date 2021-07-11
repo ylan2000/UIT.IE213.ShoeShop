@@ -15,7 +15,7 @@ const productSchema = schema({
       data: {type: Buffer},
       type: {type: String}
     } },
-  images: String,
+  images: { type: [Object] },
   description: { type: String, required: [true, 'Product must have a description'] },
   detail: { type: String, required: [true, 'Product must have detail info'] },
   price: { type: Number, default: 0, required: [true, 'Product must have a price'] },
@@ -41,6 +41,20 @@ productSchema.virtual("coverImagePath").get(function () {
     return `data:${this.coverImage.type};charset:utf-8;base64,${this.coverImage.data.toString(
       "base64"
     )}`;
+});
+
+productSchema.virtual("imagesPath").get(function () {
+  let imagesPath = [];
+  
+  if (this.images.length) {
+    this.images.forEach(img => {
+      imagesPath.push(`data:${img.type};charset:utf-8;base64,${img.data.toString(
+        "base64"
+      )}`);
+    })
+  }
+
+  return imagesPath;
 });
 
 productSchema.virtual("priceDiscount").get(function () {
