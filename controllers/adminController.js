@@ -110,11 +110,13 @@ exports.getEditProduct = async (req, res, next) => {
   try {
     //get product for edit
     const product = await Product.findById(req.params.id);
+    const desc = product.detail.split('\r\n')
     const category = await Category.find();
     // Render template
     return res.status(200).render("admin/pages/product/product-edit", {
       title: "Edit Product",
       product: product,
+      desc: desc,
       category: category
     });
   } catch (err) {
@@ -178,11 +180,32 @@ exports.postAddProduct = async (req,res,next) => {
     condition: req.body.pIsNew,
     quantity: req.body.quantity,
   });
-  saveImage(product, req.body.productImg);
+
+  const coverImgObject = saveImage(req.body.coverImage);
+  product.coverImage.data = coverImgObject["data"];
+  product.coverImage.type = coverImgObject["type"];
+
+  if (req.body.images.length) {
+    const imageArr = [];
+    req.body.images.forEach(img => {
+      let objImg = {};
+      const transferedImd = saveImage(img);
+
+      objImg.data = transferedImd["data"];
+      objImg.type = transferedImd["type"];
+
+      imageArr.push(objImg);
+      
+    });
+
+    product.images = imageArr;
+  }
+
   try {
     const newProduct = await product.save();
     return res.redirect("/admin/products?status=Success");
   } catch (err) {
+    console.log(err);
     return res.redirect("/admin/products?status=Fail")
   }
 
@@ -213,12 +236,12 @@ exports.putUpdateProduct = async(req,res,next) => {
   }
 }
 
-function saveImage(product, coverEncoded) {
-  if (coverEncoded == null) return;
-  const image = JSON.parse(coverEncoded);
-  if (image != null && imageMimeTypes.includes(image.type)) {
-    product.coverImage.data = new Buffer.from(image.data,'base64');
-    product.coverImage.type = image.type;
+function saveImage(img) {
+  if (img == null) return;
+  const image = JSON.parse(img);
+  if (image != null && imageMimeTypes.includes(image.type)) return {
+    data: new Buffer.from(image.data,'base64'),
+    type: image.type
   }
 }
 //Admin delete

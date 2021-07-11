@@ -40,5 +40,16 @@
   </div>
 </body>
 <%- include('../../template/footer.ejs'); -%>
-
+<script>
+  $("#productName").val('<%= product.name%>');
+  $("#productShortDesc").val("<%= product.description%>");
+  '<% desc.forEach(line => { %>'
+    $("#productDesc").val($("#productDesc").val() + '<%= line %>' + '\n')
+  '<% }) %>' 
+  $("#productCate").val($("option:contains('<%= product.category[0].name%>')").val()).change();
+  $("#productPrice").val('<%= product.price%>');
+  $("#pSaleOff").val('<%= product.sale%>');
+  $("#<%= product.condition %>").prop("checked",true)
+  $("#quantity").val('<%= product.quantity%>');
+</script>
 </html>

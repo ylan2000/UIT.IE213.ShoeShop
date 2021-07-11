@@ -5,6 +5,25 @@
   </head>
   <body>
     <%- include('../partials/nav'); -%>
+    <div class = "share-btn-container">
+
+      <a class = "btn-facebook" href = "#">
+        <i class="fab fa-facebook"></i>
+      </a>
+
+      <a class="btn-twitter" href="#">
+        <i class="fab fa-twitter"></i>
+      </a>
+
+      <a class="btn-reddit" href = "#">
+        <i class="fab fa-reddit"></i>
+      </a>
+
+      <a class="btn-linkedin" href = "#">
+        <i class="fab fa-linkedin"></i>
+      </a>
+
+    </div>
     <div class="detail">
       <div class="container">
         <div class="detail__container">
@@ -14,39 +33,105 @@
                 <a href="home">Home</a>
               </li>
               <span>&ThickSpace;&#62;&ThickSpace;</span>
-              <li class="breadcrumb-item active"><%= product.name %> </li>
+              <li class="breadcrumb-item active"><%= product.name %></li>
             </ul>
           </nav>
         </div>
         <div class="detail__container">
           <div class="detail__row">
             <div class="detail__product-image">
-              <img id="zoomImg" src="<%= product.coverImagePath %>" alt="item-image" data-zoom="scale: 3" />
+              <div class="detail__image-cover">
+                <img src="<%= product.coverImagePath %>" alt="<%= product.name %>"/>
+              </div>
             </div>
             <div class="detail__productdetails">
               <h3 class="detail__product-name"><%= product.name %></h3>
-              <span class="detail__price"><%= product.price%>&dollar;</span>
-              <span class="detail__stock">
-                <% if (product.quantity > 0) { %>
-                <b>In stock</b>
+              <span class="detail__price">
+                <% if (product.sale > 0) { %>
+                  <p>
+                    <span class = "sale-price">
+                      <%= product.priceDiscount%>&dollar;
+                    </span>
+                    <span class = "original-price">
+                      <%= product.price%>&dollar;
+                    </span>
+                  </p>
+                  
                 <% } else  { %>
-                <b>Out stock</b> 
+                  <span class = "sale-price">
+                    <%= product.price%>&dollar;
+                  </span> 
                 <% } %>
-                <span> SKU PR_ </span>
               </span>
+              <!-- Chỗ chứa phần size giày -->
+              <form action="#" class = "shoe-size-container">
+                <label for="shoeSize" class = "shoe-size-label">Choose size:</label>
+                <br>
+                <select name="size" id="size" class = "shoeSize-Dropdown">
+                  <option value="35">35</option>
+                  <option value="36">36</option>
+                  <option value="37">37</option>
+                  <option value="38">38</option>
+                  <option value="39">39</option>
+                  <option value="40">40</option>
+                  <option value="41">41</option>
+                </select>
+              </form>
+              <hr/>
+              <!-- Chỗ chứa phần status và quanity -->
+              <span class="detail__stock">
+                <div>
+                  <span class = "status-label">Status: </span>
+                  <% if (product.quantity > 0) { %>
+                    <span> In stock</span>
+                  <% } else  { %>
+                    <span> Out of stock</span> 
+                  <% } %>
+                </div>
+                <div>
+                  <span class = "status-label">Remaining: </span>
+                  <span> 
+                    <%= product.quantity %> 
+                  </span>
+                </div>
+              </span>
+              <hr/>
+              <!-- Chỗ chứa phần chọn số lượng, add to cart và wishlist-->
               <div class="detail__qty-add-cart">
-                <label for="detail__qty"><%= product.quantity %></label>
-                <input type="number" placeholder="1" id="detail__qty" />
-                <div class="btn-add-cart" href="cart">Add to cart</div>
-              </div>
-              <div class="detail__buttons">
-                <div class="btn-add-wishlist" href="wishlist">
-                  Add to wish list
+                <div>
+                  <label for="detail__qty">Quanity: </label>
+                  <input type="number" placeholder="1" id="detail__qty" min = "1" max = "<%= product.quantity %>"/>
+                </div>
+                <div>
+                  <div style="cursor:pointer" class="product__add add-to-cart-button btn-add-cart" data-id="<%= product._id %>">Add to cart</div>
+                </div>
+                <div>
+                  <span class="product__love add-to-wishlist" data-id="<%= product._id %>" style="cursor: pointer;"
+                    ><i class="far fa-heart product__icon"></i
+                  ></span>
                 </div>
               </div>
-              <p class="detail__final"></p>
             </div>
           </div>
+          <% if (product.imagesPath && product.imagesPath.length > 0) { %>
+          <input type="hidden" value="<%= product.imagesPath.length + 1; %>" id="numSmallImg">
+          <div class="small-slider">
+            <div class="small-slider--inner">
+              <i class="fa fa-chevron-left" id="small-slider__left-icon"></i>
+              <div class="small-slider--full-width">
+                <div class="small-slider__item">
+                  <img src="<%= product.coverImagePath %>" alt="item-image" />
+                </div>
+                <% product.imagesPath.forEach(smallImgPath => { %>
+                  <div class="small-slider__item">
+                    <img src="<%= smallImgPath %>" alt="item-image" />
+                  </div>
+                <% }); %>
+              </div>
+              <i class="fa fa-chevron-right" id="small-slider__right-icon"></i>
+            </div>
+          </div>
+          <% } %>
           <div class="detail__area">
             <div class="detail__container">
               <div class="detail__info">Product Details</div>
@@ -137,14 +222,49 @@
     </div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>
-    <script type="text/javascript" src='/scripts/jquery.zoom.min.js'></script>
     <script>
-      $(document).ready(function(){
-      $('#zoomImg')
-      .css('display', 'block')
-      .parent()
-      .zoom();
-    });
+      function change (iconID){
+      if(document.getElementById(iconID).className=="far fa-heart"){
+        document.getElementById(iconID).className = "fas fa-heart";
+      }else{
+        document.getElementById(iconID).className = "far fa-heart";
+      }
+    }
+    </script>
+    <script>
+      var text = encodeURIComponent("Check this out !!!!");
+      // Note 1: nhớ sửa thành window.document.location.href sau khi deploy nha
+      // Note 2: nếu có lỗi thì thử sửa thành encodeURI(window.document.location.href) hoặc encodeURI(document.location.href) nha
+      var url = "https://www.facebook.com/HoaThienVu.HDP/"; // Link để tạm để chắc chắn chạy được chức năng share
+      var params = "menubar=no,toolbar=no,status=no,width=570,height=570"; // for window
+      var image = document.querySelector('.pin-image');
+
+      var facebook = document.querySelector('.btn-facebook');
+      var twitter = document.querySelector('.btn-twitter');
+      var reddit = document.querySelector('.btn-reddit');
+      var linkedin = document.querySelector('.btn-linkedin');
+
+      facebook.addEventListener('click', function(ev) {
+        console.log("hi");
+          
+          let shareUrl = `http://www.facebook.com/sharer/sharer.php?u=${url}`;
+          window.open(shareUrl,"NewWindow" , params);  
+      });
+      twitter.addEventListener('click', function(ev) {
+        let shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+        window.open(shareUrl,"NewWindow" , params);
+      });
+
+      reddit.addEventListener('click', function(ev) {
+        let shareUrl = `https://reddit.com/submit?url=${url}&title=${text}`;
+        window.open(shareUrl,"NewWindow" , params);
+      });
+
+      linkedin.addEventListener('click', function(ev) {
+        let shareUrl = `https://www.linkedin.com/shareArticle?url=${url}&title=${text}`;
+        window.open(shareUrl,"NewWindow" , params);
+      });
+
     </script>
   </body>
 </html>

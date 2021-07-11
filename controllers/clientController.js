@@ -236,19 +236,6 @@ exports.getPayment = async (req, res, next) => {
   next();
 };
 
-exports.get404 = async (req, res, next) => {
-  try {
-    // Render template
-    return res.status(404).render("pages/404", {
-      title: "404",
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
-
-  next();
-};
-
 exports.getLoginFirst = async(req, res, next) => {
   try {
     // Render template
