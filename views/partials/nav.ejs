@@ -46,7 +46,7 @@
           <a href="/wishlist" class="flex-center"
             ><img src="/icon/like.svg" alt="Wish list" class="icon" /><span
               class="nav__notification" id="wishlist-number"
-              ><% if (session.wishilist && typeof session.whilist != 'underfined') {%>
+              ><% if (typeof session.whilist != 'underfined') {%>
                 <%= session.wishlist.totalQty %>
               <%} else {%>
                 <%= 0%>
