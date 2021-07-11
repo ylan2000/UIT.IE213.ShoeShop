@@ -7,6 +7,8 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 
 // -- Call passport
 require('./public/js/passport')(passport);
@@ -47,8 +49,14 @@ app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
 app.use(bodyParser.json())
 
-app.use(methodOverride('_method'));
+// data sanitization against NOSQL query injection
+app.use(mongoSanitize());
 
+// Data sanitization against XSS
+app.use(xss());
+
+app.use(methodOverride('_method'));
+ 
 app.use('/scripts', express.static(__dirname + '/node_modules/jquery-zoom/'));
 
 app.use(session({
