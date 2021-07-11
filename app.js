@@ -8,6 +8,10 @@ const passport = require("passport");
 // -- Call passport
 require('./public/js/passport')(passport);
 
+// -- App Error
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
+
 // -- Route
 const adminRouter = require("./routes/viewAdminRoutes");
 const clientRouter = require("./routes/viewClientRoutes");
@@ -68,5 +72,10 @@ app.use("/client/api", backendClientRouter);
 app.use("/admin", adminRouter);
 app.use("/" ,clientRouter);
 
+app.all("*", (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;
