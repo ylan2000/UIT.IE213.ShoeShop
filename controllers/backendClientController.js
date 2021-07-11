@@ -264,11 +264,13 @@ exports.postPaymentDone = async (req, res) => {
   req.session.save();
   for (i = 0; i < cart.length; i++) {
     const item = await Product.findById(cart[i].id)
+    item.quantity -= cart[i].qty;
     total =  total + item.price * 100 * cart[i].qty
     product.push({
       info: item._id,
       qty: cart[i].qty
     })
+    await item.save();
   }
   if (type == "card") {
     await stripe.charges.create({
