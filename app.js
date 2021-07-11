@@ -6,6 +6,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 // -- Call passport
 require('./public/js/passport')(passport);
@@ -25,6 +26,9 @@ var app = express();
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "views"));
+
+// middleware for setting security http headers
+app.use(helmet());
 
 // limit 100 request per hour on each IP
 const limiter = rateLimit({
