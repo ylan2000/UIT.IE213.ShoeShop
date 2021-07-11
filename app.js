@@ -5,6 +5,8 @@ const methodOverride = require("method-override"); //Sử dụng PUT, Delete,...
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
+const rateLimit = require('express-rate-limit');
+
 // -- Call passport
 require('./public/js/passport')(passport);
 
@@ -23,6 +25,17 @@ var app = express();
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "views"));
+
+// limit 100 request per hour on each IP
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour!' 
+});
+
+// add limiter to only api routes
+app.use('/admin/api', limiter);
+app.use('/client/api', limiter);
 
 app.use(express.static(`${__dirname}/public`));
 
