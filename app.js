@@ -9,6 +9,8 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const hpp = require('hpp');
+const compression = require('compression');
 
 // -- Call passport
 require('./public/js/passport')(passport);
@@ -85,7 +87,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-
+app.use(compression());
 
 //~~~~~~ROUTING~~~~~~~
 
