@@ -235,6 +235,7 @@ exports.login = (req, res, next) => {
       return next(err); 
     }
     if (!user) { 
+      req.flash('error_msg', 'Incorrect username/email or password, please try again');
       return res.redirect('/signIn'); 
     } else {
       if(req.session.user.role == 1)

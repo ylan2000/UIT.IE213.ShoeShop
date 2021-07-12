@@ -77,6 +77,9 @@
                 <%= session.user.userName %>
               </a>
               <div id="dropdown-menu" class="nav__dropdown-content">
+                <% if (session.user.role == 1) {%>
+                <a href="/admin">Admin Dashboard</a>
+                <%}%>
                 <a href="/account">My account</a>
                 <a href="/orders">My orders</a>
                 <a href="/logout" style="color: red">Log out</a>
