@@ -32,9 +32,6 @@ app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "views"));
 
-// middleware for setting security http headers
-app.use(helmet());
-
 // limit 100 request per hour on each IP
 const limiter = rateLimit({
   max: 100,
@@ -63,6 +60,8 @@ app.use(xss());
 app.use(methodOverride('_method'));
  
 app.use('/scripts', express.static(__dirname + '/node_modules/jquery-zoom/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/jquery-ui-dist/'));
 
 app.use(session({
   secret: 'gBpwmwE0PmyDKPuLhhmY8CONJQW3TnCujQuoE8nVao',
