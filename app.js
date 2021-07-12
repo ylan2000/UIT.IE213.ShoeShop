@@ -10,6 +10,8 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const compression = require('compression');
+const favicon = require('serve-favicon');
 
 // -- Call passport
 require('./public/js/passport')(passport);
@@ -30,9 +32,6 @@ app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "views"));
 
-// middleware for setting security http headers
-app.use(helmet());
-
 // limit 100 request per hour on each IP
 const limiter = rateLimit({
   max: 100,
@@ -45,6 +44,8 @@ app.use('/admin/api', limiter);
 app.use('/client/api', limiter);
 
 app.use(express.static(`${__dirname}/public`));
+
+app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
@@ -62,6 +63,8 @@ app.use(hpp());
 app.use(methodOverride('_method'));
  
 app.use('/scripts', express.static(__dirname + '/node_modules/jquery-zoom/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/jquery-ui-dist/'));
 
 app.use(session({
   secret: 'gBpwmwE0PmyDKPuLhhmY8CONJQW3TnCujQuoE8nVao',
@@ -89,7 +92,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-
+app.use(compression());
 
 //~~~~~~ROUTING~~~~~~~
 
