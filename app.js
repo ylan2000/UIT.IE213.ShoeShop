@@ -11,6 +11,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const compression = require('compression');
+const favicon = require('serve-favicon');
 
 // -- Call passport
 require('./public/js/passport')(passport);
@@ -46,6 +47,8 @@ app.use('/admin/api', limiter);
 app.use('/client/api', limiter);
 
 app.use(express.static(`${__dirname}/public`));
+
+app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
