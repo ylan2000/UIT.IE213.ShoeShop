@@ -360,3 +360,17 @@ exports.getCitiesOfState = async (req, res) => {
     return res.status(404).json({ status: "fail", message: err });
   }
 } 
+
+exports.addFeedback = async (req, res) => {
+  const {username, feedback, slug, starNumber} = req.body;
+  var newFeedback = new Feedback({
+    username,
+    feedback,
+    slug,
+    starNumber
+  });
+  var fb = await newFeedback.save();
+  res.json(
+    fb
+  )
+}

@@ -29,7 +29,8 @@ router
 router
   .route("/feedback")
   .post(backendClientController.addFeedback)
-  .route("/searchComplete")
+
+  router.route("/searchComplete")
   .get(backendClientController.autoSearchComplete)
 
 router
