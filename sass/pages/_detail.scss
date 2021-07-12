@@ -2,12 +2,14 @@
   margin-bottom: 15rem;
 
   &__product-image {
-    width: 80rem;
     margin-left: 8rem;
+  }
+
+  &__image-cover {
+    cursor: crosshair;
+    width: 50rem;
+    height: 30rem;
     transition: all 0.3s linear;
-    &:hover {
-      box-shadow: 0px 5px 5px 5px $color-primary-orange;
-    }
   }
 
   &__product-name {
@@ -16,8 +18,7 @@
 
   &__row {
     display: flex;
-    height: 47rem;
-    margin: 3rem 0 8rem;
+    margin: 3rem 0 0;
   }
 
   &__productdetails {
@@ -27,59 +28,60 @@
 
   &__price {
     display: block;
-    margin-bottom: 3rem;
-    margin-top: 3rem;
-    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
     font-weight: 700;
     color: $color-primary-blue;
+    word-spacing: 2rem;
+    .sale-price{
+      font-size: 4rem;
+    }
+    .original-price{
+      font-size: 3rem;
+      color: $color-dark-4;
+      text-decoration: line-through;
+    }
   }
 
   &__stock {
-    display: -webkit-box;
-    display: -ms-flexbox;
+    // margin-right: 1rem;
+    margin: 2rem 1rem 2rem 0;
+    word-spacing: normal;
+    font-size: 2rem;
     display: flex;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-right: 1rem;
-    margin-top: 2rem;
+    justify-content: space-between;
+    letter-spacing: 1.5px;
+    .status-label{
+      font-weight: 700;
+    }
   }
-
-  &__stock > span span {
-    font-weight: 700;
-    margin-right: 0.8rem;
-  }
-
-  &__stock > span {
+  &__stock > span div {
     display: block;
-    font-weight: 400;
+    font-weight: none;
     margin-left: 2.3rem;
   }
 
   &__qty-add-cart {
-    -ms-flex-line-pack: center;
-    align-content: center;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
+    justify-content: space-between;
     height: 4rem;
-    margin: 2.1rem 0 2rem;
+    margin: 2rem 0 0;
 
-    & > label {
-      -ms-flex-item-align: center;
-      align-self: center;
+    div label {
       font-weight: 700;
       margin: 0 1.3rem 0 0;
       text-transform: capitalize;
-
-      display: inline-block;
+      font-size: 2rem;
       margin-bottom: 0.5rem;
+      letter-spacing: 1.5px;
     }
 
-    & > input {
+    div input {
       border-radius: 2rem;
       padding: 0 1rem;
       text-align: center;
       width: 7rem;
+      height: 3.5rem;
       border: 1px solid #e5e5e5;
     }
   }
@@ -104,7 +106,8 @@
 
   &__product-name {
     font-weight: 600;
-    line-height: 2.5rem;
+    line-height: 4rem ;
+    word-spacing: 1px ;
     margin-right: 2.5rem;
     text-transform: uppercase;
     padding-bottom: 0.6rem;
@@ -143,9 +146,6 @@
     padding-left: 2rem;
   }
 
-  &__final {
-    padding-top: 5rem;
-  }
   &__feedback{
     display: flex;
     justify-content: space-between;
@@ -224,18 +224,45 @@
   }
 }
 
-.btn-add-wishlist {
-  background: $color-primary-blue;
-  color: $color-white;
-  display: inline-block;
-  padding: 1rem 3rem;
-  margin-top: 3rem;
-  cursor: pointer;
-  &:hover {
-    background-color: $color-primary-brown;
-    
-    transition: 0.5s;
+.share-btn-container{
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  a {
+    margin: 12px 0px;
+    transition: 500ms;
   }
+  a:hover {
+    transform: scale(1.2);
+  }
+  a i{
+    font-size: 30px;
+  }
+  .fa-facebook {
+    color: #1877f2;
+  }
+  .fa-twitter {
+    color: #1da1f2;
+  }
+  .fa-linkedin {
+    color: #0077b5;
+  }
+  .fa-reddit {
+    color: #ff4500;
+  }
+}
+
+.fa-heart {
+  color: $color-red;
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 2.5rem;
+  cursor: pointer;
 }
 .wrapper{
   position: relative;
@@ -524,5 +551,20 @@
               cursor: pointer;
           }
       }
+.shoe-size-container{
+  margin: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  .shoe-size-label{
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+  }
+  .shoeSize-Dropdown {
+    width: 50%;
+    height: 35px;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 5px;
   }
 }

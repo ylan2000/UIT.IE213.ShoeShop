@@ -15,18 +15,22 @@
             <th>Products</th>
             <th>Status</th>
           </tr>
-          <tr>
-            <td class="clientorder__name">Jill</td>
-            <td>Smith</td>
-            <td>50</td>
-            <td>ádasdas</td>
-          </tr>
-          <tr>
-            <td class="clientorder__name">Eve</td>
-            <td>Jackson</td>
-            <td>94</td>
-            <td>ádasa</td>
-          </tr>
+          <% orders.forEach(order => { %>
+            <tr>
+              <td class="clientorder__name"><a href="orders/view/<%= order._id %>"><%= order._id %></a></td>
+              <td>
+                <%= order.createdDate.getDate() %>/ <!--day-->
+                <%= order.createdDate.getMonth()+1%>/ <!--month-->
+                <%= order.createdDate.getFullYear()%> <!--year-->
+              </td>
+              <td>
+                <% order.product.forEach(product => { %>
+                 <p><%= product.info.name %></p>
+                <% }) %>
+              </td>
+              <td><%= order.status %> </td>
+            </tr>
+          <% }) %>
         </table>
       </div>
     </div>

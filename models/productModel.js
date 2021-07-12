@@ -4,20 +4,33 @@ const {Category}  = require("./categoryModel");
 const schema = mongoose.Schema;
 
 const productSchema = schema({
-  name: { type: String, required: true, unique: true },
+  name: { 
+    type: String, 
+    required: [true, 'Product must have a name'], 
+    unique: true 
+  },
   slug: String,
   coverImage: { type: Object, default:
     {
       data: {type: Buffer},
       type: {type: String}
     } },
-  images: String,
-  description: { type: String, required: true },
-  detail: { type: String, required: true },
-  price: { type: Number, default: 0, required: true },
-  sale: { type: Number, default: 0 },
+  images: { type: [Object] },
+  description: { type: String, required: [true, 'Product must have a description'] },
+  detail: { type: String, required: [true, 'Product must have detail info'] },
+  price: { type: Number, default: 0, required: [true, 'Product must have a price'] },
+  sale: { 
+    type: Number, 
+    default: 0,
+    min: [0, 'The sale off percentage is greater than 0'],
+    max: [100, 'The sale off percentage is equal or less than 100'] 
+  },
   condition: { type: Boolean, default: true },
-  quantity: { type: Number, default: 0 },
+  quantity: { 
+    type: Number, 
+    default: 1,
+    min: [1, 'The quantity must be greater than 1']
+  },
   createdDate: { type: Date, default: Date.now() },
   //transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
   category: Array
@@ -28,6 +41,24 @@ productSchema.virtual("coverImagePath").get(function () {
     return `data:${this.coverImage.type};charset:utf-8;base64,${this.coverImage.data.toString(
       "base64"
     )}`;
+});
+
+productSchema.virtual("imagesPath").get(function () {
+  let imagesPath = [];
+  
+  if (this.images.length) {
+    this.images.forEach(img => {
+      imagesPath.push(`data:${img.type};charset:utf-8;base64,${img.data.toString(
+        "base64"
+      )}`);
+    })
+  }
+
+  return imagesPath;
+});
+
+productSchema.virtual("priceDiscount").get(function () {
+  return this.price*(100 - this.sale)/100;
 });
 
 // pre hook save: add product's slug -> runs before the .save() command or .create() command

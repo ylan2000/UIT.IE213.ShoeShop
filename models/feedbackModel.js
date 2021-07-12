@@ -2,13 +2,12 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const feedbackSchema = new schema({
-    feedback: { type: String, maxlength: 100 },//required: true 
-    slug: String,
+    feedback: { type: String, required: [true, 'Feedback must have message'] },
     starNumber:{ type: Number, min: 1, max: 5 }, 
-    // isAccept: { type: Boolean},
-    username: { type: String},//type: Schema.ObjectId, ref: 'User', required: true , required: true 
-    // product: { type: Schema.ObjectId, ref: 'Product', required: true },
-    // createdDate: { type: Date, default: Date.now() },
+    isAccept: { type: Boolean},
+    user: { type: Schema.ObjectId, ref: 'User', required: [true, 'Feedback must belong to a user.'] },
+    product: { type: Schema.ObjectId, ref: 'Product', required: [true, 'Feedback must belong to a product.'] },
+    createdDate: { type: Date, default: Date.now() },
 });
 
 const Feedback = mongoose.model("Feedback", feedbackSchema);

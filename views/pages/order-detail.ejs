@@ -16,45 +16,24 @@
               <th class="cart__header">Subtotal</th>
               <th class="cart__header"></th>
             </tr>
-            <tr>
-              <td>
-                <div class="cart__info">
-                  <img
-                    src="images/UtraBoost_Summer.jpg"
-                    alt="Ultra boost"
-                    style="width: 40%"
-                  />
-                  <div>
-                    <p class="cart__product-name">
-                      ULTRABOOST SUMMER.RDY - White
-                    </p>
-                    <small
-                      >Price:
-                      <span class="cart__product-price">$220,00</span></small
-                    >
+              <% order.product.forEach(product => { %>
+                <tr>
+                  <td>
+                    <div class="cart__info"></div>
+                      <img src="<%= product.info.coverImagePath %> " style="width:10%;" alt="Product Image" />
+                      <div>
+                        <p class="cart__product-name"><%= product.info.name %></p>
+                        <small
+                          >Price:
+                          <span class="cart__product-price">$<%= product.info.price %></span></small
+                        >
+                      </div>
                   </div>
-                </div>
-              </td>
-              <td>5</td>
-              <td>$250</td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="cart__info">
-                  <img src="images/UtraBoost_Summer.jpg" alt="Ultra boost" />
-                  <div>
-                    <p class="cart__product-name">ULTRABOOST SUMMER.RDY</p>
-                    <small
-                      >Price:
-                      <span class="cart__product-price">$220,00</span></small
-                    >
-                  </div>
-                </div>
-              </td>
-              <td>7</td>
-              <td>$250</td>
-            </tr>
+                  </td>
+                  <td><%= product.qty %></td>
+                  <td>$<%= product.info.price*product.qty%></td>
+                </tr>
+              <% }) %>
           </table>
         </div>
       </div>
@@ -64,11 +43,11 @@
           <table>
             <tr>
               <td>Order ID:</td>
-              <td>1234421</td>
+              <td><%= order._id %> </td>
             </tr>
             <tr>
               <td>Total:</td>
-              <td>$500</td>
+              <td>$<%= order.total / 100 %> </td>
             </tr>
             <tr class="cart__total-resut">
               <td>Status:</td>
@@ -77,12 +56,7 @@
           </table>
         </div>
       </div>
-      <input
-        class="cart__OrdBtn"
-        type="button"
-        name=""
-        value="Return to Orders"
-      />
+      <a href="/orders"class="cart__OrdBtn">Return to Orders</a>
     </div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>

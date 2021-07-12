@@ -77,3 +77,8 @@ img {
 input[name="location"] {
   display: none;
 }
+
+.flex-center-column {
+  @include flex-center;
+  flex-direction: column;
+}

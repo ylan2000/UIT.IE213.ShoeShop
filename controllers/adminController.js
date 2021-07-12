@@ -1,5 +1,6 @@
 const {Product} = require("../models/productModel")
 const {Category} = require("../models/categoryModel")
+const {Transaction} = require("../models/transactionModel")
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
 
 const { Router } = require('express');
@@ -34,9 +35,23 @@ exports.getCategories = async (req, res, next) => {
 // orders
 exports.getOrders = async (req, res, next) => {
   try {
+    const orders = await Transaction.find();
+    const shipped = [];
+    const shipping = [];
+    for(i =0; i < orders.length; i++){
+      if(orders[i].status == true ){
+        shipped.push(orders[i])
+      }
+      if(orders[i].status == false){
+        shipping.push(orders[i])
+      }
+    }
     // Render template
     return res.status(200).render("admin/pages/order/order", {
-      title: "Orders",
+      title: "Orders", 
+      orders: orders,
+      shipped: shipped,
+      shipping: shipping
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -49,10 +64,24 @@ exports.getOrders = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   try {
     // Render template
-    const status = req.query.status
+    const status = req.query.status;
     const products =  await Product.find();
+    const sales = [];
+    const isNew = [];
+    for(i =0; i < products.length; i++){
+      if(products[i].sale > 0){
+        sales.push(products[i])
+      }
+      if(products[i].condition == true){
+        isNew.push(products[i])
+      }
+    }
     return res.status(200).render("admin/pages/product/product", {
-      title: "Products", product: products, status: status
+      title: "Products", 
+      product: products, 
+      status: status,
+      sales: sales,
+      isNew: isNew
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -81,11 +110,13 @@ exports.getEditProduct = async (req, res, next) => {
   try {
     //get product for edit
     const product = await Product.findById(req.params.id);
+    const desc = product.detail.split('\r\n')
     const category = await Category.find();
     // Render template
     return res.status(200).render("admin/pages/product/product-edit", {
       title: "Edit Product",
       product: product,
+      desc: desc,
       category: category
     });
   } catch (err) {
@@ -149,11 +180,32 @@ exports.postAddProduct = async (req,res,next) => {
     condition: req.body.pIsNew,
     quantity: req.body.quantity,
   });
-  saveImage(product, req.body.productImg);
+
+  const coverImgObject = saveImage(req.body.coverImage);
+  product.coverImage.data = coverImgObject["data"];
+  product.coverImage.type = coverImgObject["type"];
+
+  if (req.body.images.length) {
+    const imageArr = [];
+    req.body.images.forEach(img => {
+      let objImg = {};
+      const transferedImd = saveImage(img);
+
+      objImg.data = transferedImd["data"];
+      objImg.type = transferedImd["type"];
+
+      imageArr.push(objImg);
+      
+    });
+
+    product.images = imageArr;
+  }
+
   try {
     const newProduct = await product.save();
     return res.redirect("/admin/products?status=Success");
   } catch (err) {
+    console.log(err);
     return res.redirect("/admin/products?status=Fail")
   }
 
@@ -184,12 +236,12 @@ exports.putUpdateProduct = async(req,res,next) => {
   }
 }
 
-function saveImage(product, coverEncoded) {
-  if (coverEncoded == null) return;
-  const image = JSON.parse(coverEncoded);
-  if (image != null && imageMimeTypes.includes(image.type)) {
-    product.coverImage.data = new Buffer.from(image.data,'base64');
-    product.coverImage.type = image.type;
+function saveImage(img) {
+  if (img == null) return;
+  const image = JSON.parse(img);
+  if (image != null && imageMimeTypes.includes(image.type)) return {
+    data: new Buffer.from(image.data,'base64'),
+    type: image.type
   }
 }
 //Admin delete
@@ -205,4 +257,14 @@ exports.delete = async (req, res) => {
   }
 };
 
+exports.deleteOrder = async (req,res) => {
+  let order
+  try {
+    order = await Transaction.findById(req.params.id);
+    await order.remove();
+    return res.send("success");
+  } catch (error) {
+    return res.send(error);
+  }
+}
 

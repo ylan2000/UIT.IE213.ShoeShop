@@ -57,10 +57,10 @@ order.addEventListener('click',async () => {
         email: $("#email").val(),
         phone: $("#phone").val(),
         address: {
-            number: $("#add-num").val(),
-            city: $("#add-city").val(),
-            state: "Saigon",
-            ward: "11"
+            detail: $("#address-detail-field").val(),
+            city: $("#address-city-field").val(),
+            state: $("#address-state-field").val(),
+            country: $("#address-country-field").val()
         }
     }
     purchase();

@@ -25,12 +25,11 @@
             </div>
           <% }  %> 
 
-          <form method="GET" action="/products">
             <div class="brandinfo__filter">
               <div class="brandinfo__filter-label">Sort by</div>
-              <input type="submit" id="popular" value="popular" name="sort" class="brandinfo__filter-btn">
-              <input type="submit"  value="newest" name="sort" class="brandinfo__filter-btn">
-              <input type="submit" id="favorite" name="sort" value="favorite" class="brandinfo__filter-btn">
+              <span class="brandinfo__filter-btn sort">Popular</span>
+              <span data-type="products" data-sort="-createdDate" class="brandinfo__filter-btn sort">Newest</span>
+              <button data-sort="condition" data-type="products" class="brandinfo__filter-btn sort">Stocks</button>
               <div class="brandinfo__filter-selection-container">
                 <div class="brandinfo__filter-selection">Price</div>
                 <i
@@ -38,14 +37,13 @@
                 ></i>
                 <ul class="brandinfo__filter-selection-container__option">
                   <li class="brandinfo__filter__option__item">
-                    <input type="submit"  id="lowest" name="sort" value="lowest" class="brandinfo__select-input">
+                    <span data-type="products" data-sort="price" class="brandinfo__select-input sort">Lowest</span>
                   </li>
                   <li class="brandinfo__filter__option__item">
-                    <input type="submit" id="highest" name="sort" value="highest" class="brandinfo__select-input">
+                    <span data-type="products" data-sort="-price" class="brandinfo__select-input sort">Highest</span>
                   </li>
                 </ul>
               </div>
-            </form>
             <div class="brandinfo__filter-searchcontainer">
              <form action="/products" method="GET">
                <input name="search" type="text" placeholder="Search">
@@ -60,46 +58,7 @@
         <div class="brandinfo__float">
           <div class="brandinfo__product">
             <div class="brandinfo__product-container">
-              <div class="product">
-                <div class="row d-flex"> 
-                  <% if (product == null) {%>
-                      <div> not found</div>
-                       <% } else {%>
-                  <% product.forEach(product => { %>
-                  <div  class="product__item">
-                    <% if (product.condition) { %>
-                      <span class="product__new">NEW</span>
-                    <% } %>
-    
-                    <% if (product.sale > 0) { %>
-                      <span class="product__sale"><%= product.sale%>%</span>
-                    <% } %>
-    
-                    <a class="product__image">
-                      <img src="<%= product.coverImagePath %>" alt="productImage" class="img-fluid" />
-                    </a>
-                    <div class="product__summary">
-                      <div class="product__info">
-                        <p class="brandinfo__product"><%= product.name %></p>
-                        <p class="product__price"></p>
-                      </div>
-                      <div class="product__action">
-                        <span class="product__add">ADD TO CART</span>
-                        <div class="product__action--right">
-                          <a href="/product/<%= product.slug %>" class="product__view"
-                            ><i class="far fa-eye product__icon"></i
-                          ></a>
-                          <span class="product__love"
-                            ><i class="far fa-heart product__icon"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <% }) %>
-                  <% } %>
-                </div>
-              </div>
+              <%- include('../partials/card-product'); -%>
             </div>
             <div class="brandinfo__paginationcontainer">
               <div class="pagination">

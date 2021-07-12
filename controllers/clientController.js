@@ -1,11 +1,14 @@
+var mongoose = require('mongoose');
 const {Product} = require('../models/productModel');
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
-const {Transaction} = require('../models/transactionModel');
-const User = require("../models/userModel");
+const {User} = require("../models/userModel");
+const {Transaction} = require("../models/transactionModel");
 const dotenv = require("dotenv");
 const {Feedback} = require("../models/feedbackModel");
+const APIFeatures = require("../utils/apiFeatures");
 dotenv.config({ path: "./config.env" });
+const countryStateCity = require('country-state-city');
 
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
@@ -52,46 +55,36 @@ exports.getFeedback = async (req, res, next) => {
 // get products
 exports.getProducts = async (req, res, next) => {
   try {
-    // get brand name
-    const brand = req.params.brand || null;
-    
-    // --- pagination ---
-    // get page query:
-    const page = req.query.page * 1 || 1; // convert string to number, default query page is 1
-    const limit = 12; // 12 products perpage
-    const skip = (page - 1) * limit; // number of products is skipped on each page
-    
-    const numProducts = await Product.countDocuments({ "category.0.name": brand });
+    let filter = {}
 
-    if (req.query.page) {
-      // if skip products is greater than total products
-      if (skip >= numProducts) 
-        return res.status(404).json({ status: "fail", message: err });
+    // get info for sending data to view
+    brand = req.params.brand || null;
+    condition = req.params.condition || null;
+
+    // get brand name
+    if (brand) {
+      filter = { "category.0.name": brand }
     }
 
-    // --- search ---
-    // get search info, if null, match all
-    const searchQuery = req.query.search || null;
-    const searchField = searchQuery ? searchQuery : ".+";
+    if (condition) {
+      filter = {"products.condition": true}
+    }
 
-    // --- sort ---
-    const sortQuery = req.query.sort || null;
+    const limit = 12; // limit products on each page
+  
+    const page = req.query.page * 1 || 1; // convert string to number
+    const searchQuery = req.query.search || null; // get search info
+    const sortQuery = req.query.sort || null; // get search query
 
-    // default sort field is createdDate with criteria is asc
-    let sortField = "createdDate", criteria = -1;
+    const numProducts = await Product.countDocuments(filter); // total number of products
+
+    // execute query
+    const features = new APIFeatures(Product.find(filter), req.query)
+    .search()
+    .sort()
+    .paginate(limit);
     
-    if (sortQuery) {
-      if (sortQuery == "lowest") {
-        sortField = "price";
-        criteria = 1;
-      } else if (sortQuery == "highest") {
-        sortField = "price";
-        criteria = -1;
-      } 
-    } 
-
-    // find products that match all query
-    const products = await Product.find({ "category.0.name": brand, "name": new RegExp(searchField, "i") }).sort([[sortField, criteria]]).skip(skip).limit(limit);
+    const products = await features.query;
 
     // Render template
     return res.status(200).render("pages/products", {
@@ -108,6 +101,7 @@ exports.getProducts = async (req, res, next) => {
 
   next();
 };
+
 
 exports.getProduct = async (req, res, next) => {
   try {
@@ -194,12 +188,15 @@ exports.getCart = async (req, res, next) => {
     let products = []
     for (i = 0; i < cart.length; i++) {
       const product = await Product.findOne({name: cart[i].item.name}).exec();
-      products.push(product)
+      products.push({
+        info: product,
+        qty: cart[i].qty
+      })
     }
     return res.status(200).render("pages/cart", {
         title: "Cart",   
         products: products,
-        totalPrice: cart.totalPrice,
+        totalPrice: cartSession.totalPrice,
       }
     );
   } catch (err) {
@@ -216,12 +213,23 @@ exports.getPayment = async (req, res, next) => {
     }
 
     var cart = new Cart(req.session.cart);
+    //const user = await User.findOne({userName: req.session.user.userName}).exec()
+
+    const countries = 
+    countryStateCity.Country.getAllCountries()
+    .map(country => 
+      new Object({
+      "isoCode": country["isoCode"], 
+      "name": country["name"]
+    }));
 
     return res.status(200).render("pages/payment", {
       title: "Checkout",
       total:  cart.totalPrice,
       products: cart.generateArr(),
-      stripePublicKey: stripePublicKey
+      //user: user,
+      stripePublicKey: stripePublicKey,
+      countries: countries
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -229,39 +237,6 @@ exports.getPayment = async (req, res, next) => {
 
   next();
 };
-
-exports.get404 = async (req, res, next) => {
-  try {
-    // Render template
-    return res.status(404).render("pages/404", {
-      title: "404",
-    });
-  } catch (err) {
-    return res.status(404).json({ status: "fail", message: err });
-  }
-
-  next();
-};
-
-exports.postPaymentDone = async(req, res) => {
-  //console.log(req.body.stripeTokenId)
-  stripe.charges.create({
-    amount: req.body.total,
-    source: req.body.stripeTokenId,
-    currency: 'usd',
-  }).then(async function(){
-    const trans = new Transaction({
-      total: req.body.total,
-      status: true
-    })
-    const newTrans = await trans.save()
-    console.log('Charge Successful')
-    res.json({ message: 'Successfully purchased items' })
-  }).catch(function(err){
-    console.log(err)
-    res.status(500).end()
-  })
-}
 
 exports.getLoginFirst = async(req, res, next) => {
   try {
@@ -312,13 +287,28 @@ exports.logout = (req, res) => {
   return res.redirect('back'); // redirect ve trang hien tai
 }
 
-exports.getOrder = (req, res, next) => {
+exports.getOrder = async (req, res, next) => {
   try {
     // Render template
-    return res.status(200).render("pages/clientOrder", { title: "Order"});
+    const user = req.session.user;
+    const transactions = user.transaction;
+    var orders = [];
+    for (i = 0; i < transactions.length; i++) {
+      orders.push(await Transaction.findOne({_id: transactions[i]}).exec());
+    }
+    return res.status(200).render("pages/clientOrder", { title: "Order", orders: orders});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
 
   next();
+}
+
+exports.getOrderDetail = async (req,res,next) => {
+  try {
+    const order = await Transaction.findOne({_id: req.params.id}).exec();
+    return res.status(200).render("pages/order-detail", {title: "Order | Detail", order: order});
+  } catch (error) {
+    return res.status(404).json({  status:"fail", message: err });
+  }
 }

@@ -29,5 +29,15 @@ router
 router
   .route("/feedback")
   .post(backendClientController.addFeedback)
+  .route("/searchComplete")
+  .get(backendClientController.autoSearchComplete)
+
+router
+  .route("/getStatesOfCountry")
+  .post(backendClientController.getStatesOfCountry);
+
+router
+  .route("/getCitiesOfState")
+  .post(backendClientController.getCitiesOfState);
 
 module.exports = router;
