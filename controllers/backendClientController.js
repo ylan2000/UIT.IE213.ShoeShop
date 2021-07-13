@@ -254,6 +254,60 @@ exports.removeCart = async(req,res,next) => {
   return res.send(req.session.cart)
 }
 
+exports.sendOTP = async (req,res) => {
+  const name = req.body.name;
+  const user = await User.findOne(name.includes("@") ? {email: name} : {userName: name}).exec();
+  if (!user) {
+    req.flash('error_msg', 'Incorrect username/email, please try again');
+    return res.json(false)
+  }
+  const otp = Math.floor(100000 + Math.random() * 900000)
+  req.session.email = user.email;
+  req.session.otp = otp;
+  req.session.save();
+  const html = "<p>here's your otp: " + otp + "</p>";
+  mail.confirmationMail(user.email, "Your OTP", html);
+  return res.json(true);
+}
+
+exports.validate = async (req,res) => {
+  const input = req.body.otp;
+  const otp = req.session.otp;
+  if (input == otp) return res.json(true);
+  req.flash('error_msg', "Incorrect OTP, please try again");
+  return res.json(false);
+}
+
+exports.newPass = async (req,res) => {
+  const newPass = req.body.newPass;
+  const confirmPass = req.body.confirmPass;
+  if (newPass != confirmPass) {
+    req.flash('error_msg', "Passwords do not match");
+    return res.json(false);
+  }
+  const email = req.session.email;
+  const user = await User.findOne({email: email}).exec();
+  bcrypt.compare(newPass, user.password, (err, isMatch) => {
+    if(isMatch) {
+      req.flash('error_msg', "Please enter a different password");
+      return res.json(false);
+    }
+  })
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newPass, salt, (err, hash) => {
+      if (err) throw err;
+      user.password = hash;
+      user
+        .save()
+        .then(function() {
+          req.flash('success_msg', 'Password changed successfully, you can log in now');
+          return res.json(true);
+        })
+        .catch(err => console.log(err));
+    });
+  });
+}
+
 exports.postPaymentDone = async (req, res) => {
   var type = req.body.type
   let total = 0
@@ -289,14 +343,14 @@ exports.postPaymentDone = async (req, res) => {
       paymentType: type,
       product: product,
       user: user._id,
-      status: true
+      status: false
     })
     const newTrans = await trans.save()
     user.transaction.push(newTrans._id);
     await user.save();
     console.log('Charge Successful');
-    const html = "<p>here's your order</p>";
-    mail.confirmationMail("boong630@gmail.com", "Your order", html);
+    const html = "<p>here's your order id: " + newTrans._id + "</p>";
+    mail.confirmationMail(user.email, "Your order", html);
     return res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
   } catch (err) {
     console.log(err)

@@ -28,7 +28,13 @@
                  <p><%= product.info.name %></p>
                 <% }) %>
               </td>
-              <td><%= order.status %> </td>
+              <td>
+                <% if (order.status) { %>
+                  Shipped
+                <% } else { %>
+                  Shipping
+                <% } %>
+            </td> 
             </tr>
           <% }) %>
         </table>
