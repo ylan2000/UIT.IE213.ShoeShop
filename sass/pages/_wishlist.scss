@@ -35,7 +35,7 @@
             border-bottom: 2px solid #FF7D00;
         }
         td{
-            padding: 2rem 0 0 1rem;
+            padding: 2rem 0 0 5rem;
             input{
                 width: 5.5rem;
                 height: 3rem;
@@ -78,6 +78,7 @@
         font-weight: 700;
     }
     &__product-price {
+        align-items: right;
         color: $color-primary-orange;
         font-weight: 700;
     }

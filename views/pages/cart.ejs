@@ -14,6 +14,7 @@
             <tr>
               <th class="cart__header">Product</th>
               <th class="cart__header">Quantity</th>
+              <th class="cart__header">Sale</th>
               <th class="cart__header">Subtotal</th>
               <th class="cart__header"></th>
             </tr>
@@ -34,7 +35,8 @@
                 </div>
               </td>
               <td><input type="number" value="<%= product.qty; %>" class="product-quantity" data-id="<%= product.info._id %>" min="1" max="999" /></td>
-              <td class="product-full-price" data-id="<%= product.info._id %>">$<%= product.info.price %></td>
+              <td class="product-full-price" data-id="<%= product.info._id %>"><%= product.info.sale %>%</td>
+              <td class="product-full-price" data-id="<%= product.info._id %>">$<%= product.info.price - ((product.info.price / 100) *product.info.sale) %></td>
               <td class="remove-from-cart" data-id="<%= product.info._id %>"><i class="fas fa-trash-alt icon-trash"></i></td>
             </tr>
             <% }); %>

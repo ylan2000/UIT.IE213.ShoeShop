@@ -13,13 +13,15 @@
         <table class="wishlist__table">
           <thead>
             <th class="wishlist__header">Product</th>
+            <th class="wishlist__header">Discount</th>
             <th class="wishlist__header">Price</th>
-            <th class="wishlist__header"></th>
+            <th class="wishlist__header">Subtotal</th>
             <th class="wishlist__header"></th>
           </thead>
           <tbody>
             <% products.forEach(product => { %>
             <tr>
+              
               <td>
                 <div class="wishlist__info">
                   <img src="<%= product.coverImagePath %>" alt="<%= product.name %>" />
@@ -30,13 +32,21 @@
                   </div>
                 </div>
               </td>
-
+              <td>
+                <span class="wishlist__product-price">
+                  <%= product.sale %>$
+                </s>
+              </td>
               <td>
                 <span class="wishlist__product-price"
                         >$<%= product.price %></span
                       >
               </td>
-
+              <td>
+                <div class="wishlist__product-price">
+                  <%= product.price - product.sale  %>$
+                </div>
+              </td>
               <td>
                 <button class="wishlist__addcart add-to-cart-button" data-id="<%= product._id %>">
                   <i class="fas fa-shopping-cart"></i> Add to cart
