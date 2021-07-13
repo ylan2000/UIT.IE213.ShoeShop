@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); -%>
+  </head>
+  <body>
+    <%- include('../partials/nav'); -%>
+    <div class="container">
+      <nav>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-items">
+            <a href="home">Home</a>
+          </li>
+          <span>&ThickSpace;&#62;&ThickSpace;</span>
+          <li class="breadcrumb-item active">Contract us</li>
+        </ul>
+      </nav>
+      <h1 class="contract__title">Contract us</h1>
+
+        <form class="contract__form">
+         <div class="contract__lable">
+          <input class="contract__input" type="text" placeholder="Your Name" class="input">
+         </div>
+           <div class="contract__lable"> 
+             <input  class="contract__input" type="text" placeholder="Your Email Address" class="input">
+            </div>
+          <div class="contract__lable">  
+            <textarea name="message" id="" class="contract__textarea" placeholder="Message" cols="30" rows="10"></textarea>
+          </div>
+          <div class="contract__lable">  
+            <input type="submit" class="contract__btn"  value="Send Message" >
+          </div>
+          
+        </form>
+    </div>
+    <%- include('../partials/footer'); -%> <%-
+    include('../partials/script-line'); -%>
+  </body>
+</html>
+
+

@@ -22,6 +22,8 @@ router.get("/feedback", clientController.getFeedback);
 // --- protected routes
 router.get("/about", clientController.getAbout);
 
+router.get("/contract", clientController.getContract);
+
 router.get("/orders", ensureAuthenicated, clientController.getOrder);
 
 router.get("/orders/view/:id", ensureAuthenicated, clientController.getOrderDetail);
