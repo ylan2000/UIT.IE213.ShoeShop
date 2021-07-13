@@ -1,5 +1,7 @@
 const request = require("request");
 
+const chatbotService = require("../services/chatbotService")
+
 let postWebhook = (req, res) => {
   // Parse the request body from the POST
   let body = req.body;
@@ -131,7 +133,18 @@ function firstTrait(nlp, name) {
   return nlp && nlp.entities && nlp.traits[name] && nlp.traits[name][0];
 }
 
-function handleMessage(sender_psid, message) {
+let handleMessage = async (sender_psid, message) => {
+  //check the incoming message is a quick reply?
+  if (received_message && received_message.quick_reply && received_message.quick_reply.payload) {
+    let payload = received_message.quick_reply.payload;
+     if (payload === "TALK_AGENT") {
+        await chatbotService.requestTalkToAgent(sender_psid);
+    }
+
+    return;
+  }
+
+
   // check greeting is here and is confident
   let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money"];
   
@@ -158,7 +171,7 @@ function handleMessage(sender_psid, message) {
     case "wit$amount_of_money":
       break;
     default:
-      callSendAPI(sender_psid, 'Please wait Administrators for a minutes or contact with us via 0901234567 when you are in emergency situation. Thanks!');
+      await chatbotService.sendMessageOptions(sender_psid);
   }
 }
 
