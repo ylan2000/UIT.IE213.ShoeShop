@@ -136,8 +136,8 @@ function firstTrait(nlp, name) {
 let handleMessage = async (sender_psid, message) => {
   try {
     //check the incoming message is a quick reply?
-    if (received_message && received_message.quick_reply && received_message.quick_reply.payload) {
-      let payload = received_message.quick_reply.payload;
+    if (message && message.quick_reply && message.quick_reply.payload) {
+      let payload = message.quick_reply.payload;
       if (payload === "TALK_AGENT") {
           await chatbotService.requestTalkToAgent(sender_psid);
       }
