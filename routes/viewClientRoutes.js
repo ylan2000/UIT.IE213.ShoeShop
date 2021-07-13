@@ -7,11 +7,11 @@ const {ensureAuthenicated} = require('../public/js/authentication');
 
 
 router
-  .route("/chatbot")
+  .route("/webhook")
   .get(chatbotController.getWebhook);
 
 router
-  .route("/chatbot")
+  .route("/webhook")
   .post(chatbotController.postWebhook)
 
 
