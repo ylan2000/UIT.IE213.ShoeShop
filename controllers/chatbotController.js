@@ -133,11 +133,32 @@ function firstTrait(nlp, name) {
 
 function handleMessage(sender_psid, message) {
   // check greeting is here and is confident
-  const greeting = firstTrait(message.nlp, 'wit$greetings');
-  if (greeting && greeting.confidence > 0.8) {
-    callSendAPI(sender_psid, 'Hi there!');
-  } else { 
-    callSendAPI(sender_psid, 'default!');
+  let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money"];
+  
+  let entityChosen = "";
+
+  entityArr.forEach(name => {
+    const entity = firstTrait(message.nlp, name);
+
+    if (entity && entity.confidence > 0.8) {
+      entityChosen = name;
+    } 
+  });
+
+  switch(entityChosen) {
+    case "wit$greetings":
+      callSendAPI(sender_psid, 'Hi, how can I help you?');
+      break;
+    case "wit$thanks":
+      callSendAPI(sender_psid, 'You are welcome!');
+      break;
+    case "wit$bye":
+      callSendAPI(sender_psid, 'Thank you!');
+      break;
+    case "wit$amount_of_money":
+      break;
+    default:
+      callSendAPI(sender_psid, 'Please wait Administrators for a minutes or contact with us via 0901234567 when you are in emergency situation. Thanks!');
   }
 }
 
