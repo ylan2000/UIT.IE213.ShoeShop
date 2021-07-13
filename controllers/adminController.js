@@ -268,3 +268,15 @@ exports.deleteOrder = async (req,res) => {
   }
 }
 
+exports.patchOrder = async (req,res) => {
+  let order
+  try {
+    order = await Transaction.findById(req.params.id,"status");
+    order.status = !order.status;
+    await order.save()
+    return res.send("success");
+  } catch (error) {
+    return res.send(error);
+  }
+}
+

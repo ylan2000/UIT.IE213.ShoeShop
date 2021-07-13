@@ -289,7 +289,7 @@ exports.postPaymentDone = async (req, res) => {
       paymentType: type,
       product: product,
       user: user._id,
-      status: true
+      status: false
     })
     const newTrans = await trans.save()
     user.transaction.push(newTrans._id);
