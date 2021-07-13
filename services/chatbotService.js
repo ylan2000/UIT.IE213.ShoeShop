@@ -122,7 +122,40 @@ let passThreadControl = (sender_psid, app) => {
   });
 };
 
+let sendMessage = (sender_psid, response) => {
+  return new Promise(async (resolve, reject) => {
+      try {
+          await homepageService.markMessageRead(sender_psid);
+          await homepageService.sendTypingOn(sender_psid);
+          // Construct the message body
+          let request_body = {
+              "recipient": {
+                  "id": sender_psid
+              },
+              "message": response
+          };
+
+          // Send the HTTP request to the Messenger Platform
+          request({
+              "uri": "https://graph.facebook.com/v6.0/me/messages",
+              "qs": { "access_token": PAGE_ACCESS_TOKEN },
+              "method": "POST",
+              "json": request_body
+          }, (err, res, body) => {
+              if (!err) {
+                  resolve('message sent!')
+              } else {
+                  reject("Unable to send message:" + err);
+              }
+          });
+      } catch (e) {
+          reject(e);
+      }
+  });
+};
+
 module.exports = {
   sendMessageOptions: sendMessageOptions,
-  requestTalkToAgent: requestTalkToAgent
+  requestTalkToAgent: requestTalkToAgent,
+  sendMessage: sendMessage
 };
