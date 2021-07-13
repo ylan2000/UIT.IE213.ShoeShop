@@ -29,20 +29,15 @@
             <form>
               <div class="form-inline pt-2">
                 <div class="col">
-                  <a class="btn btn-primary" href="/admin/add-product">Add</a>
+                  <a class="btn btn-info" href="/admin/add-product">Add</a>
                 </div>
-                <div class="dropdown">
-                  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Sort By:
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">ID</a>
-                    <a class="dropdown-item" href="#">Price</a>
-                    <a class="dropdown-item" href="#">In Stock</a>
-                    <a class="dropdown-item" href="#">Sales</a>
+                <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+                    <button class="nav-link" id="nav-sale-tab" data-bs-toggle="tab" data-bs-target="#nav-sale" type="button" role="tab" aria-controls="nav-sale" aria-selected="false">Sales</button>
+                    <button class="nav-link" id="nav-new-tab" data-bs-toggle="tab" data-bs-target="#nav-new" type="button" role="tab" aria-controls="nav-new" aria-selected="false">New</button>
                   </div>
-                </div>
+                </nav>
                 <div class="col">
                   <input type="text" class="form-control mr-sm-2" placeholder="Search" />
                 </div>
@@ -52,76 +47,17 @@
               </div>
             </form>
           </div>
-
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Image</th>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Category</th>
-                <th scope="col">Quantity In Stock</th>
-                <th scope="col">IsNew</th>
-                <th scope="col">Sales</th>
-                <th scopr="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% product.forEach(product => { %>
-
-              <tr>
-                <td
-                  style="width: 150px"
-                  data-toggle="modal"
-                  data-target="#productImage"
-                >
-                <img src="<%= product.coverImagePath %>" alt="productImage" class="img-fluid" />
-              </td>
-                <td
-                  data-toggle="modal"
-                  class="align-middle"
-                  data-target="#productName"
-                ><%= product.name %></td>
-                <td
-                  data-toggle="modal"
-                  class="align-middle"
-                  data-target="#productPrice"
-                >
-                <%= product.price %>&dollar;
-                </td>
-                <td
-                  data-toggle="modal"
-                  class="align-middle"
-                  data-target="#productCategory"
-                ><%= product.category[0].name %></td>
-                <td
-                  class="align-middle"
-                  data-toggle="modal"
-                  data-target="#productQuantity"
-                ><%= product.quantity %></td>
-                <td
-                  class="text-danger align-middle"
-                  data-toggle="modal"
-                  data-target="#productIsNew"
-                ><%= product.condition %></td>
-                <td
-                  data-toggle="modal"
-                  class="align-middle"
-                  data-target="#productSales"
-                >
-                  <%= product.sale %> %
-                </td>
-                <td class="align-middle">
-                  <a href="edit-product/<%= product.id %>" class="btn btn-success">Edit</a>
-                  <button type="button" class="btn btn-danger deleteBtn" data-toggle="modal"
-                      data-target="#exampleModal" data-id="<%= product.id %>" data-name="<%= product.name %>" data-link="product/">
-                      Delete
-                    </button>
-                </td>
-              </tr>
-              <% }) %>
-            </tbody>
-          </table>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+              <%- include('../../template/cardproducts.ejs', {products:product}); -%>
+          </div>
+          <div class="tab-pane fade" id="nav-sale" role="tabpanel" aria-labelledby="nav-sale-tab">
+            <%- include('../../template/cardproducts.ejs', {products:sales}); -%>
+          </div>
+          <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+            <%- include('../../template/cardproducts.ejs', {products:isNew}); -%>
+          </div>
+        </div>
           <div
             class="modal fade"
             id="exampleModal"
@@ -180,6 +116,11 @@
 </body>
 <%- include('../../template/footer.ejs'); -%>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+    crossorigin="anonymous">
+  </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"

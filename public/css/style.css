@@ -1616,6 +1616,9 @@ body {
   display: flex;
   padding: 2rem 3rem;
   margin: 10rem 0rem; }
+  .flex_container h3 {
+    text-emphasis: bold;
+    font-size: 5rem; }
 
 .right_flex_container {
   margin: 10rem 0; }
