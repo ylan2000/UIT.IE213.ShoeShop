@@ -134,44 +134,50 @@ function firstTrait(nlp, name) {
 }
 
 let handleMessage = async (sender_psid, message) => {
-  //check the incoming message is a quick reply?
-  if (received_message && received_message.quick_reply && received_message.quick_reply.payload) {
-    let payload = received_message.quick_reply.payload;
-     if (payload === "TALK_AGENT") {
-        await chatbotService.requestTalkToAgent(sender_psid);
+  try {
+    //check the incoming message is a quick reply?
+    if (received_message && received_message.quick_reply && received_message.quick_reply.payload) {
+      let payload = received_message.quick_reply.payload;
+      if (payload === "TALK_AGENT") {
+          await chatbotService.requestTalkToAgent(sender_psid);
+      }
+
+      return;
     }
 
-    return;
-  }
 
+    // check greeting is here and is confident
+    let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money"];
+    
+    let entityChosen = "";
 
-  // check greeting is here and is confident
-  let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money"];
-  
-  let entityChosen = "";
+    entityArr.forEach(name => {
+      const entity = firstTrait(message.nlp, name);
 
-  entityArr.forEach(name => {
-    const entity = firstTrait(message.nlp, name);
+      if (entity && entity.confidence > 0.8) {
+        entityChosen = name;
+      } 
+    });
 
-    if (entity && entity.confidence > 0.8) {
-      entityChosen = name;
-    } 
-  });
+    console.log(entityChosen);
 
-  switch(entityChosen) {
-    case "wit$greetings":
-      callSendAPI(sender_psid, 'Hi, how can I help you?');
-      break;
-    case "wit$thanks":
-      callSendAPI(sender_psid, 'You are welcome!');
-      break;
-    case "wit$bye":
-      callSendAPI(sender_psid, 'Thank you!');
-      break;
-    case "wit$amount_of_money":
-      break;
-    default:
-      await chatbotService.sendMessageOptions(sender_psid);
+    switch(entityChosen) {
+      case "wit$greetings":
+        callSendAPI(sender_psid, 'Hi, how can I help you?');
+        break;
+      case "wit$thanks":
+        callSendAPI(sender_psid, 'You are welcome!');
+        break;
+      case "wit$bye":
+        callSendAPI(sender_psid, 'Thank you!');
+        break;
+      case "wit$amount_of_money":
+        break;
+      default:
+        await chatbotService.sendMessageOptions(sender_psid);
+    }
+  } catch (err) {
+    console.log(err);
   }
 }
 
