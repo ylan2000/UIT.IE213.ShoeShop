@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <% orders.forEach(order => {%>
-        <tr data-toggle="modal">
+        <tr class="order" data-toggle="modal">
           <th scope="row"><%= order._id %> </th>
           <td><%= order.user.fullName %></td>
           <td><%= order.user.fullAddress %> </td>
@@ -22,9 +22,18 @@
             <%= order.createdDate.getFullYear()%> <!--year-->
           </td>
           <td>&dollar;<%= order.total / 100%></td>
-          <td class="text-warning">
-            <% if (!order.status) { %>
-              Not yet shipped<button
+          <td>
+            <select class="form-select status" data-status="<%= order.status %>">
+              <option value="false">Shipping</option>
+              <option value="true">Shipped</option>
+            </select>
+            <button
+              type="button"
+              class="btn d-none newStatus"
+              data-id="<%= order._id %>"
+            >&#9989;</button>
+            <%# if (!order.status) { %>
+              <!-- Not yet shipped<button
               type="button"
               class="btn"
               data-toggle="tooltip"
@@ -33,9 +42,9 @@
             >
               &#9989;
             </button>
-            <% } else { %>
-             <p>Shipped</p>
-            <% } %>
+            <%# } else { %>
+             <p>Shipped</p> -->
+            <%# } %>
           </td>
           <td>
             <div class="btn-group" role="group">
@@ -46,4 +55,4 @@
         </tr>
       <% }) %>
     </tbody>
-  </table>
+</table>

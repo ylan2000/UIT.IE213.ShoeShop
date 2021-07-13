@@ -11,5 +11,7 @@ router.put("/product/edit/:id",adminController.putUpdateProduct);
 //~~~~~~~~USER~~~~~~~~~~~~
 
 //~~~~~~~~ORDER~~~~~~~~~~~
-router.delete("/order/:id",adminController.deleteOrder);
+router.route("/order/:id")
+    .delete(adminController.deleteOrder)
+    .patch(adminController.patchOrder) 
 module.exports = router;
