@@ -77,6 +77,7 @@
                   <option value="41">41</option>
                 </select>
               </form>
+              <a href="/shoe-size-guide" >+ Shoe size guide</a>
               <hr/>
               <!-- Chỗ chứa phần status và quanity -->
               <span class="detail__stock">
@@ -235,7 +236,7 @@
       var text = encodeURIComponent("Check this out !!!!");
       // Note 1: nhớ sửa thành window.document.location.href sau khi deploy nha
       // Note 2: nếu có lỗi thì thử sửa thành encodeURI(window.document.location.href) hoặc encodeURI(document.location.href) nha
-      var url = "https://www.facebook.com/HoaThienVu.HDP/"; // Link để tạm để chắc chắn chạy được chức năng share
+      var url = encodeURI(window.document.location.href); // Link để tạm để chắc chắn chạy được chức năng share
       var params = "menubar=no,toolbar=no,status=no,width=570,height=570"; // for window
       var image = document.querySelector('.pin-image');
 

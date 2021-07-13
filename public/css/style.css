@@ -1839,3 +1839,39 @@ body {
   .clientorder__name {
     color: #FF7D00;
     text-emphasis: bold; }
+
+.guide-title {
+  color: #001524;
+  font-size: 4.5rem;
+  text-align: center; }
+
+.guide-toc-container {
+  border-left: 5px solid #FF7D00;
+  padding: 2rem;
+  margin-bottom: 2rem; }
+  .guide-toc-container .guide-toc-title {
+    font-size: 2.5rem;
+    color: #FF7D00; }
+  .guide-toc-container .guide-toc-list a {
+    color: #757575;
+    font-size: 2rem;
+    margin-left: 1.5rem; }
+  .guide-toc-container .guide-toc-list a:hover {
+    color: #222; }
+
+.guide-toc-subtitle {
+  margin: 3rem 0; }
+  .guide-toc-subtitle p {
+    font-weight: 600;
+    font-size: 2.5rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem; }
+  .guide-toc-subtitle span {
+    font-size: 1.8rem;
+    margin-top: 1.5rem;
+    display: inline-block; }
+  .guide-toc-subtitle img {
+    width: 600px;
+    height: 100%;
+    display: block;
+    margin: 0 auto; }

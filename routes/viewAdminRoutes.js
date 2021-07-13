@@ -14,9 +14,9 @@ router.get("/categories", authRole, adminController.getCategories);
 router.get("/orders", authRole, adminController.getOrders);
 
 // products
-router.use("/products", authRole, adminController.getProducts);
-router.use("/add-product", authRole, adminController.getAddProduct);
-router.use("/edit-product/:id", authRole, adminController.getEditProduct);
+router.use("/products", adminController.getProducts);
+router.use("/add-product", adminController.getAddProduct);
+router.use("/edit-product/:id", adminController.getEditProduct);
 
 // users
 router.use("/users", authRole, adminController.getUsers);

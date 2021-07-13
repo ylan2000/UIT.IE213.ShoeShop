@@ -21,7 +21,7 @@
             <form enctype="application/x-www-form-urlencoded" class="needs-validation" action="api/product/add"
               method="POST">
               <%- include('../../template/_productFormFields.ejs'); -%>
-                <button class="btn btn-success pt-2 md-2 mb-5 submit" type="submit" name="submit">
+                <button class="btn btn-success pt-2 md-2 mb-5 submit" type="submit" name="submit" id = "submitBtn">
                   Add
                 </button>
             </form>
@@ -31,5 +31,45 @@
   </div>
 </body>
 <%- include('../../template/footer.ejs'); -%>
+<script type = "text/javascript">
+  $("#submitBtn").click(function(event){
+    event.preventDefault();
+    var shoeSizeArray = new Array();
+    $("#shoeSizeFrom input:checkbox:checked").map(function(){
+        shoeSizeArray.push($(this).val());
+    });
+    var selectedCodition = $('input[name="pIsNew"]:checked').val();
+    var inputData = {name: $("#productName").val(), 
+      description:  $("#productShortDesc").val(),
+      detail: $("#productDesc").val(),
+      price: $("#productPrice").val(),
+      category: $("#productCate").val(),
+      sale: $("#pSaleOff").val(),
+      condition: selectedCodition,
+      quantity: $("#quantity").val(),
+      shoeSize: shoeSizeArray};
+    console.log(shoeSizeArray);
+    console.log(selectedCodition);
+    console.log(inputData);
 
+    // Dùng ajax lưu vào db
+    $.ajax({
+            "url": "/admin/api/product/add",
+            "method": "POST",
+            "data": inputData
+        })
+        // If API returned success then here
+        .then( result => {
+            // Message to notify success submition
+            alert("Successfully added.");
+            return;
+        })
+        // If API returned error then here
+        .catch ( err => {
+            // Notify in case some error occurred
+            alert("An error occurred.");
+            return;
+        });
+  });
+</script>
 </html>

@@ -130,6 +130,19 @@ exports.getPolicy = async (req, res, next) => {
   next();
 };
 
+exports.getShoeSizePage = async (req, res, next) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/findShoeSize.ejs", {
+      title: "Policy",
+    });
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
 exports.getAccount = async (req, res, next) => {
   try {
     // Render template
@@ -239,7 +252,7 @@ exports.getPayment = async (req, res, next) => {
 exports.getLoginFirst = async(req, res, next) => {
   try {
     // Render template
-    return res.status(200).render("pages/login-first", { title: "Sign In"});
+    return res.status(200).render("pages/login-first", { title: "Log In first"});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
@@ -249,7 +262,7 @@ exports.getLoginFirst = async(req, res, next) => {
 exports.getPermissionDenied = async(req, res, next) => {
   try {
     // Render template
-    return res.status(200).render("pages/permission-denied", { title: "Sign In"});
+    return res.status(200).render("pages/permission-denied", { title: "No permission"});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
