@@ -161,6 +161,11 @@ let handleMessage = async (sender_psid, message) => {
 
     console.log(entityChosen);
 
+    if (entityChosen === "") {
+      console.log('not nlp default');
+      await chatbotService.sendMessageOptions(sender_psid);
+    }
+
     switch(entityChosen) {
       case "wit$greetings":
         callSendAPI(sender_psid, 'Hi, how can I help you?');
@@ -174,6 +179,7 @@ let handleMessage = async (sender_psid, message) => {
       case "wit$amount_of_money":
         break;
       default:
+        console.log('default nlp ==============================================');
         await chatbotService.sendMessageOptions(sender_psid);
     }
   } catch (err) {

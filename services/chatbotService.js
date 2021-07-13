@@ -7,6 +7,7 @@ const PRIMARY_RECEIVER_ID = process.env.FACEBOOK_APP_ID;
 let sendMessageOptions = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
       try {
+        console.log("options=======================================================");
           //send text message
           let response1 = {
               "text": `Hi! Welcome to Sneaker City Shop!`
