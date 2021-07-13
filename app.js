@@ -52,13 +52,13 @@ app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 app.use(bodyParser.json())
 
 // data sanitization against NOSQL query injection
-app.use(mongoSanitize());
+// app.use(mongoSanitize());
 
 // Data sanitization against XSS
-app.use(xss());
+// app.use(xss());
 
 // prevent parameter pollution
-app.use(hpp());
+// app.use(hpp());
 
 app.use(methodOverride('_method'));
  
