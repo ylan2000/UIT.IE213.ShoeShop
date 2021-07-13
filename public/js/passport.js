@@ -10,7 +10,7 @@ module.exports = function(passport){
     passport.use(
         new localStrategy({usernameField: 'name', passwordField: 'password'}, (username, password, done)=>{
             // Match user
-            User.findOne({userName: username})
+            User.findOne((username.includes("@"))?{email:username}:{userName:username})
                 .then(user => {
                     if(!user){
                         return done(null, false, {message: 'User is not exists'});
