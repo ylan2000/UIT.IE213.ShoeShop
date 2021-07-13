@@ -43,6 +43,12 @@ router.get("/permissiondenied", clientController.getPermissionDenied);
 
 router.get("/signIn", clientController.getSignIn);
 
+router.get("/forgotPassword",clientController.getForgotPass);
+
+router.get("/validate",clientController.getValidate);
+
+router.get("/newPassword",clientController.getNewPass);
+
 router.get("/signUp", clientController.getSignUp);
 
 router.get("/logout", clientController.logout);

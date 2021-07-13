@@ -268,6 +268,33 @@ exports.getSignIn = async (req, res, next) => {
   next();
 };
 
+exports.getForgotPass = async (req, res) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/forgotPassword", { title: "Forgot Password"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+exports.getValidate = async (req,res) =>{
+  try {
+    // Render template
+    return res.status(200).render("pages/validateUser", { title: "Validate User"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+exports.getNewPass = async (req,res) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/newPassword", { title: "New Password"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
 exports.getSignUp = async (req, res, next) => {
   try {
     // Render template
