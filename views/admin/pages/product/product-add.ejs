@@ -32,14 +32,15 @@
 </body>
 <%- include('../../template/footer.ejs'); -%>
 <script type = "text/javascript">
-  $("#submitBtn").click(function(event){
+  $("#submitBtn").click(async function(event){
     event.preventDefault();
-    var shoeSizeArray = new Array();
-    $("#shoeSizeFrom input:checkbox:checked").map(function(){
+    let shoeSizeArray = [];
+    $("#shoeSizeFrom input:checkbox:checked").each(function(){
         shoeSizeArray.push($(this).val());
     });
     var selectedCodition = $('input[name="pIsNew"]:checked').val();
-    var inputData = {name: $("#productName").val(), 
+    var inputData = {
+      name: $("#productName").val(), 
       description:  $("#productShortDesc").val(),
       detail: $("#productDesc").val(),
       price: $("#productPrice").val(),
@@ -47,16 +48,32 @@
       sale: $("#pSaleOff").val(),
       condition: selectedCodition,
       quantity: $("#quantity").val(),
-      shoeSize: shoeSizeArray};
+      shoeSize: shoeSizeArray
+    };
     console.log(shoeSizeArray);
     console.log(selectedCodition);
     console.log(inputData);
-
     // Dùng ajax lưu vào db
+    // await axios.post("/admin/api/product/add", {
+    //   name: $("#productName").val(), 
+    //   description:  $("#productShortDesc").val(),
+    //   detail: $("#productDesc").val(),
+    //   price: $("#productPrice").val(),
+    //   category: $("#productCate").val(),
+    //   sale: $("#pSaleOff").val(),
+    //   condition: selectedCodition,
+    //   quantity: $("#quantity").val(),
+    //   shoeSize: shoeSizeArray
+    // }).then(function (res) {
+    //   alert("Successfully added");
+    // }).catch(function(err) {
+    //   alert("An error occured")
+    // })
     $.ajax({
-            "url": "/admin/api/product/add",
-            "method": "POST",
-            "data": inputData
+            url: "/admin/api/product/add",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(inputData)
         })
         // If API returned success then here
         .then( result => {
