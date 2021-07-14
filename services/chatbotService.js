@@ -193,6 +193,19 @@ let sendCategories = (sender_psid) => {
     });
 };
 
+let sendLinkProducts = (sender_psid, budget) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            //send a generic template message
+            let response = templateMessage.sendProductTemplate(budget);
+            await sendMessage(sender_psid, response);
+            resolve("done");
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 let sendMessage = (sender_psid, response) => {
   return new Promise(async (resolve, reject) => {
       try {
@@ -234,5 +247,6 @@ module.exports = {
   passThreadControl: passThreadControl,
   takeControlConversation: takeControlConversation,
   sendCategories: sendCategories,
-  sendProductsByPrice: sendProductsByPrice
+  sendProductsByPrice: sendProductsByPrice,
+  sendLinkProducts: sendLinkProducts
 };

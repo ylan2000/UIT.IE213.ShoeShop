@@ -59,6 +59,37 @@ let sendCategoriesTemplate = () =>{
   };
 };
 
+let sendProductTemplate = (budget) =>{
+    return {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [
+                    {
+                        "title": "Products based on your budget.",
+                        "subtitle": "View all products have the price less than or equal your budget",
+                        "image_url": "https://i.postimg.cc/SQ3b2ngt/166313511-113666040813941-2904191884045020774-n.jpg",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": `https://glacial-reef-79728.herokuapp.com/products?price=${budget}`,
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [
+                            {
+                                "type": "web_url",
+                                "url": `https://glacial-reef-79728.herokuapp.com/products?price=${budget}`,
+                                "title": "View on Website"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    };
+};
+
 module.exports = {
-  sendCategoriesTemplate: sendCategoriesTemplate
+  sendCategoriesTemplate: sendCategoriesTemplate,
+  sendProductTemplate: sendProductTemplate
 };
