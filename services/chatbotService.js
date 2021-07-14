@@ -49,10 +49,10 @@ let sendMessageOptions = (sender_psid) => {
               ]
           };
 
-          await sendMessage(sender_psid, response1);
-          await sendMessage(sender_psid, response2);
-          await sendMessage(sender_psid, response3);
-          await sendMessage(sender_psid, response4);
+          sendMessage(sender_psid, response1);
+          sendMessage(sender_psid, response2);
+          sendMessage(sender_psid, response3);
+          sendMessage(sender_psid, response4);
           resolve("done");
       } catch (e) {
           reject(e);
@@ -124,34 +124,29 @@ let passThreadControl = (sender_psid, app) => {
 };
 
 let sendMessage = (sender_psid, response) => {
-  return new Promise(async (resolve, reject) => {
-      try {
-          console.log("in send message function=========================");
-          // Construct the message body
-          let request_body = {
-              "recipient": {
-                  "id": sender_psid
-              },
-              "message": { "text": response }
-          };
+  console.log("in send message function=========================");
+  // Construct the message body
+  let request_body = {
+    "recipient": {
+      "id": sender_psid
+    },
+    "message": { "text": response }
+  }
 
-          // Send the HTTP request to the Messenger Platform
-          request({
-              "uri": "https://graph.facebook.com/v6.0/me/messages",
-              "qs": { "access_token": PAGE_ACCESS_TOKEN },
-              "method": "POST",
-              "json": request_body
-          }, (err, res, body) => {
-              if (!err) {
-                  resolve('message sent!')
-              } else {
-                  reject("Unable to send message:" + err);
-              }
-          });
-      } catch (e) {
-          reject(e);
-      }
-  });
+  // Send the HTTP request to the Messenger Platform
+  request({
+    "uri": "https://graph.facebook.com/v6.0/me/messages",
+    "qs": { "access_token": process.env.FB_PAGE_TOKEN },
+    "method": "POST",
+    "json": request_body
+  }, (err, res, body) => {
+    if (!err) {
+      console.log('message sent!');
+      console.log(`My messenger: ${response}`);
+    } else {
+      console.error("Unable to send message:" + err);
+    }
+  }); 
 };
 
 module.exports = {
