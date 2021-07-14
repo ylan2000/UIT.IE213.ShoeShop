@@ -88,7 +88,7 @@ exports.getProducts = async (req, res, next) => {
     // Render template
     return res.status(200).render("pages/products", {
       title: brand || "Products", 
-      product: products,
+      products: products,
       current: page,
       pages: Math.ceil(numProducts / limit),
       searchQuery: searchQuery,
