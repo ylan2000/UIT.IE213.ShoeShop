@@ -31,7 +31,7 @@ let sendMessageOptions = (sender_psid) => {
               ]
           };
 
-          sendMessage(sender_psid, response);
+          await sendMessage(sender_psid, response);
           resolve("done");
       } catch (e) {
           reject(e);
@@ -47,13 +47,11 @@ let requestTalkToAgent = (sender_psid) => {
               "text": "Ok. Someone real will be with you in a few minutes ^^"
           };
 
-          sendMessage(sender_psid, response1);
-
-          console.log("behindeSenMessageeeeeeeeeeeeeeeeeeeeeeeeeeee");
-
           //change this conversation to page inbox
-          let app = "page_inbox"
-          await passThreadControl(sender_psid, app);
+          let app = "page_inbox";
+
+          await Promise.all([sendMessage(sender_psid, response1), passThreadControl(sender_psid, app)]);
+
           resolve("done");
       } catch (e) {
           reject(e);
@@ -64,7 +62,7 @@ let requestTalkToAgent = (sender_psid) => {
 let passThreadControl = (sender_psid, app) => {
   return new Promise((resolve, reject) => {
       try {
-          console.log("inPassThreadControl==================================");
+          console.log("inPassThreadControl==================================")
           let target_app_id = "";
           let metadata = "";
 
@@ -106,6 +104,8 @@ let passThreadControl = (sender_psid, app) => {
 };
 
 let sendMessage = (sender_psid, response) => {
+  return new Promise(async (resolve, reject) => {
+      try {
           await homepageService.markMessageRead(sender_psid);
           await homepageService.sendTypingOn(sender_psid);
 
@@ -131,6 +131,10 @@ let sendMessage = (sender_psid, response) => {
               console.error("Unable to send message:" + err);
             }
           }); 
+      } catch (e) {
+          reject(e);
+      }
+  });
 };
 
 module.exports = {
