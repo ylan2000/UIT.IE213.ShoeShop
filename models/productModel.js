@@ -33,7 +33,8 @@ const productSchema = schema({
   },
   createdDate: { type: Date, default: Date.now() },
   //transaction: { type: Schema.ObjectId, ref: 'Transaction', required: true },
-  category: Array
+  category: Array,
+  shoeSize: { type: [String] }
 });
 
 productSchema.virtual("coverImagePath").get(function () {

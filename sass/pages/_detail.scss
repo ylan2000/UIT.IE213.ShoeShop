@@ -276,8 +276,20 @@
   .shoeSize-Dropdown {
     width: 50%;
     height: 35px;
-    padding: 0.5rem;
+    font-size: 1.7rem;
+    padding: 0.6rem;
     background-color: white;
     border-radius: 5px;
+  }
+}
+
+.shoes__guide{
+  margin-bottom: 1.5rem;
+  text-align: right;
+  a{
+    color: $color-dark-2;
+  }
+  a:hover{
+    color: $color-black;
   }
 }

@@ -30,8 +30,10 @@ router.get("/return-policy", clientController.getPolicy);
 
 router.get("/feedback", clientController.getFeedback);
 
-// --- protected routes
 router.get("/about", clientController.getAbout);
+
+router.get("/shoe-size-guide", clientController.getShoeSizePage);
+// --- protected routes
 
 router.get("/orders", ensureAuthenicated, clientController.getOrder);
 
