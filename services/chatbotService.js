@@ -23,7 +23,51 @@ let sendMessageOptions = (sender_psid) => {
                       "content_type": "text",
                       "title": "Talk to Admin",
                       "payload": "TALK_AGENT",
+                  },
+                  {
+                    "content_type": "text",
+                    "title": "Pick items!",
+                    "payload": "PICK_ITEMS",
                   }
+              ]
+          };
+
+          await sendMessage(sender_psid, response);
+          resolve("done");
+      } catch (e) {
+          reject(e);
+      }
+  });
+};
+
+
+let sendProductsByPrice = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+      try {
+          //send a quick reply
+          let response = {
+              "text": "Hi, What can I do to help you today?",
+              "quick_replies": [
+                {
+                    "content_type": "text",
+                    "title": "100$",
+                    "payload": "PICK_BY_PRICE_100",  
+                },
+                {
+                    "content_type": "text",
+                    "title": "300$",
+                    "payload": "PICK_BY_PRICE_300",
+                },
+                {
+                    "content_type": "text",
+                    "title": "500$",
+                    "payload": "PICK_BY_PRICE_500",
+                },
+                {
+                    "content_type": "text",
+                    "title": "1000$",
+                    "payload": "PICK_BY_PRICE_1000",
+                }
               ]
           };
 
@@ -190,4 +234,5 @@ module.exports = {
   passThreadControl: passThreadControl,
   takeControlConversation: takeControlConversation,
   sendCategories: sendCategories,
+  sendProductsByPrice: sendProductsByPrice
 };

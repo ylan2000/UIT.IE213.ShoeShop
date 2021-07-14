@@ -154,11 +154,17 @@ let handleMessage = async (sender_psid, message) => {
     if (message && message.quick_reply && message.quick_reply.payload) {
       let payload = message.quick_reply.payload;
       
-      if (payload === "CATEGORIES") {
+      if (payload.startsWith == "PICK_BY_PRICE") {
+        const payloadArr = payload.split("_");
+        const payloadValue = payloadArr[payloadArr.length - 1];
+        console.log(payload.substr(payloadValue + "===============3lastttttttt");
+      } else if (payload === "CATEGORIES") {
         await chatbotService.sendCategories(sender_psid);
 
       } else if (payload === "TALK_AGENT") {
           await chatbotService.requestTalkToAgent(sender_psid);
+      } else if (payload === "PICK_ITEMS") {
+        await chatbotService.sendProductsByPrice(sender_psid);
       }
 
       return;
