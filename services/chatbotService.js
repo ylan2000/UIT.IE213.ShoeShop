@@ -17,11 +17,11 @@ let sendMessageOptions = (sender_psid) => {
                   {
                       "content_type": "text",
                       "title": "Categories",
-                      "payload": "CATEGORIES",
+                      "payload": "CATEGORIES",  
                   },
                   {
                       "content_type": "text",
-                      "title": "Talk to Admini",
+                      "title": "Talk to Admin",
                       "payload": "TALK_AGENT",
                   }
               ]
@@ -149,36 +149,6 @@ let sendCategories = (sender_psid) => {
     });
 };
 
-let showPalladium = (sender_psid) => {
-    return new Promise((resolve, reject) => {
-        try {
-            resolve("done");
-        } catch (e) {
-            reject(e);
-        }
-    })
-};
-
-let showConverse = (sender_psid) => {
-    return new Promise((resolve, reject) => {
-        try {
-            resolve("done");
-        } catch (e) {
-            reject(e);
-        }
-    })
-};
-
-let showVans = (sender_psid) => {
-    return new Promise((resolve, reject) => {
-        try {
-            resolve("done");
-        } catch (e) {
-            reject(e);
-        }
-    })
-};
-
 let sendMessage = (sender_psid, response) => {
   return new Promise(async (resolve, reject) => {
       try {
@@ -220,7 +190,4 @@ module.exports = {
   passThreadControl: passThreadControl,
   takeControlConversation: takeControlConversation,
   sendCategories: sendCategories,
-  showPalladium: showPalladium,
-  showConverse: showConverse,
-  showVans: showVans
 };

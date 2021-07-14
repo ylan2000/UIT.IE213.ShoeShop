@@ -18,11 +18,6 @@ let sendCategoriesTemplate = () =>{
                               "type": "web_url",
                               "url": "https://glacial-reef-79728.herokuapp.com/products/vans",
                               "title": "View on Website"
-                          },
-                          {
-                              "type": "postback",
-                              "title": "Show Vans",
-                              "payload": "SHOW_VANS"
                           }
                       ]
                   },
@@ -39,10 +34,6 @@ let sendCategoriesTemplate = () =>{
                               "type": "web_url",
                               "url": "https://glacial-reef-79728.herokuapp.com/products/converse",
                               "title": "View on Website"
-                          }, {
-                              "type": "postback",
-                              "title": "Show Converse",
-                              "payload": "SHOW_CONVERSE"
                           }
                       ]
                   },
@@ -59,10 +50,6 @@ let sendCategoriesTemplate = () =>{
                               "type": "web_url",
                               "url": "https://glacial-reef-79728.herokuapp.com/products/palladium",
                               "title": "View on Website"
-                          }, {
-                              "type": "postback",
-                              "title": "Show Palladium",
-                              "payload": "SHOW_PALLADIUM"
                           }
                       ]
                   },
