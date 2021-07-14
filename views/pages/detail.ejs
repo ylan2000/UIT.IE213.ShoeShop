@@ -30,7 +30,7 @@
           <nav>
             <ul class="breadcrumb">
               <li class="breadcrumb-items">
-                <a href="home">Home</a>
+                <a href="/home">Home</a>
               </li>
               <span>&ThickSpace;&#62;&ThickSpace;</span>
               <li class="breadcrumb-item active"><%= product.name %></li>
@@ -68,15 +68,15 @@
                 <label for="shoeSize" class = "shoe-size-label">Choose size:</label>
                 <br>
                 <select name="size" id="size" class = "shoeSize-Dropdown">
-                  <option value="35">35</option>
-                  <option value="36">36</option>
-                  <option value="37">37</option>
-                  <option value="38">38</option>
-                  <option value="39">39</option>
-                  <option value="40">40</option>
-                  <option value="41">41</option>
+                  <% for(var i = 0; i < product.shoeSize.length; i++) { %>
+                    <option value="<%= product.shoeSize[i] %>"> <%= product.shoeSize[i] %> </option>
+                  <% } %>
+                  
                 </select>
               </form>
+              <div class = "shoes__guide">
+                <a href="/shoe-size-guide">+ Shoe size guide</a>
+              </div>
               <hr/>
               <!-- Chỗ chứa phần status và quanity -->
               <span class="detail__stock">
@@ -219,7 +219,16 @@
           </div>
         </div>
       </div>
-    </div>
+      <div class="related-products">
+        <div class="container">
+          <h3 class="heading-h3">
+            <p class="heading-h3--sub">Maybe you have interest in these products</p>
+            <p class="heading-h3--main">RELATED PRODUCTS</p>
+          </h3>
+
+          <%- include('../partials/card-product'); -%>
+        </div>
+      </div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>
     <script>
@@ -234,8 +243,8 @@
     <script>
       var text = encodeURIComponent("Check this out !!!!");
       // Note 1: nhớ sửa thành window.document.location.href sau khi deploy nha
-      // Note 2: nếu có lỗi thì thử sửa thành encodeURI(window.document.location.href) hoặc encodeURI(document.location.href) nha
-      var url = "https://www.facebook.com/HoaThienVu.HDP/"; // Link để tạm để chắc chắn chạy được chức năng share
+      // Note 2: nếu có lỗi thì thử sửa thành encodeURI(window.document.location.href) hoặc encodeURI(window.location.href) nha
+      var url = encodeURIComponent(window.location.href); // Link để tạm để chắc chắn chạy được chức năng share
       var params = "menubar=no,toolbar=no,status=no,width=570,height=570"; // for window
       var image = document.querySelector('.pin-image');
 

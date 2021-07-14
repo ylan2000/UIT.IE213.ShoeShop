@@ -169,7 +169,7 @@ exports.getFeedbacks = async (req, res, next) => {
 
 //Product POST
 //add
-exports.postAddProduct = async (req,res,next) => {
+exports.postAddProduct = async (req,res,next) => {  
   const product = new Product({
     name: req.body.productName,
     description: req.body.productShortDesc,
@@ -179,12 +179,13 @@ exports.postAddProduct = async (req,res,next) => {
     sale: req.body.pSaleOff,
     condition: req.body.pIsNew,
     quantity: req.body.quantity,
+    shoeSize: req.body.cshoeSize,
   });
-
+  console.log("req.body Ok");
   const coverImgObject = saveImage(req.body.coverImage);
   product.coverImage.data = coverImgObject["data"];
   product.coverImage.type = coverImgObject["type"];
-
+  console.log("coverimage Ok");
   if (req.body.images.length) {
     const imageArr = [];
     req.body.images.forEach(img => {
@@ -200,9 +201,10 @@ exports.postAddProduct = async (req,res,next) => {
 
     product.images = imageArr;
   }
-
+  console.log("image Ok");
   try {
     const newProduct = await product.save();
+    console.log("add ok");
     return res.redirect("/admin/products?status=Success");
   } catch (err) {
     console.log(err);

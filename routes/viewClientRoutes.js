@@ -30,8 +30,10 @@ router.get("/return-policy", clientController.getPolicy);
 
 router.get("/feedback", clientController.getFeedback);
 
-// --- protected routes
 router.get("/about", clientController.getAbout);
+
+router.get("/shoe-size-guide", clientController.getShoeSizePage);
+// --- protected routes
 
 router.get("/orders", ensureAuthenicated, clientController.getOrder);
 
@@ -53,6 +55,12 @@ router.get("/signInFirst", clientController.getLoginFirst);
 router.get("/permissiondenied", clientController.getPermissionDenied);
 
 router.get("/signIn", clientController.getSignIn);
+
+router.get("/forgotPassword",clientController.getForgotPass);
+
+router.get("/validate",clientController.getValidate);
+
+router.get("/newPassword",clientController.getNewPass);
 
 router.get("/signUp", clientController.getSignUp);
 

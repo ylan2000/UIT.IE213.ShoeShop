@@ -19,7 +19,7 @@ exports.getHome = async (req, res, next) => {
   try {
     // Render template
     const products = await (await Product.find().sort({createdDate: -1})).slice(0, 8);
-    return res.status(200).render("pages/home", { title: "Home", product: products});
+    return res.status(200).render("pages/home", { title: "Home", products: products});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
@@ -88,7 +88,7 @@ exports.getProducts = async (req, res, next) => {
     // Render template
     return res.status(200).render("pages/products", {
       title: brand || "Products", 
-      product: products,
+      products: products,
       current: page,
       pages: Math.ceil(numProducts / limit),
       searchQuery: searchQuery,
@@ -107,8 +107,14 @@ exports.getProduct = async (req, res, next) => {
     // Render template
     const slug = req.params.slug;
     const product = await Product.findOne({slug: slug}).exec();
+
+    const cateName = product.category[0].name;
+    const relatedProduct = await Product.find({"category.0.name": cateName}).limit(4).exec();
+
     return res.status(200).render("pages/detail", {
-      title: "Detail", product: product
+      title: "Detail", 
+      product: product,
+      products: relatedProduct
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -121,6 +127,19 @@ exports.getPolicy = async (req, res, next) => {
   try {
     // Render template
     return res.status(200).render("pages/return-policy", {
+      title: "Policy",
+    });
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+exports.getShoeSizePage = async (req, res, next) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/findShoeSize.ejs", {
       title: "Policy",
     });
   } catch (err) {
@@ -239,7 +258,7 @@ exports.getPayment = async (req, res, next) => {
 exports.getLoginFirst = async(req, res, next) => {
   try {
     // Render template
-    return res.status(200).render("pages/login-first", { title: "Sign In"});
+    return res.status(200).render("pages/login-first", { title: "Log In first"});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
@@ -249,7 +268,7 @@ exports.getLoginFirst = async(req, res, next) => {
 exports.getPermissionDenied = async(req, res, next) => {
   try {
     // Render template
-    return res.status(200).render("pages/permission-denied", { title: "Sign In"});
+    return res.status(200).render("pages/permission-denied", { title: "No permission"});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
@@ -267,6 +286,33 @@ exports.getSignIn = async (req, res, next) => {
 
   next();
 };
+
+exports.getForgotPass = async (req, res) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/forgotPassword", { title: "Forgot Password"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+exports.getValidate = async (req,res) =>{
+  try {
+    // Render template
+    return res.status(200).render("pages/validateUser", { title: "Validate User"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+exports.getNewPass = async (req,res) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/newPassword", { title: "New Password"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
 
 exports.getSignUp = async (req, res, next) => {
   try {
