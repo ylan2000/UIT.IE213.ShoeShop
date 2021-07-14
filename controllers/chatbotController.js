@@ -14,15 +14,16 @@ let postWebhook = (req, res) => {
 
       if (entry.standby) {
         //if user's message is "back" or "exit", return the conversation to the bot
-        let webhook_standby = entry.standby[0];
-        if (webhook_standby && webhook_standby.message) {
-            if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit") {
-                // call function to return the conversation to the primary app
-                chatbotService.takeControlConversation(webhook_standby.sender.id);
-            }
-        }
+        console.log(entry.standby + "====================================");
+        // let webhook_standby = entry.standby[0];
+        // if (webhook_standby && webhook_standby.message) {
+        //     if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit") {
+        //         // call function to return the conversation to the primary app
+        //         chatbotService.takeControlConversation(webhook_standby.sender.id);
+        //     }
+        // }
 
-        return;
+        // return;
       }
 
       // Gets the body of the webhook event
@@ -148,6 +149,11 @@ function firstTrait(nlp, name) {
 
 let handleMessage = async (sender_psid, message) => {
   try {
+    if (message.text === "back" || message.text === "exit") {
+      // call function to return the conversation to the primary app
+      chatbotService.takeControlConversation(sender_psid);
+    }
+
     //check the incoming message is a quick reply?
     if (message && message.quick_reply && message.quick_reply.payload) {
       let payload = message.quick_reply.payload;
