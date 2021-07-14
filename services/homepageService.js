@@ -1,3 +1,5 @@
+const request = require("request");
+
 let sendTypingOn = (sender_psid) => {
   return new Promise((resolve, reject) => {
       try {
