@@ -169,13 +169,15 @@ let handleMessage = async (sender_psid, message) => {
     let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money", "wit$sentiment"];
     
     let entityChosen = "";
+    const sentimentStatus = "";
 
     entityArr.forEach(name => {
       const entity = firstTrait(message.nlp, name);
 
       if (entity && entity.confidence > 0.8) {
         entityChosen = name;
-        console.log(JSON.stringify(entity) + "sentiment+++++++++++++++++++++++++++++++++++++++");
+
+        sentimentStatus = entityChosen == "wit$sentiment" ? entity["value"] : "";
       } 
     });
 
@@ -192,11 +194,15 @@ let handleMessage = async (sender_psid, message) => {
         callSendAPI(sender_psid, 'Thank you!');
         break;
       case "wit$sentiment":
-        
-        break;
-      case "wit$amount_of_money:amount_of_money":
-        const amount_of_money = firstTrait(message.nlp, 'wit$amount_of_money:amount_of_money');
-        console.log(JSON.stringify(amount_of_money) + "money+++++++++++++++++++++++++++++++++++++++");
+        sentimentStatus == "positive"
+          ? callSendAPI(
+              sender_psid,
+              "Thank you for believing in me! Bringing satisfaction to you is my mission ^_<"
+            )
+          : callSendAPI(
+              sender_psid,
+              "Sorry for any inconvenience! You can contact with us for more detail via (+84)123456789. Sorry again :("
+            );
         break;
       default:
         console.log('default nlp ==============================================');
