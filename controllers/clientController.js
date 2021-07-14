@@ -72,14 +72,20 @@ exports.getProducts = async (req, res, next) => {
     const limit = 12; // limit products on each page
   
     const page = req.query.page * 1 || 1; // convert string to number
-    const searchQuery = req.query.search || null; // get search info
-    const sortQuery = req.query.sort || null; // get search query
+
+    let queryString = "";
+    for (const [key, value] of Object.entries(req.query)) {
+      if (key == "page") {
+        continue;
+      }
+      queryString += key + "=" + value + "&";
+    }
 
     const numProducts = await Product.countDocuments(filter); // total number of products
 
     // execute query
     const features = new APIFeatures(Product.find(filter), req.query)
-    .search()
+    .filter()
     .sort()
     .paginate(limit);
     
@@ -91,8 +97,7 @@ exports.getProducts = async (req, res, next) => {
       products: products,
       current: page,
       pages: Math.ceil(numProducts / limit),
-      searchQuery: searchQuery,
-      sortQuery: sortQuery
+      queryString: queryString
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
