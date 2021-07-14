@@ -191,6 +191,8 @@ let handleMessage = async (sender_psid, message) => {
         callSendAPI(sender_psid, 'Thank you!');
         break;
       case "wit$amount_of_money":
+        const amount_of_money = firstTrait(message.nlp, 'wit$amount_of_money');
+        console.log(JSON.stringify(amount_of_money) + "money+++++++++++++++++++++++++++++++++++++++");
         break;
       default:
         console.log('default nlp ==============================================');
