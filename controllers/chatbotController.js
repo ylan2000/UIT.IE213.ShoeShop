@@ -169,7 +169,7 @@ let handleMessage = async (sender_psid, message) => {
     let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money", "wit$sentiment"];
     
     let entityChosen = "";
-    const sentimentStatus = "";
+    let sentimentStatus = "";
 
     entityArr.forEach(name => {
       const entity = firstTrait(message.nlp, name);
