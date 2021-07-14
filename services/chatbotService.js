@@ -135,6 +135,49 @@ let takeControlConversation = (sender_psid) =>{
     });
 };
 
+let sendCategories = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            //send a generic template message
+            let response = templateMessage.sendCategoriesTemplate();
+            await sendMessage(sender_psid, response);
+            resolve("done");
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+let showPalladium = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve("done");
+        } catch (e) {
+            reject(e);
+        }
+    })
+};
+
+let showConverse = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve("done");
+        } catch (e) {
+            reject(e);
+        }
+    })
+};
+
+let showVans = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve("done");
+        } catch (e) {
+            reject(e);
+        }
+    })
+};
+
 let sendMessage = (sender_psid, response) => {
   return new Promise(async (resolve, reject) => {
       try {
@@ -174,5 +217,9 @@ module.exports = {
   requestTalkToAgent: requestTalkToAgent,
   sendMessage: sendMessage,
   passThreadControl: passThreadControl,
-  takeControlConversation: takeControlConversation
+  takeControlConversation: takeControlConversation,
+  sendCategories: sendCategories,
+  showPalladium: showPalladium,
+  showConverse: showConverse,
+  showVans: showVans
 };

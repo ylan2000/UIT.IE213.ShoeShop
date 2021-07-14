@@ -133,13 +133,24 @@ function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  if (payload === 'yes') {
-    response = { "text": "Thanks!" }
-  } else if (payload === 'no') {
-    response = { "text": "Oops, try sending another image." }
+  switch (payload) {
+    case "GET_STARTED":
+    case "TALK_AGENT":
+        await chatbotService.requestTalkToAgent(sender_psid);
+        break;
+    case "SHOW_PALLADIUM":
+        await chatbotService.showPalladium(sender_psid);
+        break;
+    case "SHOW_CONVERSE":
+        await chatbotService.showConverse(sender_psid);
+        break;
+    case "SHOW_VANS":
+        await chatbotService.showVans(sender_psid);
+        break;
+    default:
+        console.log("run default switch case")
+
   }
-  // Send the message to acknowledge the postback
-  callSendAPI(sender_psid, response);
 }
 
 function firstTrait(nlp, name) {
@@ -151,7 +162,11 @@ let handleMessage = async (sender_psid, message) => {
     //check the incoming message is a quick reply?
     if (message && message.quick_reply && message.quick_reply.payload) {
       let payload = message.quick_reply.payload;
-      if (payload === "TALK_AGENT") {
+      
+      if (payload === "CATEGORIES") {
+        await chatbotService.sendCategories(sender_psid);
+
+      } else if (payload === "TALK_AGENT") {
           await chatbotService.requestTalkToAgent(sender_psid);
       }
 
