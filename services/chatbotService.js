@@ -1,6 +1,7 @@
 const request = require("request");
 
 const homepageService = require("./homepageService");
+const templateMessage = require("./templateMessage");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const SECONDARY_RECEIVER_ID = process.env.SECONDARY_RECEIVER_ID;
@@ -20,7 +21,7 @@ let sendMessageOptions = (sender_psid) => {
                   },
                   {
                       "content_type": "text",
-                      "title": "Talk to Administrator",
+                      "title": "Talk to Admini",
                       "payload": "TALK_AGENT",
                   }
               ]
@@ -39,7 +40,7 @@ let requestTalkToAgent = (sender_psid) => {
       try {
           //send a text message
           let response1 = {
-              "text": "Ok. Administrator will be with you in a few minutes ^^"
+              "text": "Ok. Admin will be with you in a few minutes ^^"
           };
 
           let response2 = {
