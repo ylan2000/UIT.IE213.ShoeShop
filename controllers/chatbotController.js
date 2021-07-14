@@ -12,13 +12,8 @@ let postWebhook = (req, res) => {
     // Iterate over each entry - there may be multiple if batched
     body.entry.forEach(function(entry) {
 
-      if (entry.messaging) {
-        console.log(JSON.stringify(entry.messaging) + "====================================entrymessage111111");
-      }
-
       if (entry.standby) {
         //if user's message is "back" or "exit", return the conversation to the bot
-        console.log(JSON.stringify(entry.standby) + "====================================entrystandby");
         let webhook_standby = entry.standby[0];
         if (webhook_standby && webhook_standby.message) {
             if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit") {
@@ -29,8 +24,6 @@ let postWebhook = (req, res) => {
 
         return;
       }
-
-      console.log(JSON.stringify(entry.messaging) + "====================================entrymessage");
 
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
@@ -155,11 +148,6 @@ function firstTrait(nlp, name) {
 
 let handleMessage = async (sender_psid, message) => {
   try {
-    if (message.text === "back" || message.text === "exit") {
-      // call function to return the conversation to the primary app
-      chatbotService.takeControlConversation(sender_psid);
-    }
-
     //check the incoming message is a quick reply?
     if (message && message.quick_reply && message.quick_reply.payload) {
       let payload = message.quick_reply.payload;

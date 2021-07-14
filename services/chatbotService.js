@@ -20,13 +20,8 @@ let sendMessageOptions = (sender_psid) => {
                   },
                   {
                       "content_type": "text",
-                      "title": "Talk to an agent",
+                      "title": "Talk to Administrator",
                       "payload": "TALK_AGENT",
-                  },
-                  {
-                      "content_type": "text",
-                      "title": "Bye",
-                      "payload": "BYE",
                   }
               ]
           };
@@ -44,11 +39,11 @@ let requestTalkToAgent = (sender_psid) => {
       try {
           //send a text message
           let response1 = {
-              "text": "Ok. Someone real will be with you in a few minutes ^^"
+              "text": "Ok. Administrator will be with you in a few minutes ^^"
           };
 
           let response2 = {
-            "text": "If you want to talk with me (I'm chatbot ^_<) again, just type 'back' or 'exit'!"
+            "text": "If you want to talk to me (I'm chatbot ^_<) again, just type 'back' or 'exit'!"
           };
 
           //change this conversation to page inbox
