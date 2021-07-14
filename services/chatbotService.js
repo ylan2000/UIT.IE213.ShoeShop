@@ -10,23 +10,9 @@ let sendMessageOptions = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
       try {
         console.log("options=======================================================");
-          //send text message
-          let response1 = {
-              "text": `Hi! Welcome to Sneaker City Shop!`
-          };
-
-          //send an image
-          let response2 = {
-            "text": `How can I help you?`
-          };
-
-          let response3 = {
-              "text": "At any time, use the menu below to navigate through the features."
-          };
-
           //send a quick reply
-          let response4 = {
-              "text": "What can I do to help you today?",
+          let response = {
+              "text": "Hi, What can I do to help you today?",
               "quick_replies": [
                   {
                       "content_type": "text",
@@ -46,10 +32,7 @@ let sendMessageOptions = (sender_psid) => {
               ]
           };
 
-          await sendMessage(sender_psid, response1);
-          await sendMessage(sender_psid, response2);
-          await sendMessage(sender_psid, response3);
-          await sendMessage(sender_psid, response4);
+          await sendMessage(sender_psid, response);
           resolve("done");
       } catch (e) {
           reject(e);
