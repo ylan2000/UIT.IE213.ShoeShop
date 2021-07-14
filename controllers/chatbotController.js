@@ -175,6 +175,7 @@ let handleMessage = async (sender_psid, message) => {
 
       if (entity && entity.confidence > 0.8) {
         entityChosen = name;
+        console.log(JSON.stringify(entity) + "sentiment+++++++++++++++++++++++++++++++++++++++");
       } 
     });
 
@@ -191,7 +192,7 @@ let handleMessage = async (sender_psid, message) => {
         callSendAPI(sender_psid, 'Thank you!');
         break;
       case "wit$sentiment":
-        console.log(JSON.stringify(entityChosen) + "sentiment+++++++++++++++++++++++++++++++++++++++");
+        
         break;
       case "wit$amount_of_money:amount_of_money":
         const amount_of_money = firstTrait(message.nlp, 'wit$amount_of_money:amount_of_money');
