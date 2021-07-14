@@ -12,6 +12,19 @@ let postWebhook = (req, res) => {
     // Iterate over each entry - there may be multiple if batched
     body.entry.forEach(function(entry) {
 
+      if (entry.standby) {
+        //if user's message is "back" or "exit", return the conversation to the bot
+        let webhook_standby = entry.standby[0];
+        if (webhook_standby && webhook_standby.message) {
+            if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit") {
+                // call function to return the conversation to the primary app
+                chatbotService.takeControlConversation(webhook_standby.sender.id);
+            }
+        }
+
+        return;
+      }
+
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);

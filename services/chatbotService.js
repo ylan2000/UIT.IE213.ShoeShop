@@ -47,10 +47,14 @@ let requestTalkToAgent = (sender_psid) => {
               "text": "Ok. Someone real will be with you in a few minutes ^^"
           };
 
+          let response2 = {
+            "text": "If you want to talk with me (I'm chatbot ^_<) again, just type 'back' or 'exit'!"
+          };
+
           //change this conversation to page inbox
           let app = "page_inbox";
 
-          await Promise.all([sendMessage(sender_psid, response1), passThreadControl(sender_psid, app)]);
+          await Promise.all([sendMessage(sender_psid, response1), sendMessage(sender_psid, response2), passThreadControl(sender_psid, app)]);
 
           resolve("done");
       } catch (e) {
@@ -103,6 +107,39 @@ let passThreadControl = (sender_psid, app) => {
   });
 };
 
+let takeControlConversation = (sender_psid) =>{
+    return new Promise((resolve, reject) => {
+        try {
+            // Construct the message body
+            let request_body = {
+                "recipient": {
+                    "id": sender_psid
+                },
+                "metadata": "Pass this conversation from page inbox to the bot - primary app"
+            };
+
+            // Send the HTTP request to the Messenger Platform
+            request({
+                "uri": "https://graph.facebook.com/v6.0/me/take_thread_control",
+                "qs": { "access_token": process.env.FB_PAGE_TOKEN },
+                "method": "POST",
+                "json": request_body
+            }, async (err, res, body) => {
+                if (!err) {
+                    //send messages
+                    await sendMessage(sender_psid, {"text": "The super bot came back !!!"});
+                    await backToMainMenu(sender_psid);
+                    resolve('message sent!')
+                } else {
+                    reject("Unable to send message:" + err);
+                }
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 let sendMessage = (sender_psid, response) => {
   return new Promise(async (resolve, reject) => {
       try {
@@ -140,5 +177,7 @@ let sendMessage = (sender_psid, response) => {
 module.exports = {
   sendMessageOptions: sendMessageOptions,
   requestTalkToAgent: requestTalkToAgent,
-  sendMessage: sendMessage
+  sendMessage: sendMessage,
+  passThreadControl: passThreadControl,
+  takeControlConversation: takeControlConversation
 };
