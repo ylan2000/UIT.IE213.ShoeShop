@@ -169,43 +169,42 @@ exports.getFeedbacks = async (req, res, next) => {
 
 //Product POST
 //add
-exports.postAddProduct = async (req,res,next) => {
+exports.postAddProduct = async (req,res,next) => {  
   const product = new Product({
-    name: req.body.name,
-    description: req.body.price,
-    detail: req.body.detail,
-    price: req.body.price,
-    category: [req.body.category],
-    sale: req.body.sale,
-    condition: req.body.condition,
+    name: req.body.productName,
+    description: req.body.productShortDesc,
+    detail: req.body.productDesc,
+    price: req.body.productPrice,
+    category: [req.body.productCate],
+    sale: req.body.pSaleOff,
+    condition: req.body.pIsNew,
     quantity: req.body.quantity,
-    shoeSize: req.body.shoeSize,
+    shoeSize: req.body.cshoeSize,
   });
-  console.log(req.body.shoeSize);
-  console.log("OK");
-  // const coverImgObject = saveImage(req.body.coverImage);
-  // product.coverImage.data = coverImgObject["data"];
-  // product.coverImage.type = coverImgObject["type"];
+  console.log("req.body Ok");
+  const coverImgObject = saveImage(req.body.coverImage);
+  product.coverImage.data = coverImgObject["data"];
+  product.coverImage.type = coverImgObject["type"];
+  console.log("coverimage Ok");
+  if (req.body.images.length) {
+    const imageArr = [];
+    req.body.images.forEach(img => {
+      let objImg = {};
+      const transferedImd = saveImage(img);
 
-  // if (req.body.images.length) {
-  //   const imageArr = [];
-  //   req.body.images.forEach(img => {
-  //     let objImg = {};
-  //     const transferedImd = saveImage(img);
+      objImg.data = transferedImd["data"];
+      objImg.type = transferedImd["type"];
 
-  //     objImg.data = transferedImd["data"];
-  //     objImg.type = transferedImd["type"];
-
-  //     imageArr.push(objImg);
+      imageArr.push(objImg);
       
-  //   });
+    });
 
-  //   product.images = imageArr;
-  // }
-
+    product.images = imageArr;
+  }
+  console.log("image Ok");
   try {
     const newProduct = await product.save();
-    console.log("OK 1");
+    console.log("add ok");
     return res.redirect("/admin/products?status=Success");
   } catch (err) {
     console.log(err);

@@ -47,7 +47,7 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 
-app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 app.use(bodyParser.json())
 
