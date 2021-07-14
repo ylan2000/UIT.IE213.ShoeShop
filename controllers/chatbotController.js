@@ -14,7 +14,7 @@ let postWebhook = (req, res) => {
 
       if (entry.standby) {
         //if user's message is "back" or "exit", return the conversation to the bot
-        console.log(entry.standby + "====================================");
+        console.log(JSON.stringify(entry.standby) + "====================================");
         // let webhook_standby = entry.standby[0];
         // if (webhook_standby && webhook_standby.message) {
         //     if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit") {
