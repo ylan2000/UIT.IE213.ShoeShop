@@ -1,5 +1,5 @@
 .detail {
-  margin-bottom: 15rem;
+  // margin-bottom: 15rem;
 
   &__product-image {
     margin-left: 8rem;
@@ -292,4 +292,8 @@
   a:hover{
     color: $color-black;
   }
+}
+
+.related-products {
+  margin: 5rem 0;
 }
