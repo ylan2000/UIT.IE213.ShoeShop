@@ -9,7 +9,6 @@ const PRIMARY_RECEIVER_ID = process.env.FACEBOOK_APP_ID;
 let sendMessageOptions = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
       try {
-        console.log("options=======================================================");
           //send a quick reply
           let response = {
               "text": "Hi, What can I do to help you today?",
@@ -63,6 +62,7 @@ let requestTalkToAgent = (sender_psid) => {
 let passThreadControl = (sender_psid, app) => {
   return new Promise((resolve, reject) => {
       try {
+          console.log("inPassThreadControl==================================");
           let target_app_id = "";
           let metadata = "";
 
@@ -86,7 +86,7 @@ let passThreadControl = (sender_psid, app) => {
           // Send the HTTP request to the Messenger Platform
           request({
               "uri": "https://graph.facebook.com/v6.0/me/pass_thread_control",
-              "qs": { "access_token": PAGE_ACCESS_TOKEN },
+              "qs": { "access_token": process.env.FB_PAGE_TOKEN },
               "method": "POST",
               "json": request_body
           }, (err, res, body) => {
@@ -116,8 +116,6 @@ let sendMessage = (sender_psid, response) => {
               },
               "message": response
           };
-
-          console.log(JSON.stringify(request_body) + "=====================");
 
           // Send the HTTP request to the Messenger Platform
           request({
