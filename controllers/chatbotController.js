@@ -12,6 +12,10 @@ let postWebhook = (req, res) => {
     // Iterate over each entry - there may be multiple if batched
     body.entry.forEach(function(entry) {
 
+      if (entry.messaging) {
+        console.log(JSON.stringify(entry.messaging) + "====================================entrymessage111111");
+      }
+
       if (entry.standby) {
         //if user's message is "back" or "exit", return the conversation to the bot
         console.log(JSON.stringify(entry.standby) + "====================================entrystandby");
