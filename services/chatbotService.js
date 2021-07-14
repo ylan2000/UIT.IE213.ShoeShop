@@ -134,23 +134,22 @@ let sendMessage = (sender_psid, response) => {
               "message": response
           };
 
-          console.log(sender_psid + "id=====================");
-          console.log(JSON.stringify(response) + "res=====================");
           console.log(JSON.stringify(request_body) + "=====================");
 
           // Send the HTTP request to the Messenger Platform
           request({
-              "uri": "https://graph.facebook.com/v6.0/me/messages",
-              "qs": { "access_token": PAGE_ACCESS_TOKEN },
-              "method": "POST",
-              "json": request_body
+            "uri": "https://graph.facebook.com/v6.0/me/messages",
+            "qs": { "access_token": process.env.FB_PAGE_TOKEN },
+            "method": "POST",
+            "json": request_body
           }, (err, res, body) => {
-              if (!err) {
-                  resolve('message sent!')
-              } else {
-                  reject("Unable to send message:" + err);
-              }
-          });
+            if (!err) {
+              console.log('message sent!');
+              console.log(`My messenger: ${response}`);
+            } else {
+              console.error("Unable to send message:" + err);
+            }
+          }); 
       } catch (e) {
           reject(e);
       }
