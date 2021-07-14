@@ -154,7 +154,7 @@ let handleMessage = async (sender_psid, message) => {
     if (message && message.quick_reply && message.quick_reply.payload) {
       let payload = message.quick_reply.payload;
       
-      if (payload.startsWith == "PICK_BY_PRICE") {
+      if (payload.startsWith("PICK_BY_PRICE")) {
         const payloadArr = payload.split("_");
         const payloadValue = payloadArr[payloadArr.length - 1];
         console.log(payload.substr(payloadValue + "===============3lastttttttt"));
@@ -166,6 +166,8 @@ let handleMessage = async (sender_psid, message) => {
       } else if (payload === "PICK_ITEMS") {
         await chatbotService.sendProductsByPrice(sender_psid);
       }
+
+      console.log("saiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 
       return;
     }

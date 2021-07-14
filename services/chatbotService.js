@@ -46,7 +46,7 @@ let sendProductsByPrice = (sender_psid) => {
       try {
           //send a quick reply
           let response = {
-              "text": "Hi, What can I do to help you today?",
+              "text": "Choose your buget!",
               "quick_replies": [
                 {
                     "content_type": "text",
