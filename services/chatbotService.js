@@ -1,5 +1,7 @@
 const request = require("request");
 
+const homepageService = require("./homepageService");
+
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const SECONDARY_RECEIVER_ID = process.env.SECONDARY_RECEIVER_ID;
 const PRIMARY_RECEIVER_ID = process.env.FACEBOOK_APP_ID;
@@ -15,12 +17,7 @@ let sendMessageOptions = (sender_psid) => {
 
           //send an image
           let response2 = {
-              "attachment": {
-                  "type": "image",
-                  "payload": {
-                      "url": "https://ibb.co/19cnprV"
-                  }
-              }
+            "text": `How can I help you?`
           };
 
           let response3 = {
@@ -126,6 +123,9 @@ let passThreadControl = (sender_psid, app) => {
 let sendMessage = (sender_psid, response) => {
   return new Promise(async (resolve, reject) => {
       try {
+          await homepageService.markMessageRead(sender_psid);
+          await homepageService.sendTypingOn(sender_psid);
+
           // Construct the message body
           let request_body = {
               "recipient": {
