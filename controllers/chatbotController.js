@@ -157,7 +157,7 @@ let handleMessage = async (sender_psid, message) => {
       if (payload.startsWith("PICK_BY_PRICE")) {
         const payloadArr = payload.split("_");
         const payloadValue = payloadArr[payloadArr.length - 1];
-        console.log(payload.substr(payloadValue + "===============3lastttttttt"));
+        console.log(payloadValue + "===============3lastttttttt");
       } else if (payload === "CATEGORIES") {
         await chatbotService.sendCategories(sender_psid);
 
