@@ -1034,9 +1034,18 @@ body {
   .shoe-size-container .shoeSize-Dropdown {
     width: 50%;
     height: 35px;
-    padding: 0.5rem;
+    font-size: 1.7rem;
+    padding: 0.6rem;
     background-color: white;
     border-radius: 5px; }
+
+.shoes__guide {
+  margin-bottom: 1.5rem;
+  text-align: right; }
+  .shoes__guide a {
+    color: #757575; }
+  .shoes__guide a:hover {
+    color: #222; }
 
 .cart {
   min-height: calc(100vh - 26.6rem - 10rem - 5rem); }

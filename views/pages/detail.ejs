@@ -68,16 +68,15 @@
                 <label for="shoeSize" class = "shoe-size-label">Choose size:</label>
                 <br>
                 <select name="size" id="size" class = "shoeSize-Dropdown">
-                  <option value="35">35</option>
-                  <option value="36">36</option>
-                  <option value="37">37</option>
-                  <option value="38">38</option>
-                  <option value="39">39</option>
-                  <option value="40">40</option>
-                  <option value="41">41</option>
+                  <% for(var i = 0; i < product.shoeSize.length; i++) { %>
+                    <option value="<%= product.shoeSize[i] %>"> <%= product.shoeSize[i] %> </option>
+                  <% } %>
+                  
                 </select>
               </form>
-              <a href="/shoe-size-guide" >+ Shoe size guide</a>
+              <div class = "shoes__guide">
+                <a href="/shoe-size-guide">+ Shoe size guide</a>
+              </div>
               <hr/>
               <!-- Chỗ chứa phần status và quanity -->
               <span class="detail__stock">
@@ -219,6 +218,15 @@
               </div>
           </div>
         </div>
+      </div>
+      <div class="container">
+        <h3 class="heading-h3">
+          <p class="heading-h3--sub">Maybe you have insterest in these products</p>
+          <p class="heading-h3--main">Related Products</p>
+          
+          <%- include('../partials/card-product'); -%>
+        </h3>
+
       </div>
     </div>
     <%- include('../partials/footer'); -%> <%-
