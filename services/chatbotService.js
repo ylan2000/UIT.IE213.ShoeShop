@@ -126,12 +126,13 @@ let passThreadControl = (sender_psid, app) => {
 let sendMessage = (sender_psid, response) => {
   return new Promise(async (resolve, reject) => {
       try {
+          console.log("in send message function=========================");
           // Construct the message body
           let request_body = {
               "recipient": {
                   "id": sender_psid
               },
-              "message": response
+              "message": { "text": response }
           };
 
           // Send the HTTP request to the Messenger Platform

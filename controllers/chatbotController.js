@@ -161,11 +161,6 @@ let handleMessage = async (sender_psid, message) => {
 
     console.log(entityChosen);
 
-    if (entityChosen === "") {
-      console.log('not nlp default');
-      await chatbotService.sendMessageOptions(sender_psid);
-    }
-
     switch(entityChosen) {
       case "wit$greetings":
         callSendAPI(sender_psid, 'Hi, how can I help you?');
