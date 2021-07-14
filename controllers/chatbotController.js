@@ -166,7 +166,7 @@ let handleMessage = async (sender_psid, message) => {
 
 
     // check greeting is here and is confident
-    let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money"];
+    let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money", "wit$sentiment"];
     
     let entityChosen = "";
 
@@ -189,6 +189,9 @@ let handleMessage = async (sender_psid, message) => {
         break;
       case "wit$bye":
         callSendAPI(sender_psid, 'Thank you!');
+        break;
+      case "wit$sentiment":
+        console.log(JSON.stringify(entityChosen) + "sentiment+++++++++++++++++++++++++++++++++++++++");
         break;
       case "wit$amount_of_money:amount_of_money":
         const amount_of_money = firstTrait(message.nlp, 'wit$amount_of_money:amount_of_money');
