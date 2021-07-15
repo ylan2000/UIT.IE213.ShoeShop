@@ -335,10 +335,13 @@ exports.getOrder = async (req, res, next) => {
   try {
     // Render template
     const user = req.session.user;
-    const transactions = user.transaction;
     var orders = [];
-    for (i = 0; i < transactions.length; i++) {
-      orders.push(await Transaction.findOne({_id: transactions[i]}).exec());
+    if (user.transaction.length <= 0 || typeof user.transaction[0] != 'number') orders = null;
+    else {
+      const transactions = user.transaction;
+      for (i = 0; i < transactions.length; i++) {
+        orders.push(await Transaction.findOne({_id: transactions[i]}).exec());
+      }
     }
     return res.status(200).render("pages/clientOrder", { title: "Order", orders: orders});
   } catch (err) {
