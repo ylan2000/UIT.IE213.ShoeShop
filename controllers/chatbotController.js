@@ -154,27 +154,38 @@ let handleMessage = async (sender_psid, message) => {
     if (message && message.quick_reply && message.quick_reply.payload) {
       let payload = message.quick_reply.payload;
       
-      if (payload === "CATEGORIES") {
+      if (payload.startsWith("PICK_BY_PRICE")) {
+        const payloadArr = payload.split("_");
+        const payloadValue = payloadArr[payloadArr.length - 1];
+        await chatbotService.sendLinkProducts(sender_psid, payloadValue);
+      } else if (payload === "CATEGORIES") {
         await chatbotService.sendCategories(sender_psid);
 
       } else if (payload === "TALK_AGENT") {
           await chatbotService.requestTalkToAgent(sender_psid);
+      } else if (payload === "PICK_ITEMS") {
+        await chatbotService.sendProductsByPrice(sender_psid);
       }
+
+      console.log("saiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 
       return;
     }
 
 
     // check greeting is here and is confident
-    let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money"];
+    let entityArr = ["wit$greetings", "wit$thanks", "wit$bye", "wit$amount_of_money:amount_of_money", "wit$sentiment"];
     
     let entityChosen = "";
+    let sentimentStatus = "";
 
     entityArr.forEach(name => {
       const entity = firstTrait(message.nlp, name);
 
       if (entity && entity.confidence > 0.8) {
         entityChosen = name;
+
+        sentimentStatus = entityChosen == "wit$sentiment" ? entity["value"] : "";
       } 
     });
 
@@ -190,7 +201,16 @@ let handleMessage = async (sender_psid, message) => {
       case "wit$bye":
         callSendAPI(sender_psid, 'Thank you!');
         break;
-      case "wit$amount_of_money":
+      case "wit$sentiment":
+        sentimentStatus == "positive"
+          ? callSendAPI(
+              sender_psid,
+              "Thank you for believing in me! Bringing satisfaction to you is my mission ^_<"
+            )
+          : callSendAPI(
+              sender_psid,
+              "Sorry for any inconvenience! You can contact with us for more detail via (+84)123456789. Sorry again :("
+            );
         break;
       default:
         console.log('default nlp ==============================================');

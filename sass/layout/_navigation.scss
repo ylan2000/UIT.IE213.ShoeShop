@@ -38,6 +38,17 @@
     font-weight: 700;
     text-align: center;
     box-shadow: 0 8px 10px rgba($color-black, 0.1);
+    border-top: 1px solid $color-dark-3;
+
+    &::before {
+      content: "\A";
+      width: 10rem;
+      height: 5rem;
+      background: $color-white;
+      position: absolute;
+      left: 21rem;
+      top: -2.5rem;
+    }
   }
 
   &__img {

@@ -43,7 +43,7 @@
 
   $(inputField).keyup(function(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {
-      window.location = "/products?search=" + inputField.val();
+      window.location = "/products?name=" + inputField.val();
     }
 });
 })();
