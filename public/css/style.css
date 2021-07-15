@@ -528,7 +528,16 @@ body {
     text-transform: uppercase;
     font-weight: 700;
     text-align: center;
-    box-shadow: 0 8px 10px rgba(34, 34, 34, 0.1); }
+    box-shadow: 0 8px 10px rgba(34, 34, 34, 0.1);
+    border-top: 1px solid #f1f1f1; }
+    .nav__sub-menu::before {
+      content: "\A";
+      width: 10rem;
+      height: 5rem;
+      background: #fff;
+      position: absolute;
+      left: 21rem;
+      top: -2.5rem; }
   .nav__img {
     width: 10rem;
     height: 10rem; }
