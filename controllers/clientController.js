@@ -69,7 +69,7 @@ exports.getProducts = async (req, res, next) => {
       filter = {"products.condition": true}
     }
 
-    const limit = 12; // limit products on each page
+    const limit = 9; // limit products on each page
   
     const page = req.query.page * 1 || 1; // convert string to number
 
