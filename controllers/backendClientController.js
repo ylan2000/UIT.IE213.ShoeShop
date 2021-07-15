@@ -265,7 +265,9 @@ exports.sendOTP = async (req,res) => {
   req.session.email = user.email;
   req.session.otp = otp;
   req.session.save();
-  const html = "<p>here's your otp: " + otp + "</p>";
+  var html = "<p>Here's your otp: " + otp + "</p> <br>";
+  html += "Use your otp to reset password" +"<br>"
+  html += "If you did not forget password and received this mail, BE CAUTION with any fraudulent activity" + "<br>"
   mail.confirmationMail(user.email, "Your OTP", html);
   return res.json(true);
 }
@@ -349,7 +351,11 @@ exports.postPaymentDone = async (req, res) => {
     user.transaction.push(newTrans._id);
     await user.save();
     console.log('Charge Successful');
-    const html = "<p>here's your order id: " + newTrans._id + "</p>";
+    var html = "Here's your order id: " + newTrans._id + "<br>"
+    html+= "For any further information, do not hesitate to contact us via " + "<br>"
+    html+= "Facebook: https://www.facebook.com/sneakercityy or through chatbox \n" + "<br>"
+    html+= "Your order will be prepare in 3 to 5 working days and will be shipped immediately\n" + "<br>" 
+    html+= "Total time for you order will be from 5 - 10 day working estimatedly \n" ;
     mail.confirmationMail(user.email, "Your order", html);
     return res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
   } catch (err) {
