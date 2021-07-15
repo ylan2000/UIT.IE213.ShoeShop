@@ -1071,7 +1071,7 @@ body {
     color: #222; }
 
 .related-products {
-  margin: 5rem 0; }
+  margin: 10rem 0 15rem; }
 
 .cart {
   min-height: calc(100vh - 26.6rem - 10rem - 5rem); }
