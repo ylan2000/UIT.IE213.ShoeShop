@@ -362,12 +362,13 @@ exports.getCitiesOfState = async (req, res) => {
 } 
 
 exports.addFeedback = async (req, res) => {
-  const {username, feedback, slug, starNumber} = req.body;
+  const {username, feedback, slug, starNumber,time} = req.body;
   var newFeedback = new Feedback({
     username,
     feedback,
     slug,
-    starNumber
+    starNumber,
+    time
   });
   var fb = await newFeedback.save();
   res.json(

@@ -23,7 +23,7 @@ Array.from({ length: numberStar }, (_, i) => {
 });
 
 setDefautRating();
-calcRating();
+// calcRating();
 // show, hide feedback form
 
 
@@ -51,9 +51,10 @@ submitBtn.addEventListener('click', function(){
         $.ajax({
             url: "/client/api/feedback",
             type: "post",
-            data: { username: username.value, feedback: feedback.value, slug: slug, starNumber: userRatingStar},
+            data: { username: username.value, feedback: feedback.value, slug: slug, starNumber: userRatingStar, time: time},
             success: function (response) {
                 console.log(response);
+                
                 reviewContent.insertAdjacentHTML(
                     'afterbegin',
                     `
@@ -68,7 +69,7 @@ submitBtn.addEventListener('click', function(){
                                 <div class="comment-content">
                                 ${response.feedback}
                                 </div>
-                                <time datetime = "${time}"  title = "${time}">${time}</time>
+                                <time datetime = "${reponse.time}"  >${reponse.time}</time>
                             </div>
                     `
                 );
@@ -81,8 +82,8 @@ submitBtn.addEventListener('click', function(){
        
         
         //When success
-        ratingStars[`${userRatingStar}stars`]++;
-        ratingStars.numRating++;
+        // ratingStars[`${userRatingStar}stars`]++;
+        // ratingStars.numRating++;
         calcRating();
         
         //submit success
@@ -128,47 +129,47 @@ function handleRating(number){
         }
     });
 }
-function setStars(number) {
-    let stars = '';
-    Array.from({length: numberStar},(_, i) =>{
-        let starNth = 0;
-        starNth = ++i;
-        stars += `${
-            number >= starNth
-            ? "<i class='fas fa-fw fa-star'></i>"
-            : number >= starNth - 0.5
-            ? "<i class='fas fa-fw fa-star-half'></i>"
-            : "<i class='far fa-fw fa-star'></i>"
-        }`;
-    });
-    return stars;
-}
-function calcRating(){
-    let sumStars = 0;
-    let indexProgress = 0;
-    const barItems = document.querySelectorAll('.rating-bar .bar-item');
-    for(let number = numberStar; number >= 1; number-- ){
-        let percent = 0;
+// function setStars(number) {
+//     let stars = '';
+//     Array.from({length: numberStar},(_, i) =>{
+//         let starNth = 0;
+//         starNth = ++i;
+//         stars += `${
+//             number >= starNth
+//             ? "<i class='fas fa-fw fa-star'></i>"
+//             : number >= starNth - 0.5
+//             ? "<i class='fas fa-fw fa-star-half'></i>"
+//             : "<i class='far fa-fw fa-star'></i>"
+//         }`;
+//     });
+//     return stars;
+// }
+// function calcRating(){
+//     let sumStars = 0;
+//     let indexProgress = 0;
+//     const barItems = document.querySelectorAll('.rating-bar .bar-item');
+//     for(let number = numberStar; number >= 1; number-- ){
+//         let percent = 0;
 
-        const numberOfStars = ratingStars[`${number}stars`];
-        if(numberOfStars){
-            sumStars += number * numberOfStars;
-            percent = ((numberOfStars / ratingStars.numRating) * 100).toFixed(1);
-        }
-        barItems[indexProgress].querySelector(
-            '.progress-line'
-        ).style.width = `${percent}%`;
-        barItems[indexProgress].querySelector(
-            '.percent'
-        ).textContent = `${percent}%`;
-        indexProgress++;
-    }
-    if(ratingStars.numRating){
-        ratingStars.avgRating = (sumStars / ratingStars.numRating).toFixed(1);
-    }
-    document.querySelector('.count-review span').textContent = ratingStars.numRating;
-    document.querySelector('.rating-count .count').textContent = ratingStars.numRating;
-    document.querySelector('.start-count .avg').textContent = ratingStars.avgRating ;
-    document.querySelector('.avg-stars').innerHTML = setStars(ratingStars.avgRating);
+//         const numberOfStars = ratingStars[`${number}stars`];
+//         if(numberOfStars){
+//             sumStars += number * numberOfStars;
+//             percent = ((numberOfStars / ratingStars.numRating) * 100).toFixed(1);
+//         }
+//         barItems[indexProgress].querySelector(
+//             '.progress-line'
+//         ).style.width = `${percent}%`;
+//         barItems[indexProgress].querySelector(
+//             '.percent'
+//         ).textContent = `${percent}%`;
+//         indexProgress++;
+//     }
+//     if(ratingStars.numRating){
+//         ratingStars.avgRating = (sumStars / ratingStars.numRating).toFixed(1);
+//     }
+//     document.querySelector('.count-review span').textContent = ratingStars.numRating;
+//     document.querySelector('.rating-count .count').textContent = ratingStars.numRating;
+//     document.querySelector('.start-count .avg').textContent = ratingStars.avgRating ;
+//     document.querySelector('.avg-stars').innerHTML = setStars(ratingStars.avgRating);
 
-}
+// }

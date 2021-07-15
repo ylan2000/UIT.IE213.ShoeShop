@@ -148,20 +148,22 @@
             <div class="rating-box">
                 <div class="rating-header">
                     <div class="title">Over rating</div>
+                    
                     <div class="info-rating">
                         <div class="start-count">
                             <span class="avg">4.9</span>OUT OF 5
                         </div>
                         <div class="stars">
                             <div class="avg-stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
                                 <i class="far fa-star"></i>
                             </div>
                             <div class="rating-count">
-                                <div class="count">300</div>
+                              
+                                <div class="count"><%= feedbacks.length %> </div>
                                 ratings
                             </div>
                         </div>
@@ -174,9 +176,12 @@
                                 5 <i class="fas fa-star"></i>
                             </div>
                             <div class="progress">
+                               <% const result = feedbacks.filter(feedback => feedback.starNumber == 5);%> 
                                 <div class="progress-line" style="width: 15%;"></div>
                             </div>
-                            <div class="percent">15%</div>
+                            
+
+                            <div class="percent"><%= result.length /feedbacks.length *100 %>%</div>
                         </div>
                         <div class="bar-item">
                             <div class="star">
@@ -221,7 +226,7 @@
                 <div class="review-box ">
                     <div class="review-header">
                         <div class="count-review">
-                            <span>13</span>Review
+                            <span><%= feedbacks.length %></span>Review
                         </div>
                         <div class="txt btn-write">Write a review</div>
                     </div>
@@ -231,14 +236,58 @@
                           <div class="user-rating">
                               <div class="username"><%= feedback.username %></div>
                               <div class="stars"> 
-                                
+                                <% if(feedback.starNumber == 1) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <%}%>
+                                <% if(feedback.starNumber == 2) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <%}%>
+                                <% if(feedback.starNumber == 3) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <%}%>
+                                <% if(feedback.starNumber == 4) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <%}%>
+                                <% if(feedback.starNumber == 5) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <%}%>
                               </div>
                           </div>
                           <!-- end user rating -->
                           <div class="comment-content">
                             <%= feedback.feedback %>
                           </div>
-                          <!-- <time datetime = "${time}"  title = "${time}">${time}</time> -->
+                          <time datetime = "<%= feedback.time %>"  ><%= feedback.time %></time>
                       </div>
                     <% }) %>
                     </div>
@@ -272,7 +321,7 @@
                     </div>
                     <!-- end rating -->
                     
-                      <div class="form">
+                      <form class="form">
                         <div class="form-input">
                             <label for="name">Your name</label>
                             <input type="text" placeholder="Enter your name" id="name" name="username">
@@ -282,9 +331,10 @@
                             <label for="feedback">Your feedback</label>
                             <textarea name="feedback" id="feedback" cols="30" rows="8" placeholder="Your feedback here...W"></textarea>
                         </div>
-                    </div>
-                    <!-- end form -->
+                         <!-- end form -->
                     <button class="submit" type="submit" slug =<%=slug%> >Send feedback</button>
+                    </form>>
+                   
                     
                     
                 </div>
