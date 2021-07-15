@@ -231,12 +231,15 @@ exports.putUpdateProduct = async(req,res,next) => {
     product.condition = req.body.pIsNew;
     product.quantity = req.body.quantity;
     product.price = req.body.productPrice;
-    const image = new Product()
-    saveImage(image,req.body.productImg)
-    product.image = image.image;
+    const image = saveImage(req.body.coverImage)
+    const newImage = Product()
+    newImage.coverImage.data = image["data"];
+    newImage.coverImage.type = image["type"];
+    product.coverImage = newImage.coverImage;
     await product.save()
     return res.redirect("/admin/products?status=Success");
   } catch (err) {
+    console.log(err)
     return res.redirect("/admin/products?status=Fail")
   }
 }
