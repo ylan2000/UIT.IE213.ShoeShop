@@ -151,15 +151,16 @@
                     
                     <div class="info-rating">
                         <div class="start-count">
-                            <span class="avg">4.9</span>OUT OF 5
+                          <% const reducer = (accumulator, currentValue) => accumulator + currentValue.starNumber;%>
+                            <span class="avg"><%=Math.round(feedbacks.reduce(reducer, 0) / feedbacks.length) %>  </span>OUT OF 5
                         </div>
                         <div class="stars">
                             <div class="avg-stars">
+                                <!-- <i class="far fa-star"></i>
                                 <i class="far fa-star"></i>
                                 <i class="far fa-star"></i>
                                 <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> -->
                             </div>
                             <div class="rating-count">
                               
@@ -176,48 +177,52 @@
                                 5 <i class="fas fa-star"></i>
                             </div>
                             <div class="progress">
-                               <% const result = feedbacks.filter(feedback => feedback.starNumber == 5);%> 
-                                <div class="progress-line" style="width: 15%;"></div>
+                               <% const result5 = feedbacks.filter(feedback => feedback.starNumber == 5);%> 
+                               <% const percent5 = Math.round(result5.length /feedbacks.length *100 )%>
+                                <div class="progress-line" id = "progress-line5" style="width: 100%;"></div>
                             </div>
-                            
-
-                            <div class="percent"><%= result.length /feedbacks.length *100 %>%</div>
+                            <div class="percent"><%= Math.round(result5.length /feedbacks.length *100 )%>%</div>
                         </div>
                         <div class="bar-item">
                             <div class="star">
                                 4 <i class="fas fa-star"></i>
                             </div>
                             <div class="progress">
-                                <div class="progress-line" style="width: 67%;"></div>
-                            </div>
-                            <div class="percent">67%</div>
+                              <% const result4 = feedbacks.filter(feedback => feedback.starNumber == 4);%> 
+                              <div class="progress-line" style="width: 0%;"></div>
+                          </div>
+                          <div class="percent"><%= Math.round(result4.length /feedbacks.length *100 )%>%</div>
                         </div>
                         <div class="bar-item">
                             <div class="star">
                                 3 <i class="fas fa-star"></i>
                             </div>
                             <div class="progress">
-                                <div class="progress-line" style="width: 67%;"></div>
-                            </div>
-                            <div class="percent">67%</div>
+                              <% const result3 = feedbacks.filter(feedback => feedback.starNumber == 3);%> 
+                              <div class="progress-line" style="width: 0%;"></div>
+                          </div>
+                          
+                          <div class="percent"><%= Math.round(result3.length /feedbacks.length *100 )%>%</div>
                         </div>
                         <div class="bar-item">
                             <div class="star">
                                 2 <i class="fas fa-star"></i>
                             </div>
                             <div class="progress">
-                                <div class="progress-line" style="width: 67%;"></div>
-                            </div>
-                            <div class="percent">67%</div>
+                              <% const result2 = feedbacks.filter(feedback => feedback.starNumber == 2);%> 
+                              <div class="progress-line" style="width: 0%;"></div>
+                          </div>
+                          <div class="percent"><%= Math.round(result2.length /feedbacks.length *100 )%>%</div>
                         </div>
                         <div class="bar-item">
                             <div class="star">
                                 1 <i class="fas fa-star"></i>
                             </div>
                             <div class="progress">
-                                <div class="progress-line" style="width: 13%;"></div>
-                            </div>
-                            <div class="percent">13%</div>
+                              <% const result1 = feedbacks.filter(feedback => feedback.starNumber == 1);%> 
+                              <div class="progress-line" style="width: 0%;"></div>
+                          </div>
+                          <div class="percent"><%= Math.round(result1.length /feedbacks.length *100 )%>%</div>
                         </div>
                     </div>
                     <!-- end rating bar -->
@@ -333,10 +338,7 @@
                         </div>
                          <!-- end form -->
                     <button class="submit" type="submit" slug =<%=slug%> >Send feedback</button>
-                    </form>>
-                   
-                    
-                    
+                    </form>
                 </div>
                 
             </div>
@@ -398,7 +400,7 @@
         let shareUrl = `https://www.linkedin.com/shareArticle?url=${url}&title=${text}`;
         window.open(shareUrl,"NewWindow" , params);
       });
-
+      
     </script>
   </body>
 </html>

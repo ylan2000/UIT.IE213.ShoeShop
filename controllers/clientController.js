@@ -121,7 +121,8 @@ exports.getProduct = async (req, res, next) => {
     return res.status(200).render("pages/detail", {
       title: "Detail", 
       product: product,
-      products: relatedProduct
+      products: relatedProduct,
+      feedbacks, slug
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });

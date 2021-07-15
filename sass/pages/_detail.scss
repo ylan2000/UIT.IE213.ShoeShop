@@ -273,7 +273,7 @@
   align-items: center;
   justify-content: center;
   
-  --color--yellow: #ffcc48;
+  --color--yellow: #FF7D00;
   --color--border: #f4f4f4;
   --color--primary: #393a5d;
   --color--secondary: #888999;
@@ -400,7 +400,7 @@
       justify-content: space-between;
       color: var(--color--secondary);
       margin-bottom: 15px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      // font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin-right: 5px;
       .count-review span{
           margin-right: 5px;
@@ -452,7 +452,7 @@
       }
       time{
           color: var(--color--secondary);
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          // font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       }
   }
   // end review content
