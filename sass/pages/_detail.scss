@@ -233,6 +233,7 @@
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 9000;
   a {
     margin: 12px 0px;
     transition: 500ms;
