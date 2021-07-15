@@ -1,5 +1,5 @@
 .detail {
-  margin-bottom: 15rem;
+  // margin-bottom: 15rem;
 
   &__product-image {
     margin-left: 8rem;
@@ -233,6 +233,7 @@
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 9000;
   a {
     margin: 12px 0px;
     transition: 500ms;
@@ -563,8 +564,24 @@
   .shoeSize-Dropdown {
     width: 50%;
     height: 35px;
-    padding: 0.5rem;
+    font-size: 1.7rem;
+    padding: 0.6rem;
     background-color: white;
     border-radius: 5px;
   }
+}
+
+.shoes__guide{
+  margin-bottom: 1.5rem;
+  text-align: right;
+  a{
+    color: $color-dark-2;
+  }
+  a:hover{
+    color: $color-black;
+  }
+}
+
+.related-products {
+  margin: 10rem 0 15rem;
 }

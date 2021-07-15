@@ -20,7 +20,7 @@ exports.getHome = async (req, res, next) => {
   try {
     // Render template
     const products = await (await Product.find().sort({createdDate: -1})).slice(0, 8);
-    return res.status(200).render("pages/home", { title: "Home", product: products});
+    return res.status(200).render("pages/home", { title: "Home", products: products});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
@@ -70,17 +70,23 @@ exports.getProducts = async (req, res, next) => {
       filter = {"products.condition": true}
     }
 
-    const limit = 12; // limit products on each page
+    const limit = 9; // limit products on each page
   
     const page = req.query.page * 1 || 1; // convert string to number
-    const searchQuery = req.query.search || null; // get search info
-    const sortQuery = req.query.sort || null; // get search query
+
+    let queryString = "";
+    for (const [key, value] of Object.entries(req.query)) {
+      if (key == "page") {
+        continue;
+      }
+      queryString += key + "=" + value + "&";
+    }
 
     const numProducts = await Product.countDocuments(filter); // total number of products
 
     // execute query
     const features = new APIFeatures(Product.find(filter), req.query)
-    .search()
+    .filter()
     .sort()
     .paginate(limit);
     
@@ -89,11 +95,10 @@ exports.getProducts = async (req, res, next) => {
     // Render template
     return res.status(200).render("pages/products", {
       title: brand || "Products", 
-      product: products,
+      products: products,
       current: page,
       pages: Math.ceil(numProducts / limit),
-      searchQuery: searchQuery,
-      sortQuery: sortQuery
+      queryString: queryString
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -109,8 +114,14 @@ exports.getProduct = async (req, res, next) => {
     const slug = req.params.slug;
     const feedbacks = await Feedback.find({slug: slug}).exec();
     const product = await Product.findOne({slug: slug}).exec();
+
+    const cateName = product.category[0].name;
+    const relatedProduct = await Product.find({"category.0.name": cateName}).limit(4).exec();
+
     return res.status(200).render("pages/detail", {
-      title: "Detail", product: product, slug, feedbacks
+      title: "Detail", 
+      product: product,
+      products: relatedProduct
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -123,6 +134,19 @@ exports.getPolicy = async (req, res, next) => {
   try {
     // Render template
     return res.status(200).render("pages/return-policy", {
+      title: "Policy",
+    });
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+
+  next();
+};
+
+exports.getShoeSizePage = async (req, res, next) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/findShoeSize.ejs", {
       title: "Policy",
     });
   } catch (err) {
@@ -241,7 +265,7 @@ exports.getPayment = async (req, res, next) => {
 exports.getLoginFirst = async(req, res, next) => {
   try {
     // Render template
-    return res.status(200).render("pages/login-first", { title: "Sign In"});
+    return res.status(200).render("pages/login-first", { title: "Log In first"});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
@@ -251,7 +275,7 @@ exports.getLoginFirst = async(req, res, next) => {
 exports.getPermissionDenied = async(req, res, next) => {
   try {
     // Render template
-    return res.status(200).render("pages/permission-denied", { title: "Sign In"});
+    return res.status(200).render("pages/permission-denied", { title: "No permission"});
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
@@ -269,6 +293,33 @@ exports.getSignIn = async (req, res, next) => {
 
   next();
 };
+
+exports.getForgotPass = async (req, res) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/forgotPassword", { title: "Forgot Password"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+exports.getValidate = async (req,res) =>{
+  try {
+    // Render template
+    return res.status(200).render("pages/validateUser", { title: "Validate User"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
+exports.getNewPass = async (req,res) => {
+  try {
+    // Render template
+    return res.status(200).render("pages/newPassword", { title: "New Password"});
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
 
 exports.getSignUp = async (req, res, next) => {
   try {
@@ -291,10 +342,13 @@ exports.getOrder = async (req, res, next) => {
   try {
     // Render template
     const user = req.session.user;
-    const transactions = user.transaction;
     var orders = [];
-    for (i = 0; i < transactions.length; i++) {
-      orders.push(await Transaction.findOne({_id: transactions[i]}).exec());
+    if (user.transaction.length <= 0 || typeof user.transaction[0] != 'number') orders = null;
+    else {
+      const transactions = user.transaction;
+      for (i = 0; i < transactions.length; i++) {
+        orders.push(await Transaction.findOne({_id: transactions[i]}).exec());
+      }
     }
     return res.status(200).render("pages/clientOrder", { title: "Order", orders: orders});
   } catch (err) {

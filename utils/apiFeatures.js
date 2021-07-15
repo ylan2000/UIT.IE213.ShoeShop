@@ -5,13 +5,25 @@ class APIFeatures {
     this.queryString = queryString; // from the route (url - req.query)
   }
 
-  search() {
-    let searchField = ".+";
-    if (this.queryString.search) {
-      searchField = this.queryString.search;
-    } 
+  filter() {
+    const queryObj = { ...this.queryString };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach(el => delete queryObj[el]);
 
-    this.query = this.query.find({"name": new RegExp(searchField, "i") });
+    if ('name' in queryObj) {
+      queryObj['name'] = new RegExp(queryObj['name'], "i");
+    }
+
+    if ('price' in queryObj) {
+      queryObj['price'] = { $lte: queryObj['price'] };
+    }
+
+    // 1B) Advanced filtering
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+    this.query = this.query.find(queryObj);
+
     return this;
   }
 

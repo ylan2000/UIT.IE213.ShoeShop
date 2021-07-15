@@ -41,4 +41,11 @@ router
   .route("/getCitiesOfState")
   .post(backendClientController.getCitiesOfState);
 
+router
+  .route("/forgotPassword")
+  .post(backendClientController.sendOTP)
+
+router.post("/validate",backendClientController.validate)
+
+router.post("/newPass",backendClientController.newPass)
 module.exports = router;

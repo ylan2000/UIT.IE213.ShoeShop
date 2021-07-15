@@ -1,8 +1,19 @@
 const express = require("express");
 const clientController = require("../controllers/clientController");
+const chatbotController = require("../controllers/chatbotController");
 const router = express.Router();
 const {user} = require("../models/userModel");
 const {ensureAuthenicated} = require('../public/js/authentication');
+
+
+router
+  .route("/webhook")
+  .get(chatbotController.getWebhook);
+
+router
+  .route("/webhook")
+  .post(chatbotController.postWebhook)
+
 
 // --- public routes
 router.get("/", clientController.getHome);
@@ -19,8 +30,10 @@ router.get("/return-policy", clientController.getPolicy);
 
 router.get("/feedback", clientController.getFeedback);
 
-// --- protected routes
 router.get("/about", clientController.getAbout);
+
+router.get("/shoe-size-guide", clientController.getShoeSizePage);
+// --- protected routes
 
 router.get("/orders", ensureAuthenicated, clientController.getOrder);
 
@@ -42,6 +55,12 @@ router.get("/signInFirst", clientController.getLoginFirst);
 router.get("/permissiondenied", clientController.getPermissionDenied);
 
 router.get("/signIn", clientController.getSignIn);
+
+router.get("/forgotPassword",clientController.getForgotPass);
+
+router.get("/validate",clientController.getValidate);
+
+router.get("/newPassword",clientController.getNewPass);
 
 router.get("/signUp", clientController.getSignUp);
 

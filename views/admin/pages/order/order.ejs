@@ -125,6 +125,20 @@
   </body>
   <%- include('../../template/footer.ejs'); -%>
   <script>
+    $(".order select").each(function(index) {
+      var data = $(this).data("status").toString()
+      $(this).val(data).change()
+      $(this).on("change", function() {
+        $(".newStatus").eq(index).toggleClass("d-none")
+      })
+    })
+    $(document).on("click",".newStatus", async function() {
+      var id = $(this).data("id");
+      await axios.post("/admin/api/order/"+id+"?_method=PATCH")
+                  .then(function(res){
+                    if(res.data == "success") window.location="/admin/orders";
+                  })
+    })
     $(document).on("click",".deleteOrderBtn", async function() {
       var id = $(this).data("id");
       await axios.post("/admin/api/order/"+id+"?_method=DELETE")

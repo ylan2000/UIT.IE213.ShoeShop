@@ -2,14 +2,17 @@ const {Product} = require("../models/productModel")
 const {Category} = require("../models/categoryModel")
 const {Transaction} = require("../models/transactionModel")
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
-
+const {User} = require("../models/userModel");
 const { Router } = require('express');
 const { mongo } = require('mongoose');
 exports.getDashboard = async (req, res, next) => {
   try {
     // Render template
+    const products =  await Product.find();
+    const users = await User.find();
+    const orders = await Transaction.find();
     return res.status(200).render("admin/pages/dashboard", {
-      title: "Dashboard",
+      title: "Dashboard",product: products, user: users, orders: orders,
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
@@ -169,7 +172,7 @@ exports.getFeedbacks = async (req, res, next) => {
 
 //Product POST
 //add
-exports.postAddProduct = async (req,res,next) => {
+exports.postAddProduct = async (req,res,next) => {  
   const product = new Product({
     name: req.body.productName,
     description: req.body.productShortDesc,
@@ -179,12 +182,13 @@ exports.postAddProduct = async (req,res,next) => {
     sale: req.body.pSaleOff,
     condition: req.body.pIsNew,
     quantity: req.body.quantity,
+    shoeSize: req.body.cshoeSize,
   });
-
+  console.log("req.body Ok");
   const coverImgObject = saveImage(req.body.coverImage);
   product.coverImage.data = coverImgObject["data"];
   product.coverImage.type = coverImgObject["type"];
-
+  console.log("coverimage Ok");
   if (req.body.images.length) {
     const imageArr = [];
     req.body.images.forEach(img => {
@@ -200,9 +204,10 @@ exports.postAddProduct = async (req,res,next) => {
 
     product.images = imageArr;
   }
-
+  console.log("image Ok");
   try {
     const newProduct = await product.save();
+    console.log("add ok");
     return res.redirect("/admin/products?status=Success");
   } catch (err) {
     console.log(err);
@@ -226,12 +231,15 @@ exports.putUpdateProduct = async(req,res,next) => {
     product.condition = req.body.pIsNew;
     product.quantity = req.body.quantity;
     product.price = req.body.productPrice;
-    const image = new Product()
-    saveImage(image,req.body.productImg)
-    product.image = image.image;
+    const image = saveImage(req.body.coverImage)
+    const newImage = Product()
+    newImage.coverImage.data = image["data"];
+    newImage.coverImage.type = image["type"];
+    product.coverImage = newImage.coverImage;
     await product.save()
     return res.redirect("/admin/products?status=Success");
   } catch (err) {
+    console.log(err)
     return res.redirect("/admin/products?status=Fail")
   }
 }
@@ -262,6 +270,18 @@ exports.deleteOrder = async (req,res) => {
   try {
     order = await Transaction.findById(req.params.id);
     await order.remove();
+    return res.send("success");
+  } catch (error) {
+    return res.send(error);
+  }
+}
+
+exports.patchOrder = async (req,res) => {
+  let order
+  try {
+    order = await Transaction.findById(req.params.id,"status");
+    order.status = !order.status;
+    await order.save()
     return res.send("success");
   } catch (error) {
     return res.send(error);
