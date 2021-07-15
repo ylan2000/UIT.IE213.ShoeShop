@@ -2,14 +2,17 @@ const {Product} = require("../models/productModel")
 const {Category} = require("../models/categoryModel")
 const {Transaction} = require("../models/transactionModel")
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
-
+const {User} = require("../models/userModel");
 const { Router } = require('express');
 const { mongo } = require('mongoose');
 exports.getDashboard = async (req, res, next) => {
   try {
     // Render template
+    const products =  await Product.find();
+    const users = await User.find();
+    const orders = await Transaction.find();
     return res.status(200).render("admin/pages/dashboard", {
-      title: "Dashboard",
+      title: "Dashboard",product: products, user: users, orders: orders,
     });
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
