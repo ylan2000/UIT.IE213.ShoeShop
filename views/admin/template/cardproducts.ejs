@@ -8,7 +8,8 @@
         <th scope="col">Quantity In Stock</th>
         <th scope="col">IsNew</th>
         <th scope="col">Sales</th>
-        <th scopr="col">Action</th>
+        <th scopr="col" id="action-header">Action</th>
+        <th scope="col"><input type="checkbox" id="master-checkbox"></th>
       </tr>
     </thead>
     <tbody>
@@ -56,12 +57,15 @@
         >
           <%= product.sale %> %
         </td>
-        <td class="align-middle">
+        <td class="align-middle action-group">
           <a href="edit-product/<%= product.id %>" class="btn btn-success">Edit</a>
           <button type="button" class="btn btn-danger deleteBtn" data-toggle="modal"
               data-target="#exampleModal" data-id="<%= product.id %>" data-name="<%= product.name %>" data-link="product/">
               Delete
             </button>
+        </td>
+        <td class="check-product align-middle d-none">
+          <input type="checkbox" data-id="<%= product.id %>">
         </td>
       </tr>
       <% }) %>
