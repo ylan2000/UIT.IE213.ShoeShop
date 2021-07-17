@@ -80,7 +80,7 @@
               <hr/>
               <!-- Chỗ chứa phần status và quanity -->
               <span class="detail__stock">
-                <div>
+                <div style="margin: auto 0;">
                   <span class = "status-label">Status: </span>
                   <% if (product.quantity > 0) { %>
                     <span> In stock</span>
@@ -89,10 +89,14 @@
                   <% } %>
                 </div>
                 <div>
-                  <span class = "status-label">Remaining: </span>
-                  <span> 
-                    <%= product.quantity %> 
-                  </span>
+                  <div>
+                    <span class="status-label">Sold: </span>
+                    <span style="float: right;"><%= product.sold %> </span>
+                  </div>
+                  <div>
+                    <span class = "status-label">Remaining: </span>
+                    <span style="float: right;"> <%= product.quantity %> </span>
+                  </div>
                 </div>
               </span>
               <hr/>
