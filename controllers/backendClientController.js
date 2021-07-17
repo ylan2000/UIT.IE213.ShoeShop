@@ -195,12 +195,44 @@ exports.register = async (req,res) => {
         });
         //console.log(errors);
       }else{
-        var newUser = new User({
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < 7; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        const link = "http://localhost:8080/client/api/verify/" + result
+
+        var verify = {
           fullName: fullname,
           userName: username,
           email: email,
           phone: phone,
-          password: password
+          password: password,
+          verifyCode: result
+        }
+    
+        var html = "<p>Access this link to complete sign up:</p>";
+        html += '<a href="'+ link +'">' +link+'</a>'
+        mail.confirmationMail(email,"Verify your account",html)
+        req.session.verify = verify
+        req.session.save()
+        return res.redirect('/verify')
+      }
+    });
+  }
+};
+
+exports.verified = async (req,res) => {
+  const id = req.params.id; 
+  if (id != req.session.verify.verifyCode) return res.redirect("/permissiondenied")
+  const user = req.session.verify
+  var newUser = new User({
+          fullName: user.fullName,
+          userName: user.userName,
+          email: user.email,
+          phone: user.phone,
+          password: user.password
         });
 
         // Hash password
@@ -212,15 +244,13 @@ exports.register = async (req,res) => {
               .save()
               .then(User => {
                 req.flash('success_msg', 'Registered successfully, you can log in now');
+                req.session.verify = null;
                 return res.redirect('/signIn');
               })
               .catch(err => console.log(err));
           });
         });
-      }
-    });
-  }
-};
+}
 
 
 exports.login = (req, res, next) => {

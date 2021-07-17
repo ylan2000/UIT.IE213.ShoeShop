@@ -45,4 +45,6 @@ router
 router.post("/validate",backendClientController.validate)
 
 router.post("/newPass",backendClientController.newPass)
+
+router.get("/verify/:id",backendClientController.verified)
 module.exports = router;

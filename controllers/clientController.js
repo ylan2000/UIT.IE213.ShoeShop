@@ -260,6 +260,21 @@ exports.getPayment = async (req, res, next) => {
   next();
 };
 
+exports.getVerify = (req,res) => {
+  try {
+    if (typeof req.session.verify == "undefined") return res.redirect("/permissiondenied")
+    const email = req.session.verify.email;
+    const verifyCode = req.session.verify.verifyCode;
+    return res.status(200).render("pages/verify-account",{
+      title: "Verify",
+      email: email,
+      verifyCode: verifyCode
+    })    
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+}
+
 exports.getLoginFirst = async(req, res, next) => {
   try {
     // Render template
