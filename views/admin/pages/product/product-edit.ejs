@@ -40,12 +40,21 @@
   </div>
 </body>
 <%- include('../../template/footer.ejs'); -%>
-<script>
+<script async>
+  tinymce.init({
+    selector: '#productDesc',
+    height: 400,
+    setup: function(editor) {
+      editor.on('init',function(e){
+        editor.setContent('')
+        '<% desc.forEach(line => { %>'
+          editor.execCommand('mceInsertContent', false, '<%- line %>')
+        '<% }) %>' 
+      })
+    }
+  });
   $("#productName").val('<%= product.name%>');
   $("#productShortDesc").val("<%= product.description%>");
-  '<% desc.forEach(line => { %>'
-    $("#productDesc").val($("#productDesc").val() + '<%= line %>' + '\n')
-  '<% }) %>' 
   $("#productCate").val($("option:contains('<%= product.category[0].name%>')").val()).change();
   $("#productPrice").val('<%= product.price%>');
   $("#pSaleOff").val('<%= product.sale%>');
