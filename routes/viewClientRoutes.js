@@ -64,6 +64,8 @@ router.get("/newPassword",clientController.getNewPass);
 
 router.get("/signUp", clientController.getSignUp);
 
+router.get("/verify",clientController.getVerify)
+
 router.get("/logout", clientController.logout);
 
 

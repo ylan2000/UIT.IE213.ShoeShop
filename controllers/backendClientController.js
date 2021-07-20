@@ -2,9 +2,9 @@ const { Product } = require("../models/productModel");
 const { Transaction } = require("../models/transactionModel");
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
-const {Feedback} = require("../models/feedbackModel");
+const { Feedback } = require("../models/feedbackModel");
 
-const {User} = require("../models/userModel");
+const { User } = require("../models/userModel");
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const dotenv = require("dotenv");
@@ -190,35 +190,62 @@ exports.register = async (req, res) => {
         });
         //console.log(errors);
       } else {
-        var newUser = new User({
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < 7; i++) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        const link = "http://localhost:8080/client/api/verify/" + result
+
+        var verify = {
           fullName: fullname,
           userName: username,
           email: email,
           phone: phone,
           password: password,
-        });
+          verifyCode: result
+        }
 
-        // Hash password
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser
-              .save()
-              .then((User) => {
-                req.flash(
-                  "success_msg",
-                  "Registered successfully, you can log in now"
-                );
-                return res.redirect("/signIn");
-              })
-              .catch((err) => console.log(err));
-          });
-        });
+        var html = "<p>Access this link to complete sign up:</p>";
+        html += '<a href="' + link + '">' + link + '</a>'
+        mail.confirmationMail(email, "Verify your account", html)
+        req.session.verify = verify
+        req.session.save()
+        return res.redirect('/verify')
       }
     });
   }
 };
+
+exports.verified = async (req, res) => {
+  const id = req.params.id;
+  if (id != req.session.verify.verifyCode) return res.redirect("/permissiondenied")
+  const user = req.session.verify
+  var newUser = new User({
+    fullName: user.fullName,
+    userName: user.userName,
+    email: user.email,
+    phone: user.phone,
+    password: user.password
+  });
+
+  // Hash password
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newUser.password, salt, (err, hash) => {
+      if (err) throw err;
+      newUser.password = hash;
+      newUser
+        .save()
+        .then(User => {
+          req.flash('success_msg', 'Registered successfully, you can log in now');
+          req.session.verify = null;
+          return res.redirect('/signIn');
+        })
+        .catch((err) => console.log(err));
+    });
+  });
+}
 
 exports.login = (req, res, next) => {
   passport.authenticate("local", function (err, user, info) {
@@ -231,9 +258,9 @@ exports.login = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    if (!user) { 
+    if (!user) {
       req.flash('error_msg', 'Incorrect username/email or password, please try again');
-      return res.redirect('/signIn'); 
+      return res.redirect('/signIn');
     } else {
       if (req.session.user.role == 1) return res.redirect("/admin");
       else return res.redirect("/");
@@ -249,9 +276,9 @@ exports.removeCart = async (req, res, next) => {
   return res.send(req.session.cart);
 };
 
-exports.sendOTP = async (req,res) => {
+exports.sendOTP = async (req, res) => {
   const name = req.body.name;
-  const user = await User.findOne(name.includes("@") ? {email: name} : {userName: name}).exec();
+  const user = await User.findOne(name.includes("@") ? { email: name } : { userName: name }).exec();
   if (!user) {
     req.flash('error_msg', 'Incorrect username/email, please try again');
     return res.json(false)
@@ -261,13 +288,13 @@ exports.sendOTP = async (req,res) => {
   req.session.otp = otp;
   req.session.save();
   var html = "<p>Here's your otp: " + otp + "</p> <br>";
-  html += "Use your otp to reset password" +"<br>"
+  html += "Use your otp to reset password" + "<br>"
   html += "If you did not forget password and received this mail, BE CAUTION with any fraudulent activity" + "<br>"
   mail.confirmationMail(user.email, "Your OTP", html);
   return res.json(true);
 }
 
-exports.validate = async (req,res) => {
+exports.validate = async (req, res) => {
   const input = req.body.otp;
   const otp = req.session.otp;
   if (input == otp) return res.json(true);
@@ -275,7 +302,7 @@ exports.validate = async (req,res) => {
   return res.json(false);
 }
 
-exports.newPass = async (req,res) => {
+exports.newPass = async (req, res) => {
   const newPass = req.body.newPass;
   const confirmPass = req.body.confirmPass;
   if (newPass != confirmPass) {
@@ -283,9 +310,9 @@ exports.newPass = async (req,res) => {
     return res.json(false);
   }
   const email = req.session.email;
-  const user = await User.findOne({email: email}).exec();
+  const user = await User.findOne({ email: email }).exec();
   bcrypt.compare(newPass, user.password, (err, isMatch) => {
-    if(isMatch) {
+    if (isMatch) {
       req.flash('error_msg', "Please enter a different password");
       return res.json(false);
     }
@@ -296,7 +323,7 @@ exports.newPass = async (req,res) => {
       user.password = hash;
       user
         .save()
-        .then(function() {
+        .then(function () {
           req.flash('success_msg', 'Password changed successfully, you can log in now');
           return res.json(true);
         })
@@ -310,14 +337,14 @@ exports.postPaymentDone = async (req, res) => {
   let total = 0
   let cart = req.body.cart
   let product = []
-  const user = await User.findOne({email: req.body.user.email}); 
+  const user = await User.findOne({ email: req.body.user.email });
   user.address = req.body.user.address;
   req.session.user = user;
   req.session.save();
   for (i = 0; i < cart.length; i++) {
     const item = await Product.findById(cart[i].id)
     item.quantity -= cart[i].qty;
-    total =  total + item.price * 100 * cart[i].qty
+    total = total + item.price * 100 * cart[i].qty
     product.push({
       info: item._id,
       qty: cart[i].qty
@@ -349,17 +376,17 @@ exports.postPaymentDone = async (req, res) => {
     await user.save();
     console.log('Charge Successful');
     var html = "Here's your order id: " + newTrans._id + "<br>"
-    html+= "For any further information, do not hesitate to contact us via " + "<br>"
-    html+= "Facebook: https://www.facebook.com/sneakercityy or through chatbox \n" + "<br>"
-    html+= "Your order will be prepare in 3 to 5 working days and will be shipped immediately\n" + "<br>" 
-    html+= "Total time for you order will be from 5 - 10 day working estimatedly \n" ;
+    html += "For any further information, do not hesitate to contact us via " + "<br>"
+    html += "Facebook: https://www.facebook.com/sneakercityy or through chatbox \n" + "<br>"
+    html += "Your order will be prepare in 3 to 5 working days and will be shipped immediately\n" + "<br>"
+    html += "Total time for you order will be from 5 - 10 day working estimatedly \n";
     mail.confirmationMail(user.email, "Your order", html);
     return res.json({ message: 'Successfully purchased items\nYour order number: ' + newTrans._id })
   } catch (err) {
     console.log(err)
     return res.status(500).end()
   }
-  
+
 }
 
 exports.autoSearchComplete = async (req, res) => {
@@ -386,14 +413,14 @@ exports.getStatesOfCountry = async (req, res) => {
   try {
     const countryCode = req.body.countryCode;
 
-    const states = 
-    countryStateCity.State.getAllStates()
-    .filter(state => state["countryCode"] == countryCode)
-    .map(state =>
-      new Object({
-        "isoCode": state["isoCode"],
-        "name": state["name"]
-      }));
+    const states =
+      countryStateCity.State.getAllStates()
+        .filter(state => state["countryCode"] == countryCode)
+        .map(state =>
+          new Object({
+            "isoCode": state["isoCode"],
+            "name": state["name"]
+          }));
 
     return res.send(states);
   } catch (err) {
@@ -407,23 +434,23 @@ exports.getCitiesOfState = async (req, res) => {
     const stateCode = req.body.stateCode;
 
     const cities = countryStateCity.City.getAllCities()
-    .filter(
-      city => city["countryCode"] == countryCode 
-      && city["stateCode"] == stateCode
+      .filter(
+        city => city["countryCode"] == countryCode
+          && city["stateCode"] == stateCode
       )
-    .map(city => 
-      new Object({
-        "name": city["name"]
-    }));
+      .map(city =>
+        new Object({
+          "name": city["name"]
+        }));
 
     return res.send(cities);
   } catch (err) {
     return res.status(404).json({ status: "fail", message: err });
   }
-} 
+}
 
 exports.addFeedback = async (req, res) => {
-  const {username, feedback, slug, starNumber,time} = req.body;
+  const { username, feedback, slug, starNumber, time } = req.body;
   var newFeedback = new Feedback({
     username,
     feedback,
