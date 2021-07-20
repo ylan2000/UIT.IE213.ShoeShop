@@ -344,6 +344,7 @@ exports.postPaymentDone = async (req, res) => {
   for (i = 0; i < cart.length; i++) {
     const item = await Product.findById(cart[i].id)
     item.quantity -= cart[i].qty;
+    item.sold += cart[i].qty;
     total = total + item.price * 100 * cart[i].qty
     product.push({
       info: item._id,
