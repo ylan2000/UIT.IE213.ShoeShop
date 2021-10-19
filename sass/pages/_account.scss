@@ -7,6 +7,10 @@
     display: flex;
     padding: 2rem 3rem;
     margin: 10rem 0rem;
+    & h3{
+            text-emphasis: bold;
+            font-size: 5rem;
+    }
 }
 
 .right_flex_container{
@@ -45,6 +49,7 @@
 .info_container_style{
     margin-top: 3rem;
     & label{
+
         color: $color-primary-blue;
         font-size: 3rem;
         text-emphasis: bold;

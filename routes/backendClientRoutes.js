@@ -27,7 +27,10 @@ router
   .delete(backendClientController.removeCart)
 
 router
-  .route("/searchComplete")
+  .route("/feedback")
+  .post(backendClientController.addFeedback)
+
+  router.route("/searchComplete")
   .get(backendClientController.autoSearchComplete)
 
 router
@@ -38,4 +41,13 @@ router
   .route("/getCitiesOfState")
   .post(backendClientController.getCitiesOfState);
 
+router
+  .route("/forgotPassword")
+  .post(backendClientController.sendOTP)
+
+router.post("/validate",backendClientController.validate)
+
+router.post("/newPass",backendClientController.newPass)
+
+router.get("/verify/:id",backendClientController.verified)
 module.exports = router;

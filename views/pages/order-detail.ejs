@@ -19,16 +19,18 @@
               <% order.product.forEach(product => { %>
                 <tr>
                   <td>
-                    <div class="cart__info"></div>
-                      <img src="<%= product.info.coverImagePath %> " style="width:10%;" alt="Product Image" />
+                    <div class="cart__info">
+                      <img src="<%= product.info.coverImagePath %>" alt="<%= product.info.name %>" />
                       <div>
-                        <p class="cart__product-name"><%= product.info.name %></p>
+                        <p class="cart__product-name">
+                          <%= product.info.name %>
+                        </p>
                         <small
                           >Price:
                           <span class="cart__product-price">$<%= product.info.price %></span></small
                         >
                       </div>
-                  </div>
+                    </div>
                   </td>
                   <td><%= product.qty %></td>
                   <td>$<%= product.info.price*product.qty%></td>
@@ -55,8 +57,8 @@
             </tr>
           </table>
         </div>
+        <a href="/orders"class="cart__OrdBtn">Return to Orders</a>
       </div>
-      <a href="/orders"class="cart__OrdBtn">Return to Orders</a>
     </div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>

@@ -30,7 +30,7 @@
           <nav>
             <ul class="breadcrumb">
               <li class="breadcrumb-items">
-                <a href="home">Home</a>
+                <a href="/home">Home</a>
               </li>
               <span>&ThickSpace;&#62;&ThickSpace;</span>
               <li class="breadcrumb-item active"><%= product.name %></li>
@@ -68,19 +68,19 @@
                 <label for="shoeSize" class = "shoe-size-label">Choose size:</label>
                 <br>
                 <select name="size" id="size" class = "shoeSize-Dropdown">
-                  <option value="35">35</option>
-                  <option value="36">36</option>
-                  <option value="37">37</option>
-                  <option value="38">38</option>
-                  <option value="39">39</option>
-                  <option value="40">40</option>
-                  <option value="41">41</option>
+                  <% for(var i = 0; i < product.shoeSize.length; i++) { %>
+                    <option value="<%= product.shoeSize[i] %>"> <%= product.shoeSize[i] %> </option>
+                  <% } %>
+                  
                 </select>
               </form>
+              <div class = "shoes__guide">
+                <a href="/shoe-size-guide">+ Shoe size guide</a>
+              </div>
               <hr/>
               <!-- Chỗ chứa phần status và quanity -->
               <span class="detail__stock">
-                <div>
+                <div style="margin: auto 0;">
                   <span class = "status-label">Status: </span>
                   <% if (product.quantity > 0) { %>
                     <span> In stock</span>
@@ -89,10 +89,14 @@
                   <% } %>
                 </div>
                 <div>
-                  <span class = "status-label">Remaining: </span>
-                  <span> 
-                    <%= product.quantity %> 
-                  </span>
+                  <div>
+                    <span class="status-label">Sold: </span>
+                    <span style="float: right;"><%= product.sold %> </span>
+                  </div>
+                  <div>
+                    <span class = "status-label">Remaining: </span>
+                    <span style="float: right;"> <%= product.quantity %> </span>
+                  </div>
                 </div>
               </span>
               <hr/>
@@ -138,88 +142,224 @@
               <div class="detail__content">
                 <div class="detail__items">
                   <div class="detail__items_container">
-                    <%= product.detail %>
+                    <%- product.detail %>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="detail__feedback-container">
-            <div>
-              <div class="detail__feedback-overall">
-                <div class="detail__info">Overall Ratings</div>
-                <div class="detail__feedback-column">
-                  <div class="detail__feedback-overall-score">
-                    <a>4.8/5.0</a>
-                  </div>
-                  <div class="detail__overall-container">
-                    <div>
-                      <div>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <a class="fa fa-star" aria-hidden="true"></a>
-                      <a>300 Feedbacks</a>
+          <div class="wrapper">
+            <div class="rating-box">
+                <div class="rating-header">
+                    <div class="title">Over rating</div>
+                    
+                    <div class="info-rating">
+                        <div class="start-count">
+                          <% const reducer = (accumulator, currentValue) => accumulator + currentValue.starNumber;%>
+                            <span class="avg"><%=Math.round(feedbacks.reduce(reducer, 0) / feedbacks.length) %>  </span>OUT OF 5
+                        </div>
+                        <div class="stars">
+                            <div class="avg-stars">
+                                <!-- <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> -->
+                            </div>
+                            <div class="rating-count">
+                              
+                                <div class="count"><%= feedbacks.length %> </div>
+                                ratings
+                            </div>
+                        </div>
+                        <!-- end stars -->
                     </div>
-                    <div class="detail__feedback">
-                      <div>
-                        <ul>5 stars</ul>
-                        <ul>4 stars</ul>
-                        <ul>3 stars</ul>
-                        <ul>2 stars</ul>
-                        <ul>1 star</ul>
-                      </div>
-                      <div class="detail__feedback-bar-container">
-                        <div class="bar-5"></div>
-                        <div class="bar-4"></div>
-                        <div class="bar-1"></div>
-                        <div class="bar-2"></div>
-                        <div class="bar-3"></div>
-                      </div>
-                      <div>
-                        <ul>200</ul>
-                        <ul>100</ul>
-                        <ul>10</ul>
-                        <ul>5</ul>
-                        <ul>50</ul>
-                      </div>
+                    <!-- end info rating -->
+                    <div class="rating-bar">
+                        <div class="bar-item">
+                            <div class="star">
+                                5 <i class="fas fa-star"></i>
+                            </div>
+                            <div class="progress">
+                               <% const result5 = feedbacks.filter(feedback => feedback.starNumber == 5);%> 
+                               <% const percent5 = Math.round(result5.length /feedbacks.length *100 )%>
+                                <div class="progress-line" id = "progress-line5" style="width: 100%;"></div>
+                            </div>
+                            <div class="percent"><%= Math.round(result5.length /feedbacks.length *100 )%>%</div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="star">
+                                4 <i class="fas fa-star"></i>
+                            </div>
+                            <div class="progress">
+                              <% const result4 = feedbacks.filter(feedback => feedback.starNumber == 4);%> 
+                              <div class="progress-line" style="width: 0%;"></div>
+                          </div>
+                          <div class="percent"><%= Math.round(result4.length /feedbacks.length *100 )%>%</div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="star">
+                                3 <i class="fas fa-star"></i>
+                            </div>
+                            <div class="progress">
+                              <% const result3 = feedbacks.filter(feedback => feedback.starNumber == 3);%> 
+                              <div class="progress-line" style="width: 0%;"></div>
+                          </div>
+                          
+                          <div class="percent"><%= Math.round(result3.length /feedbacks.length *100 )%>%</div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="star">
+                                2 <i class="fas fa-star"></i>
+                            </div>
+                            <div class="progress">
+                              <% const result2 = feedbacks.filter(feedback => feedback.starNumber == 2);%> 
+                              <div class="progress-line" style="width: 0%;"></div>
+                          </div>
+                          <div class="percent"><%= Math.round(result2.length /feedbacks.length *100 )%>%</div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="star">
+                                1 <i class="fas fa-star"></i>
+                            </div>
+                            <div class="progress">
+                              <% const result1 = feedbacks.filter(feedback => feedback.starNumber == 1);%> 
+                              <div class="progress-line" style="width: 0%;"></div>
+                          </div>
+                          <div class="percent"><%= Math.round(result1.length /feedbacks.length *100 )%>%</div>
+                        </div>
                     </div>
+                    <!-- end rating bar -->
+                </div>
+                <!-- end rating header -->
+                <div class="review-box ">
+                    <div class="review-header">
+                        <div class="count-review">
+                            <span><%= feedbacks.length %></span>Review
+                        </div>
+                        <div class="txt btn-write">Write a review</div>
                     </div>
-                  </div>
+                    <div class="review-content">
+                      <% feedbacks.forEach((feedback)=>{ %>
+                        <div class="user-review">
+                          <div class="user-rating">
+                              <div class="username"><%= feedback.username %></div>
+                              <div class="stars"> 
+                                <% if(feedback.starNumber == 1) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <%}%>
+                                <% if(feedback.starNumber == 2) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <%}%>
+                                <% if(feedback.starNumber == 3) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <%}%>
+                                <% if(feedback.starNumber == 4) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <%}%>
+                                <% if(feedback.starNumber == 5) {%> 
+                                  <div class="avg-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <%}%>
+                              </div>
+                          </div>
+                          <!-- end user rating -->
+                          <div class="comment-content">
+                            <%= feedback.feedback %>
+                          </div>
+                          <time datetime = "<%= feedback.time %>"  ><%= feedback.time %></time>
+                      </div>
+                    <% }) %>
+                    </div>
+                    
                 </div>
-                  
-              </div>
-              <div>
-                <div>
-                  </div>
-                  <div class="detail__info">Feedback</div>
-                <div class="detail__feedback-comment">
-                <div>
-                  <ul>Hoang Tien Dat</ul>
-                  <div>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                  </div>
+                <!-- end review box -->
+            </div>
+            <!-- end rating box -->
+            <div class="feedback-user ">
+                <div class="feedback-header">
+                    <div class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="title">Send us your feedback!</div>
+                    <div class="txt">
+                        Do you have a suggestion for this course? Let us know in the field below
+                    </div>
                 </div>
-                <div class="detail__feedback-date">
-                  <a> Jul 06</a>
+                <div class="feedback-content">
+                    <div class="rating">
+                        <div class="title">
+                            How was your experience?
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star fa-fw" data-rating="1"></i>
+                            <i class="fas fa-star fa-fw" data-rating="2"></i>
+                            <i class="fas fa-star fa-fw" data-rating="3"></i>
+                            <i class="fas fa-star fa-fw" data-rating="4"></i>
+                            <i class="fas fa-star fa-fw" data-rating="5"></i>
+                        </div>
+                    </div>
+                    <!-- end rating -->
+                    
+                      <form class="form">
+                        <div class="form-input">
+                            <label for="name">Your name</label>
+                            <input type="text" placeholder="Enter your name" id="name" name="username">
+        
+                        </div>
+                        <div class="form-input">
+                            <label for="feedback">Your feedback</label>
+                            <textarea name="feedback" id="feedback" cols="30" rows="8" placeholder="Your feedback here...W"></textarea>
+                        </div>
+                         <!-- end form -->
+                    <button class="submit" type="submit" slug =<%=slug%> >Send feedback</button>
+                    </form>
                 </div>
-              </div>
-              <hr>
-                <div class="detain__items_container">
-                  This is a feedback, something really long, really arrogant about the product. There is not much left to
-                  talk about but i want to make it right and clearly because of my ego
-                </div>
-              </div>
-              </div>
-          </div>
+                
+            </div>
+            <!-- end feedback user -->
+        </div>
         </div>
       </div>
-    </div>
+      <div class="related-products">
+        <div class="container">
+          <h3 class="heading-h3">
+            <p class="heading-h3--sub">Maybe you have interest in these products</p>
+            <p class="heading-h3--main">RELATED PRODUCTS</p>
+          </h3>
+
+          <%- include('../partials/card-product'); -%>
+        </div>
+      </div>
     <%- include('../partials/footer'); -%> <%-
     include('../partials/script-line'); -%>
     <script>
@@ -234,8 +374,8 @@
     <script>
       var text = encodeURIComponent("Check this out !!!!");
       // Note 1: nhớ sửa thành window.document.location.href sau khi deploy nha
-      // Note 2: nếu có lỗi thì thử sửa thành encodeURI(window.document.location.href) hoặc encodeURI(document.location.href) nha
-      var url = "https://www.facebook.com/HoaThienVu.HDP/"; // Link để tạm để chắc chắn chạy được chức năng share
+      // Note 2: nếu có lỗi thì thử sửa thành encodeURI(window.document.location.href) hoặc encodeURI(window.location.href) nha
+      var url = encodeURIComponent(window.location.href); // Link để tạm để chắc chắn chạy được chức năng share
       var params = "menubar=no,toolbar=no,status=no,width=570,height=570"; // for window
       var image = document.querySelector('.pin-image');
 
@@ -264,7 +404,7 @@
         let shareUrl = `https://www.linkedin.com/shareArticle?url=${url}&title=${text}`;
         window.open(shareUrl,"NewWindow" , params);
       });
-
+      
     </script>
   </body>
 </html>

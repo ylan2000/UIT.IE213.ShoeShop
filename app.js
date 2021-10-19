@@ -32,9 +32,6 @@ app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "views"));
 
-// middleware for setting security http headers
-app.use(helmet());
-
 // limit 100 request per hour on each IP
 const limiter = rateLimit({
   max: 100,
@@ -50,19 +47,24 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 
-app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 app.use(bodyParser.json())
 
 // data sanitization against NOSQL query injection
-app.use(mongoSanitize());
+// app.use(mongoSanitize());
 
 // Data sanitization against XSS
-app.use(xss());
+// app.use(xss());
+
+// prevent parameter pollution
+// app.use(hpp());
 
 app.use(methodOverride('_method'));
  
 app.use('/scripts', express.static(__dirname + '/node_modules/jquery-zoom/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/jquery-ui-dist/'));
 
 app.use(session({
   secret: 'gBpwmwE0PmyDKPuLhhmY8CONJQW3TnCujQuoE8nVao',

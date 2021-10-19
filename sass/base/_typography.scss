@@ -58,6 +58,19 @@ body {
   color: $color-primary-orange;
 }
 
+.heading-section {
+  font-size: 2rem;
+  font-weight: 700;
+  color: $color-primary-orange;
+}
+
+.heading-big-section {
+  font-size: 2.5rem;
+  font-weight: 700;
+  border-bottom: 1px solid $color-dark-4;
+  padding-bottom: 1.5rem;
+}
+
 .result-data {
   padding: 1rem 1.5rem;
   visibility: hidden;
