@@ -1,31 +1,23 @@
-const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-// Lấy user schema
-const {User} = require('../../models/userModel');
+const { User } = require('../../models/userModel');
 
-module.exports = function(passport){
+module.exports = function (passport) {
     passport.use(
-        new localStrategy({usernameField: 'name', passwordField: 'password'}, (username, password, done)=>{
-            // Match user
-            User.findOne((username.includes("@"))?{email:username}:{userName:username})
+        new localStrategy({ usernameField: 'name', passwordField: 'password' }, (username, password, done) => {
+            User.findOne((username.includes("@")) ? { email: username } : { userName: username })
                 .then(user => {
-                    if(!user){
-                        return done(null, false, {message: 'User is not exists'});
+                    if (!user) {
+                        return done(null, false, { message: 'User is not exists' });
                     }
-                    else{
-                        // Match password
-                        // password lấy từ user, user.password lấy từ db
+                    else {
                         bcrypt.compare(password, user.password, (err, isMatch) => {
-                            // console.log(user.password);
-                            //console.log(password);
-                            if(isMatch){
+                            if (isMatch) {
                                 return done(null, user);
                             }
-                            else{
-                                return done(null, false, {message: 'Incorrect Password'});
+                            else {
+                                return done(null, false, { message: 'Incorrect Password' });
                             }
                         });
                     }
@@ -33,14 +25,14 @@ module.exports = function(passport){
                 .catch(err => console.log(err));
         })
     );
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function (user, done) {
         done(null, user.id);
-      });
-    
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-          done(err, user);
+    });
+
+    passport.deserializeUser(function (id, done) {
+        User.findById(id, function (err, user) {
+            done(err, user);
         });
-      });
+    });
 };
 

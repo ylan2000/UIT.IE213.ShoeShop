@@ -5,7 +5,7 @@ const overlay = document.getElementById("overlay");
 openModalBtns.forEach(function (button) {
   button.addEventListener("click", function () {
     closeAllActiveModal();
-    
+
     const modal = document.querySelector(button.dataset.modalTarget);
     openModal(modal);
   });
@@ -37,13 +37,13 @@ function closeAllActiveModal() {
 }
 
 //for account modal
-$("#account_dropdown").on("click",function (){
+$("#account_dropdown").on("click", function () {
   $("#dropdown-menu").toggleClass("nav__show");
 })
 
-$(window).click(function(e) {
+$(window).click(function (e) {
   var target = $(e.target);
-  if(!target.is("#account_dropdown")) {
+  if (!target.is("#account_dropdown")) {
     $("#dropdown-menu").removeClass("nav__show");
   }
 })
