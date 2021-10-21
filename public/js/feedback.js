@@ -53,26 +53,11 @@ submitBtn.addEventListener('click', function(){
             type: "post",
             data: { username: username.value, feedback: feedback.value, slug: slug, starNumber: userRatingStar, time: time},
             success: function (response) {
-                console.log(response);
-                
-                reviewContent.insertAdjacentHTML(
-                    'afterbegin',
-                    `
-                    <div class="user-review">
-                                <div class="user-rating">
-                                    <div class="username">${response.username}</div>
-                                    <div class="stars">
-                                        ${setStars(response.starNumber)}
-                                    </div>
-                                </div>
-                                <!-- end user rating -->
-                                <div class="comment-content">
-                                ${response.feedback}
-                                </div>
-                                <time datetime = "${reponse.time}"  >${reponse.time}</time>
-                            </div>
-                    `
-                );
+                const result = feedbacks.filter(feedback => feedback.starNumber == parseInt(userRatingStar)); 
+                const percent = Math.round(result.length /feedbacks.length *100 );
+                $("#percent-" + userRatingStar).text(result + "%");
+                alert(percent);
+                location.reload();            
             },
             error: function (err) {
             alert(err);
@@ -88,11 +73,9 @@ submitBtn.addEventListener('click', function(){
         
         //submit success
         setDefautRating();
+
     }
 })
-
-{
-};
     
 function setDefautRating() {
     feedbackBox.classList.remove('show');

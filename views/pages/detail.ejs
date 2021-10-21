@@ -156,7 +156,7 @@
                     <div class="info-rating">
                         <div class="start-count">
                           <% const reducer = (accumulator, currentValue) => accumulator + currentValue.starNumber;%>
-                            <span class="avg"><%=Math.round(feedbacks.reduce(reducer, 0) / feedbacks.length) %>  </span>OUT OF 5
+                            <span class="avg"><%=Math.round((feedbacks.reduce(reducer, 0) / feedbacks.length)*100)/100 %>  </span>OUT OF 5
                         </div>
                         <div class="stars">
                             <div class="avg-stars">
@@ -183,7 +183,7 @@
                             <div class="progress">
                                <% const result5 = feedbacks.filter(feedback => feedback.starNumber == 5);%> 
                                <% const percent5 = Math.round(result5.length /feedbacks.length *100 )%>
-                                <div class="progress-line" id = "progress-line5" style="width: 100%;"></div>
+                                <div class="progress-line" id = "progress-line5"></div>
                             </div>
                             <div class="percent"><%= Math.round(result5.length /feedbacks.length *100 )%>%</div>
                         </div>
