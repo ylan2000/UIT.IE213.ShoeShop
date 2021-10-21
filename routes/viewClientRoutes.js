@@ -32,7 +32,7 @@ router.get("/feedback", clientController.getFeedback);
 
 router.get("/about", clientController.getAbout);
 
-router.get("/contract", clientController.getContract);
+router.get("/contact", clientController.getContact);
 router.get("/shoe-size-guide", clientController.getShoeSizePage);
 // --- protected routes
 

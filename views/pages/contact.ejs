@@ -12,17 +12,18 @@
             <a href="home">Home</a>
           </li>
           <span>&ThickSpace;&#62;&ThickSpace;</span>
-          <li class="breadcrumb-item active">Contract us</li>
+          <li class="breadcrumb-item active">Contact us</li>
         </ul>
       </nav>
-      <h1 class="contract__title">Contract us</h1>
+      <h1 class="contract__title">Contact us</h1>
 
         <form class="contract__form">
          <div class="contract__lable">
-          <input class="contract__input" type="text" placeholder="Your Name" class="input">
+          
+            <input class="contract__input" type="text" placeholder="Your Name" value="<%= (session.user && typeof session.user != 'undefined') ? session.user.fullName : '' %>" class="input">
          </div>
            <div class="contract__lable"> 
-             <input  class="contract__input" type="text" placeholder="Your Email Address" class="input">
+             <input  class="contract__input" type="text" placeholder="Your Email Address" value="<%= (session.user && typeof session.user != 'undefined') ? session.user.email : '' %>" class="input">
             </div>
           <div class="contract__lable">  
             <textarea name="message" id="" class="contract__textarea" placeholder="Message" cols="30" rows="10"></textarea>
