@@ -2225,7 +2225,12 @@ body {
   height: 30px;
   border: none;
   border-radius: 2px;
-  text-decoration: black; }
+  text-decoration: black;
+  cursor: pointer;
+  transition: 0.3s; }
+  .contract__btn:hover {
+    background-color: #78290F;
+    color: #fff; }
 
 .guide-title {
   color: #001524;
