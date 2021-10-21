@@ -4,13 +4,13 @@ exports.confirmationMail = function(userMail,title,content) {
     const transporter = mail.createTransport({
         service: 'gmail',
         auth: {
-            user: 'c13.thptpn@gmail.com', 
-            pass: 'fortythreec13'
+            user: process.env.MAIL, 
+            pass: process.env.PASS_MAIL
         }
     });
     
     const mailOptions = {
-        from: 'c13.thptpn@gmail.com',
+        from: process.env.MAIL,
         to: userMail,
         subject: title,
         html: content
