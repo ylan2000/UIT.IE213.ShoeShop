@@ -3,6 +3,7 @@ const { Transaction } = require("../models/transactionModel");
 const Cart = require("../models/cartModel");
 const Wishlist = require("../models/wishlistModel");
 const { Feedback } = require("../models/feedbackModel");
+const { Contact } = require("../models/contactModel");
 
 const { User } = require("../models/userModel");
 const bcrypt = require('bcryptjs');
@@ -464,3 +465,21 @@ exports.addFeedback = async (req, res) => {
     fb
   )
 }
+
+exports.sendContact = async (req, res, next) => {
+  try {
+    const { fullName, email, message } = req.body;
+  
+    const newContact = new Contact({
+      fullName: fullName,
+      email: email,
+      message: message
+    });
+
+    await newContact.save();
+
+    return res.status(200).send("ok");
+  } catch (err) {
+    return res.status(404).json({ status: "fail", message: err });
+  }
+};

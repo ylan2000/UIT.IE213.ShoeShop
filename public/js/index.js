@@ -1,5 +1,6 @@
 import { caclDayRemain, checkScroll } from './animation.js';
 import { addToCart, removeFromCart, updateCart, addToWishlist } from './sessionControl.js';
+import { sendContact } from './sendContact.js';
 
 const sortField = $(".sort");
 
@@ -9,6 +10,7 @@ const removeFromCartBtn = $(".remove-from-cart");
 const qtyInfo = $(".product-quantity");
 const addToWishlistBtn = $(".add-to-wishlist");
 const removeFromWishlisBtn = $(".remove-from-wishlist");
+const submitContact = $("#submitContact");
 
 if (eventTimeElement) {
   caclDayRemain();
@@ -80,3 +82,13 @@ $.each(removeFromWishlisBtn, function () {
     }
   });
 });
+
+if (submitContact) {
+  submitContact.on("click", function (e) {
+      e.preventDefault();
+      const fullName = $("#contact_fullName").val();
+      const email = $(".contact_email").val();
+      const message = $(".contact_message").val();
+      sendContact(fullName, email, message);
+  });
+}
