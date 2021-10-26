@@ -191,34 +191,63 @@ exports.register = async (req, res) => {
         });
         //console.log(errors);
       } else {
-        var result = '';
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var charactersLength = characters.length;
-        for (var i = 0; i < 7; i++) {
-          result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        const link = "http://localhost:8080/client/api/verify/" + result
+        //Start of sending registration through email
 
-        var verify = {
+          // var result = '';
+          // var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          // var charactersLength = characters.length;
+          // for (var i = 0; i < 7; i++) {
+          //   result += characters.charAt(Math.floor(Math.random() * charactersLength));
+          // }
+          // const link = "http://localhost:8080/client/api/verify/" + result
+
+          // var verify = {
+          //   fullName: fullname,
+          //   userName: username,
+          //   email: email,
+          //   phone: phone,
+          //   password: password,
+          //   verifyCode: result
+          // }
+
+          // var html = "<p>Access this link to complete sign up:</p>";
+          // html += '<a href="' + link + '">' + link + '</a>'
+          // mail.confirmationMail(email, "Verify your account", html)
+          // req.session.verify = verify
+          // req.session.save()
+          // return res.redirect('/verify')
+        
+        //End of sending...
+
+        var newUser = new User({
           fullName: fullname,
           userName: username,
           email: email,
           phone: phone,
-          password: password,
-          verifyCode: result
-        }
-
-        var html = "<p>Access this link to complete sign up:</p>";
-        html += '<a href="' + link + '">' + link + '</a>'
-        mail.confirmationMail(email, "Verify your account", html)
-        req.session.verify = verify
-        req.session.save()
-        return res.redirect('/verify')
+          password: password
+        });
+      
+        // Hash password
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(User => {
+                req.flash('success_msg', 'Registered successfully, you can log in now');
+                req.session.verify = null;
+                return res.redirect('/signIn');
+              })
+              .catch((err) => console.log(err));
+          });
+        });
       }
     });
   }
 };
 
+//verification through email
 exports.verified = async (req, res) => {
   const id = req.params.id;
   if (id != req.session.verify.verifyCode) return res.redirect("/permissiondenied")
@@ -247,6 +276,8 @@ exports.verified = async (req, res) => {
     });
   });
 }
+//end
+
 
 exports.login = (req, res, next) => {
   passport.authenticate("local", function (err, user, info) {
