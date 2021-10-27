@@ -1,5 +1,8 @@
 const request = require("request");
 
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+
 const homepageService = require("./homepageService");
 const templateMessage = require("./templateMessage");
 

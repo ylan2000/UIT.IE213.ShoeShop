@@ -1,5 +1,8 @@
 const request = require("request");
 
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+
 let sendTypingOn = (sender_psid) => {
   return new Promise((resolve, reject) => {
       try {

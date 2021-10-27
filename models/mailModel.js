@@ -1,5 +1,8 @@
 const mail = require('nodemailer');
 
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+
 exports.confirmationMail = function(userMail,title,content) {
     const transporter = mail.createTransport({
         service: 'gmail',

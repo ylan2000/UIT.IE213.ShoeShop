@@ -2,6 +2,9 @@ const request = require("request");
 
 const chatbotService = require("../services/chatbotService")
 
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+
 let postWebhook = (req, res) => {
   // Parse the request body from the POST
   let body = req.body;
