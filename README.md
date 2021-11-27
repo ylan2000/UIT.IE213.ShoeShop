@@ -1,4 +1,4 @@
-Link on heroku: [Sneaker City site](https://glacial-reef-79728.herokuapp.com/)
+Link on heroku: [Sneaker City site](https://sneaker-city-shoeshop.herokuapp.com/)
 ## To run project
 1. Install [npm](https://www.npmjs.com/get-npm)
 2. Install all packages are defined in package.json via command: `npm install`
