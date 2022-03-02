@@ -1,4 +1,4 @@
-const countDownDate = new Date("2021-12-12").getTime();
+const countDownDate = new Date("2022-12-12").getTime();
 
 const eventDay = $(".event__time--day");
 const eventHour = $(".event__time--hour");
@@ -62,5 +62,3 @@ const toggleNav = (direction, curScroll) => {
     prevDirection = direction;
   }
 };
-
-
